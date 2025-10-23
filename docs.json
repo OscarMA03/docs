@@ -96,7 +96,7 @@
             ]
           },
           {
-            "group": "Task Management",
+            "group": "Schedule Later",
             "pages": [
               "api-reference/endpoint/todo-tasks"
             ]
