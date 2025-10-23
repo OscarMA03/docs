@@ -1,0 +1,77 @@
+---
+title: 'Proxy Endpoints'
+openapi: 'GET /api/*'
+---
+
+## Proxy to Builder Prime API
+
+All requests to `/api/*` are proxied directly to the Builder Prime API. This allows you to access the full Builder Prime API through the proxy server.
+
+### Base URL
+
+```
+GET/POST /api/*
+```
+
+### How It Works
+
+1. **Request Forwarding**: The proxy server forwards all `/api/*` requests to `https://stage.builderprime.com`
+2. **Authentication**: The `BUILDER_PRIME_API_KEY` environment variable is automatically used for authentication
+3. **Response Forwarding**: The response from Builder Prime is forwarded back to the client
+
+### Example Requests
+
+#### Get Appointments
+
+```bash
+GET /api/appointments
+```
+
+#### Create Appointment
+
+```bash
+POST /api/appointments
+Content-Type: application/json
+
+{
+  "title": "New Appointment",
+  "startTime": "2024-01-15T10:00:00Z",
+  "endTime": "2024-01-15T11:00:00Z"
+}
+```
+
+#### Get Opportunities
+
+```bash
+GET /api/opportunities?limit=10&page=0
+```
+
+### Authentication
+
+The proxy automatically handles authentication by:
+
+1. Reading the `BUILDER_PRIME_API_KEY` environment variable
+2. Adding the appropriate authentication headers to the proxied request
+3. Forwarding the response with the same headers
+
+### Error Handling
+
+If the Builder Prime API returns an error, the proxy will forward the error response with the same status code and error details.
+
+### Example Error Response
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Invalid API key",
+  "status": 401
+}
+```
+
+### Use Cases
+
+- **Full API Access**: Access all Builder Prime API endpoints
+- **Authentication Management**: Centralized API key management
+- **Request Logging**: Log all API requests for monitoring
+- **Rate Limiting**: Implement rate limiting if needed
+- **Caching**: Add caching layer for frequently accessed data

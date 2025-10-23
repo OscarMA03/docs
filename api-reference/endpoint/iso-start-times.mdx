@@ -1,0 +1,49 @@
+---
+title: 'ISO Start Times'
+openapi: 'GET /iso-start-times'
+---
+
+## Get ISO Start Times
+
+Get only ISO start time values for appointments.
+
+<ParamField path="query" type="string" name="opportunityId" required>
+  The appointment ID to get start times for
+</ParamField>
+
+### Example Request
+
+```bash
+GET /iso-start-times?opportunityId=12345
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "opportunityId": "12345",
+  "isoStartTimes": [
+    "2024-01-15T09:00:00.000Z",
+    "2024-01-15T10:00:00.000Z",
+    "2024-01-15T11:00:00.000Z"
+  ],
+  "count": 3
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "error": "Failed to get ISO start times",
+  "details": "opportunityId parameter is required"
+}
+```
+
+### Use Cases
+
+- **Time Selection**: Get available start times in ISO format
+- **API Integration**: Use ISO times for external system integration
+- **Time Validation**: Validate appointment times before scheduling

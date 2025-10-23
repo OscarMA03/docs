@@ -1,0 +1,119 @@
+---
+title: 'Update Lead'
+openapi: 'POST /leads/{opportunityId}'
+---
+
+## Update Lead
+
+Update an existing lead/opportunity record. The `secretKey` is automatically set from the `BUILDER_PRIME_API_KEY` environment variable.
+
+<ParamField path="path" type="string" name="opportunityId" required>
+  The opportunity ID of the lead to update
+</ParamField>
+
+<ParamField path="body" type="object" name="updateData" required>
+  Lead data to update
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="string" name="firstName">
+  Lead's first name
+</ParamField>
+
+<ParamField path="body" type="string" name="lastName">
+  Lead's last name
+</ParamField>
+
+<ParamField path="body" type="string" name="email">
+  Lead's email address
+</ParamField>
+
+<ParamField path="body" type="string" name="mobilePhone">
+  Lead's mobile phone number
+</ParamField>
+
+<ParamField path="body" type="string" name="addressLine1">
+  Lead's address line 1
+</ParamField>
+
+<ParamField path="body" type="string" name="city">
+  Lead's city
+</ParamField>
+
+<ParamField path="body" type="string" name="state">
+  Lead's state
+</ParamField>
+
+<ParamField path="body" type="string" name="zip">
+  Lead's ZIP code
+</ParamField>
+
+<ParamField path="body" type="string" name="leadStatusName">
+  Lead status
+</ParamField>
+
+<ParamField path="body" type="string" name="leadSourceName">
+  Lead source
+</ParamField>
+
+### Example Request
+
+```bash
+POST /leads/12345
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "email": "john.smith@example.com",
+  "mobilePhone": "+1234567890",
+  "addressLine1": "456 Oak Ave",
+  "city": "Newtown",
+  "state": "CA",
+  "zip": "90210",
+  "leadStatusName": "Qualified",
+  "leadSourceName": "Website"
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "opportunityId": "12345",
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "john.smith@example.com",
+    "phone": "+1234567890",
+    "addressLine1": "456 Oak Ave",
+    "city": "Newtown",
+    "state": "CA",
+    "zip": "90210",
+    "leadStatus": "Qualified",
+    "leadSource": "Website"
+  },
+  "message": "Successfully updated lead with ID: 12345",
+  "opportunityId": "12345",
+  "note": "secretKey automatically set from BUILDER_PRIME_API_KEY"
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "error": "Email address already exists",
+  "details": "The email address you're trying to use is already associated with another lead. Please use a different email address or update other fields without changing the email.",
+  "originalError": "uk_emailaddress constraint violation"
+}
+```
+
+### Use Cases
+
+- **Lead Updates**: Update existing lead information
+- **Status Changes**: Change lead status or source
+- **Contact Updates**: Update contact information for existing leads

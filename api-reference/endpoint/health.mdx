@@ -1,0 +1,42 @@
+---
+title: 'Health Check'
+openapi: 'GET /health'
+---
+
+## Health Check
+
+Check the server status and health.
+
+<ParamField path="query" type="string" name="none">
+  No query parameters required
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Server status (always "healthy")
+</ResponseField>
+
+<ResponseField name="timestamp" type="string">
+  Current server timestamp in ISO format
+</ResponseField>
+
+<ResponseField name="port" type="number">
+  Port number the server is running on
+</ResponseField>
+
+### Example Response
+
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "port": 3001
+}
+```
+
+### Use Cases
+
+- **Server Monitoring**: Check if the proxy server is running
+- **Health Checks**: Verify server availability before making API calls
+- **Load Balancer**: Use for load balancer health checks

@@ -1,0 +1,88 @@
+---
+title: 'Leads by Address and Phone'
+openapi: 'GET /leads/by-address-and-phone'
+---
+
+## Get Leads by Address and Phone
+
+Retrieve leads filtered by both address and phone number. Returns the newest lead if multiple matches are found.
+
+<ParamField path="query" type="string" name="address" required>
+  Address to search for (searches addressLine1 field)
+</ParamField>
+
+<ParamField path="query" type="string" name="phone" required>
+  Phone number to search for
+</ParamField>
+
+<ParamField path="query" type="string" name="last-modified-since">
+  Filter leads modified since timestamp (Unix timestamp)
+</ParamField>
+
+<ParamField path="query" type="string" name="lead-status">
+  Filter by lead status
+</ParamField>
+
+<ParamField path="query" type="string" name="lead-source">
+  Filter by lead source
+</ParamField>
+
+<ParamField path="query" type="string" name="dialer-status">
+  Filter by dialer status
+</ParamField>
+
+<ParamField path="query" type="number" name="limit">
+  Maximum number of leads to return
+</ParamField>
+
+<ParamField path="query" type="number" name="page">
+  Page number for pagination
+</ParamField>
+
+### Example Request
+
+```bash
+GET /leads/by-address-and-phone?address=123 Main St&phone=+1234567890
+```
+
+### Example Response
+
+```json
+{
+  "leads": [
+    {
+      "opportunityId": "12345",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1234567890",
+      "addressLine1": "123 Main St",
+      "city": "Anytown",
+      "state": "NY",
+      "zip": "12345",
+      "leadStatus": "Lead Received",
+      "leadSource": "API",
+      "lastModifiedDate": 1705312200000
+    }
+  ],
+  "count": 1,
+  "address": "123 Main St",
+  "phone": "+1234567890",
+  "totalFound": 1,
+  "message": "Found 1 account for address \"123 Main St\" and phone +1234567890. Returning newest one."
+}
+```
+
+### Error Response
+
+```json
+{
+  "error": "Address parameter is required"
+}
+```
+
+### Use Cases
+
+- **Exact Match Lookup**: Find leads with both specific address and phone
+- **Duplicate Detection**: Check for exact duplicates before creating new leads
+- **Data Deduplication**: Identify and handle duplicate lead records

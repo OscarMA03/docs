@@ -1,0 +1,94 @@
+---
+title: 'To-Do Tasks'
+openapi: 'POST /to-do-tasks/v1'
+---
+
+## Create To-Do Task
+
+Create a new to-do task. The employee ID is automatically set from the `HARDCODED_EMPLOYEE_ID` environment variable.
+
+<ParamField path="query" type="string" name="opportunityId">
+  Optional opportunity ID to associate with the task
+</ParamField>
+
+<ParamField path="body" type="object" name="taskData" required>
+  Task data for creation
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="string" name="title" required>
+  Task title
+</ParamField>
+
+<ParamField path="body" type="string" name="type" required>
+  Task type (must be one of: TODO, CALL, EMAIL)
+</ParamField>
+
+<ParamField path="body" type="string" name="description">
+  Task description
+</ParamField>
+
+<ParamField path="body" type="string" name="dueDate">
+  Task due date (ISO format)
+</ParamField>
+
+<ParamField path="body" type="object" name="employee">
+  Employee object (automatically set from environment)
+</ParamField>
+
+<ParamField path="body" type="object" name="opportunity">
+  Opportunity object (set if opportunityId is provided)
+</ParamField>
+
+### Example Request
+
+```bash
+POST /to-do-tasks/v1?opportunityId=12345
+Content-Type: application/json
+
+{
+  "title": "Follow up with lead",
+  "type": "CALL",
+  "description": "Call the lead to discuss their requirements",
+  "dueDate": "2024-01-20T10:00:00Z"
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "taskId": "67890",
+  "title": "Follow up with lead",
+  "type": "CALL",
+  "description": "Call the lead to discuss their requirements",
+  "dueDate": "2024-01-20T10:00:00Z",
+  "employee": {
+    "id": 1632
+  },
+  "opportunity": {
+    "opportunityId": "12345",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com"
+  },
+  "status": "Created",
+  "createdDate": "2024-01-15T10:30:00Z"
+}
+```
+
+### Error Response
+
+```json
+{
+  "error": "title is required"
+}
+```
+
+### Use Cases
+
+- **Task Management**: Create tasks for lead follow-up
+- **Workflow Automation**: Automatically create tasks based on lead status
+- **Team Coordination**: Assign tasks to team members

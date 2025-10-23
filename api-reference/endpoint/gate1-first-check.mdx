@@ -1,0 +1,146 @@
+---
+title: 'Gate 1 First Check'
+openapi: 'GET /gate1/first-check'
+---
+
+## Gate 1 First Check
+
+First validation check to determine if a new opportunity ID is needed. If all validations pass, indicates no new opportunity ID is needed.
+
+<ParamField path="query" type="string" name="firstName">
+  First name to validate
+</ParamField>
+
+<ParamField path="query" type="string" name="lastName">
+  Last name to validate (optional)
+</ParamField>
+
+<ParamField path="query" type="string" name="phone">
+  Phone number to validate
+</ParamField>
+
+<ParamField path="query" type="string" name="email">
+  Email address to validate
+</ParamField>
+
+<ParamField path="query" type="string" name="address">
+  Address to validate
+</ParamField>
+
+### Example Request
+
+```bash
+GET /gate1/first-check?firstName=John&lastName=Doe&phone=+1234567890&email=john@example.com&address=123 Main St
+```
+
+### Example Response (All Validations Pass)
+
+```json
+{
+  "success": true,
+  "firstCheck": {
+    "allValidationsPass": true,
+    "needsNewOpportunityId": false,
+    "validationLoop": 0,
+    "message": "All validations passed - no new opportunity ID needed",
+    "validation": {
+      "isValid": true,
+      "canCreateOpportunity": true,
+      "missingFields": [],
+      "invalidFields": [],
+      "fieldValidations": {
+        "firstName": {
+          "isValid": true,
+          "isPresent": true,
+          "formatValid": true,
+          "message": "Valid"
+        },
+        "lastName": {
+          "isValid": true,
+          "isPresent": true,
+          "formatValid": true,
+          "message": "Valid"
+        },
+        "phone": {
+          "isValid": true,
+          "isPresent": true,
+          "formatValid": true,
+          "message": "Valid"
+        },
+        "email": {
+          "isValid": true,
+          "isPresent": true,
+          "formatValid": true,
+          "message": "Valid"
+        },
+        "address": {
+          "isValid": true,
+          "isPresent": true,
+          "formatValid": true,
+          "message": "Valid"
+        }
+      }
+    }
+  },
+  "timestamp": "2024-01-15T10:30:00.000Z"
+}
+```
+
+### Example Response (Validations Failed)
+
+```json
+{
+  "success": true,
+  "firstCheck": {
+    "allValidationsPass": false,
+    "needsNewOpportunityId": true,
+    "validationLoop": 1,
+    "message": "Validations failed - new opportunity ID required",
+    "validation": {
+      "isValid": false,
+      "canCreateOpportunity": false,
+      "missingFields": ["email"],
+      "invalidFields": ["phone"],
+      "fieldValidations": {
+        "firstName": {
+          "isValid": true,
+          "isPresent": true,
+          "formatValid": true,
+          "message": "Valid"
+        },
+        "lastName": {
+          "isValid": true,
+          "isPresent": true,
+          "formatValid": true,
+          "message": "Valid"
+        },
+        "phone": {
+          "isValid": false,
+          "isPresent": true,
+          "formatValid": false,
+          "message": "Invalid phone format"
+        },
+        "email": {
+          "isValid": false,
+          "isPresent": false,
+          "formatValid": false,
+          "message": "Email is required"
+        },
+        "address": {
+          "isValid": true,
+          "isPresent": true,
+          "formatValid": true,
+          "message": "Valid"
+        }
+      }
+    }
+  },
+  "timestamp": "2024-01-15T10:30:00.000Z"
+}
+```
+
+### Use Cases
+
+- **Workflow Control**: Determine if new opportunity creation is needed
+- **Validation Loop**: Control validation loops in applications
+- **Pre-Processing**: Check data quality before lead creation

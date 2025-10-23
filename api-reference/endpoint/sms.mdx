@@ -1,0 +1,120 @@
+---
+title: 'SMS Communication'
+openapi: 'GET /sms/v1'
+---
+
+## Get SMS Conversation
+
+Retrieve SMS conversation between two phone numbers.
+
+<ParamField path="query" type="string" name="from">
+  From phone number
+</ParamField>
+
+<ParamField path="query" type="string" name="to">
+  To phone number
+</ParamField>
+
+### Example Request
+
+```bash
+GET /sms/v1?from=+1234567890&to=+0987654321
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "conversation": [
+    {
+      "id": "msg1",
+      "from": "+1234567890",
+      "to": "+0987654321",
+      "text": "Hello, this is a test message",
+      "timestamp": "2024-01-15T10:30:00Z",
+      "direction": "outbound"
+    },
+    {
+      "id": "msg2",
+      "from": "+0987654321",
+      "to": "+1234567890",
+      "text": "Hi, thanks for reaching out!",
+      "timestamp": "2024-01-15T10:32:00Z",
+      "direction": "inbound"
+    }
+  ],
+  "count": 2,
+  "from": "+1234567890",
+  "to": "+0987654321"
+}
+```
+
+---
+
+## Send SMS
+
+<ParamField path="body" type="object" name="smsData" required>
+  SMS data for sending
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="string" name="text" required>
+  SMS message text
+</ParamField>
+
+<ParamField path="body" type="array" name="mediaUrls">
+  Array of media URLs to attach
+</ParamField>
+
+<ParamField path="body" type="string" name="from">
+  From phone number
+</ParamField>
+
+<ParamField path="body" type="string" name="phone">
+  To phone number
+</ParamField>
+
+### Example Request
+
+```bash
+POST /sms/v1
+Content-Type: application/json
+
+{
+  "text": "Hello, this is a test message from our system",
+  "from": "+1234567890",
+  "phone": "+0987654321",
+  "mediaUrls": ["https://example.com/image.jpg"]
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "messageId": "msg123",
+  "text": "Hello, this is a test message from our system",
+  "from": "+1234567890",
+  "to": "+0987654321",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "status": "sent"
+}
+```
+
+### Error Response
+
+```json
+{
+  "error": "Failed to send SMS",
+  "details": "Invalid phone number format"
+}
+```
+
+### Use Cases
+
+- **Lead Communication**: Send SMS messages to leads
+- **Conversation Tracking**: Track SMS conversations with leads
+- **Media Sharing**: Send images and files via SMS

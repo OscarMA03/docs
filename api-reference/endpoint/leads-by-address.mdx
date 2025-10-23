@@ -1,0 +1,82 @@
+---
+title: 'Leads by Address'
+openapi: 'GET /leads/by-address'
+---
+
+## Get Leads by Address
+
+Retrieve leads filtered by address with additional optional filters.
+
+<ParamField path="query" type="string" name="address" required>
+  Address to search for (searches addressLine1 field)
+</ParamField>
+
+<ParamField path="query" type="string" name="last-modified-since">
+  Filter leads modified since timestamp (Unix timestamp)
+</ParamField>
+
+<ParamField path="query" type="string" name="lead-status">
+  Filter by lead status
+</ParamField>
+
+<ParamField path="query" type="string" name="lead-source">
+  Filter by lead source
+</ParamField>
+
+<ParamField path="query" type="string" name="dialer-status">
+  Filter by dialer status
+</ParamField>
+
+<ParamField path="query" type="number" name="limit">
+  Maximum number of leads to return
+</ParamField>
+
+<ParamField path="query" type="number" name="page">
+  Page number for pagination
+</ParamField>
+
+### Example Request
+
+```bash
+GET /leads/by-address?address=123 Main St&lead-status=Lead Received
+```
+
+### Example Response
+
+```json
+{
+  "leads": [
+    {
+      "opportunityId": "12345",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1234567890",
+      "addressLine1": "123 Main St",
+      "city": "Anytown",
+      "state": "NY",
+      "zip": "12345",
+      "leadStatus": "Lead Received",
+      "leadSource": "API",
+      "lastModifiedDate": 1705312200000
+    }
+  ],
+  "count": 1,
+  "address": "123 Main St",
+  "message": "Found 1 account for address \"123 Main St\""
+}
+```
+
+### Error Response
+
+```json
+{
+  "error": "Address parameter is required"
+}
+```
+
+### Use Cases
+
+- **Address Lookup**: Find existing leads by address
+- **Duplicate Prevention**: Check for existing leads at the same address
+- **Location-Based Queries**: Search leads by geographic location

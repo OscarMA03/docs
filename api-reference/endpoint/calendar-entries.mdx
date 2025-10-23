@@ -1,0 +1,89 @@
+---
+title: 'Calendar Entries'
+openapi: 'GET /calendar-entries'
+---
+
+## Get Calendar Entries
+
+Fetch suggested appointment time slots for a specific appointment.
+
+<ParamField path="query" type="string" name="opportunityId" required>
+  The appointment ID to fetch time slots for
+</ParamField>
+
+### Response
+
+Returns an array of suggested appointment time slots.
+
+### Example Request
+
+```bash
+GET /calendar-entries?opportunityId=12345
+```
+
+### Example Response
+
+```json
+[
+  {
+    "startTime": "2024-01-15T09:00:00Z",
+    "endTime": "2024-01-15T10:00:00Z",
+    "available": true
+  },
+  {
+    "startTime": "2024-01-15T10:00:00Z", 
+    "endTime": "2024-01-15T11:00:00Z",
+    "available": true
+  }
+]
+```
+
+---
+
+## Schedule Calendar Entry
+
+<ParamField path="query" type="string" name="opportunityId" required>
+  The appointment ID to schedule
+</ParamField>
+
+<ParamField path="body" type="object" name="appointmentData" required>
+  Appointment data to schedule
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="string" name="startTime" required>
+  Start time of the appointment
+</ParamField>
+
+<ParamField path="body" type="string" name="endTime" required>
+  End time of the appointment
+</ParamField>
+
+<ParamField path="body" type="string" name="notes">
+  Optional appointment notes
+</ParamField>
+
+### Example Request
+
+```bash
+POST /calendar-entries?opportunityId=12345
+Content-Type: application/json
+
+{
+  "startTime": "2024-01-15T09:00:00Z",
+  "endTime": "2024-01-15T10:00:00Z",
+  "notes": "Initial consultation"
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "opportunityId": "12345",
+  "scheduledTime": "2024-01-15T09:00:00Z",
+  "message": "Appointment scheduled successfully"
+}
+```

@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "Proxy Server Builder Prime API",
+    "description": "Proxy server for Builder Prime API with additional validation, calendar management, and lead processing capabilities",
     "license": {
       "name": "MIT"
     },
@@ -10,85 +10,26 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://proxy-server-builder-prime.onrender.com"
     }
   ],
   "security": [
     {
-      "bearerAuth": []
+      "apiKey": []
     }
   ],
   "paths": {
-    "/plants": {
+    "/health": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "summary": "Health Check",
+        "description": "Check the server status and health",
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Server health status",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/HealthResponse"
                 }
               }
             }
@@ -96,57 +37,374 @@
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/calendar-entries": {
+      "get": {
+        "summary": "Get Calendar Entries",
+        "description": "Fetch suggested appointment time slots for a specific appointment",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
+            "name": "opportunityId",
+            "in": "query",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+              "type": "string"
+            },
+            "description": "The appointment ID to fetch time slots for"
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Array of suggested appointment time slots",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSlot"
+                  }
                 }
               }
             }
           }
         }
-      }
-    }
-  },
-  "webhooks": {
-    "/plant/webhook": {
+      },
       "post": {
-        "description": "Information about a new plant added to the store",
+        "summary": "Schedule Calendar Entry",
+        "description": "Schedule an appointment time slot",
+        "parameters": [
+          {
+            "name": "opportunityId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The appointment ID to schedule"
+          }
+        ],
         "requestBody": {
-          "description": "Plant added to the store",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/AppointmentData"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
+            "description": "Appointment scheduled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leads": {
+      "get": {
+        "summary": "Get Leads",
+        "description": "Retrieve leads/opportunities with optional filtering",
+        "parameters": [
+          {
+            "name": "opportunity-id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by specific opportunity ID"
+          },
+          {
+            "name": "lead-status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by lead status"
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by phone number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Maximum number of leads to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of leads",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Lead"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-lead": {
+      "post": {
+        "summary": "Create Simple Lead",
+        "description": "Create a simplified lead with core fields only",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleLeadData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Lead created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gate1/validate-all": {
+      "get": {
+        "summary": "Gate 1 Validate All",
+        "description": "Validate all required fields for lead creation",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "First name to validate"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Last name to validate"
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Phone number to validate"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Email address to validate"
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Address to validate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gate1/first-check": {
+      "get": {
+        "summary": "Gate 1 First Check",
+        "description": "First validation check to determine if a new opportunity ID is needed",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "First name to validate"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Last name to validate (optional)"
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Phone number to validate"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Email address to validate"
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Address to validate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "First check validation results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FirstCheckResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/to-do-tasks/v1": {
+      "post": {
+        "summary": "Create To-Do Task",
+        "description": "Create a new to-do task",
+        "parameters": [
+          {
+            "name": "opportunityId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional opportunity ID to associate with the task"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sms/v1": {
+      "get": {
+        "summary": "Get SMS Conversation",
+        "description": "Retrieve SMS conversation between two phone numbers",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "From phone number"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "To phone number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SMS conversation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMSConversationResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Send SMS",
+        "description": "Send an SMS message",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SMSData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SMS sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMSResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -154,63 +412,337 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
+      "HealthResponse": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
+          "status": {
+            "type": "string",
+            "example": "healthy"
           },
-          "tag": {
-            "description": "Tag to specify the type",
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "port": {
+            "type": "integer",
+            "example": 3001
+          }
+        }
+      },
+      "TimeSlot": {
+        "type": "object",
+        "properties": {
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "available": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AppointmentData": {
+        "type": "object",
+        "required": ["startTime", "endTime"],
+        "properties": {
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
             "type": "string"
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
+      "AppointmentResponse": {
         "type": "object",
         "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
+          "success": {
+            "type": "boolean"
+          },
+          "opportunityId": {
+            "type": "string"
+          },
+          "scheduledTime": {
+            "type": "string",
+            "format": "date-time"
           },
           "message": {
             "type": "string"
           }
         }
+      },
+      "Lead": {
+        "type": "object",
+        "properties": {
+          "opportunityId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "addressLine1": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "leadStatus": {
+            "type": "string"
+          },
+          "leadSource": {
+            "type": "string"
+          },
+          "lastModifiedDate": {
+            "type": "integer"
+          }
+        }
+      },
+      "SimpleLeadData": {
+        "type": "object",
+        "required": ["firstName", "email", "phone", "addressLine1"],
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "addressLine1": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          }
+        }
+      },
+      "LeadResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Lead"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ValidationResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "gate1": {
+            "type": "object",
+            "properties": {
+              "isValid": {
+                "type": "boolean"
+              },
+              "canCreateOpportunity": {
+                "type": "boolean"
+              },
+              "missingFields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "invalidFields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FirstCheckResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "firstCheck": {
+            "type": "object",
+            "properties": {
+              "allValidationsPass": {
+                "type": "boolean"
+              },
+              "needsNewOpportunityId": {
+                "type": "boolean"
+              },
+              "validationLoop": {
+                "type": "integer"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TaskData": {
+        "type": "object",
+        "required": ["title", "type"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["TODO", "CALL", "EMAIL"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TaskResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "SMSData": {
+        "type": "object",
+        "required": ["text"],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "mediaUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SMSResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "SMSConversationResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "conversation": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "direction": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API key for authentication (automatically set from BUILDER_PRIME_API_KEY environment variable)"
       }
     }
   }

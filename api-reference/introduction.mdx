@@ -1,33 +1,52 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Reference'
+description: 'Proxy Server Builder Prime API Documentation'
 ---
-
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
 
 ## Welcome
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+This API documentation covers all endpoints available in the Proxy Server Builder Prime application. The server acts as a proxy to the Builder Prime API while providing additional validation, calendar management, and lead processing capabilities.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Base URL
+
+```
+https://proxy-server-builder-prime.onrender.com
+```
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Most endpoints require the `BUILDER_PRIME_API_KEY` environment variable to be set. The API key is automatically used for authentication with the Builder Prime backend.
+
+## Response Format
+
+All endpoints return JSON responses with the following structure:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "success": true,
+  "data": { ... },
+  "message": "Success message"
+}
 ```
+
+Error responses follow this format:
+
+```json
+{
+  "success": false,
+  "error": "Error description",
+  "details": "Additional error details"
+}
+```
+
+## Available Endpoints
+
+The API provides the following categories of endpoints:
+
+- **Health Check** - Server status and health monitoring
+- **Calendar Management** - Appointment scheduling and time slot management
+- **Lead Management** - Lead creation, retrieval, and updates
+- **Gate 1 Validation** - Field validation before lead creation
+- **Task Management** - To-do task creation and management
+- **SMS Communication** - SMS conversation retrieval and sending
+- **Proxy Endpoints** - Direct proxy to Builder Prime API

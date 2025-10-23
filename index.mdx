@@ -1,97 +1,81 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Proxy Server Builder Prime API"
+description: "A comprehensive API for lead management, appointment scheduling, and Builder Prime integration"
 ---
 
-## Setting up
+## Welcome to the Proxy Server Builder Prime API
 
-Get your documentation site up and running in minutes.
+This API serves as a proxy to the Builder Prime API while providing additional validation, calendar management, and lead processing capabilities.
 
 <Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
+  title="API Base URL"
+  icon="globe"
+  href="https://proxy-server-builder-prime.onrender.com"
   horizontal
 >
-  Follow our three step quickstart guide.
+  https://proxy-server-builder-prime.onrender.com
 </Card>
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
+## Key Features
 
 <Columns cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Lead Management"
+    icon="users"
+    href="/api-reference/endpoint/leads"
   >
-    Edit your docs locally and preview them in real time.
+    Create, update, and retrieve lead information with comprehensive search capabilities.
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Appointment Scheduling"
+    icon="calendar"
+    href="/api-reference/endpoint/calendar-entries"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    Schedule appointments with available time slots and employee assignments.
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
+    title="Gate 1 Validation"
+    icon="shield-check"
+    href="/api-reference/endpoint/gate1-validate-all"
   >
-    Auto-generate API documentation from OpenAPI specifications.
+    Validate lead data before processing to ensure data quality.
+  </Card>
+  <Card
+    title="Task Management"
+    icon="list-check"
+    href="/api-reference/endpoint/todo-tasks"
+  >
+    Create and manage to-do tasks associated with opportunities.
   </Card>
 </Columns>
 
-## Create beautiful pages
+## Quick Start
 
-Everything you need to create world-class documentation.
+<Steps>
+  <Step title="Get API Access">
+    Contact support to obtain your API key for Builder Prime integration.
+  </Step>
+  <Step title="Test the API">
+    Use the health endpoint to verify connectivity: `GET /health`
+  </Step>
+  <Step title="Create Your First Lead">
+    Use the create-lead endpoint to add new leads to your system.
+  </Step>
+  <Step title="Schedule Appointments">
+    Retrieve available time slots and book appointments for your leads.
+  </Step>
+</Steps>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Authentication
 
-## Need inspiration?
+Most endpoints require the `BUILDER_PRIME_API_KEY` environment variable to be set. The API key is automatically used for authentication with the Builder Prime backend.
+
+## Support
 
 <Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
+  title="API Reference"
+  icon="book"
+  href="/api-reference/introduction"
 >
-  Browse our showcase of exceptional documentation sites.
+  Browse the complete API reference documentation.
 </Card>

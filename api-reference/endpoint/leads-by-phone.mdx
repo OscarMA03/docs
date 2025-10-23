@@ -1,0 +1,82 @@
+---
+title: 'Leads by Phone'
+openapi: 'GET /leads/by-phone'
+---
+
+## Get Leads by Phone
+
+Retrieve leads filtered by phone number with additional optional filters.
+
+<ParamField path="query" type="string" name="phone" required>
+  Phone number to search for
+</ParamField>
+
+<ParamField path="query" type="string" name="last-modified-since">
+  Filter leads modified since timestamp (Unix timestamp)
+</ParamField>
+
+<ParamField path="query" type="string" name="lead-status">
+  Filter by lead status
+</ParamField>
+
+<ParamField path="query" type="string" name="lead-source">
+  Filter by lead source
+</ParamField>
+
+<ParamField path="query" type="string" name="dialer-status">
+  Filter by dialer status
+</ParamField>
+
+<ParamField path="query" type="number" name="limit">
+  Maximum number of leads to return
+</ParamField>
+
+<ParamField path="query" type="number" name="page">
+  Page number for pagination
+</ParamField>
+
+### Example Request
+
+```bash
+GET /leads/by-phone?phone=+1234567890&lead-status=Lead Received
+```
+
+### Example Response
+
+```json
+{
+  "leads": [
+    {
+      "opportunityId": "12345",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1234567890",
+      "addressLine1": "123 Main St",
+      "city": "Anytown",
+      "state": "NY",
+      "zip": "12345",
+      "leadStatus": "Lead Received",
+      "leadSource": "API",
+      "lastModifiedDate": 1705312200000
+    }
+  ],
+  "count": 1,
+  "phone": "+1234567890",
+  "message": "Found 1 account for phone number +1234567890"
+}
+```
+
+### Error Response
+
+```json
+{
+  "error": "Phone number is required"
+}
+```
+
+### Use Cases
+
+- **Phone Lookup**: Find existing leads by phone number
+- **Duplicate Prevention**: Check for existing leads with the same phone
+- **Contact Verification**: Verify if a phone number is already in the system

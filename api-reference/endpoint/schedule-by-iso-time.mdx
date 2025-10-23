@@ -1,0 +1,60 @@
+---
+title: 'Schedule by ISO Time'
+openapi: 'POST /schedule-by-iso-time'
+---
+
+## Schedule by ISO Time
+
+Schedule an appointment using ISO start time.
+
+<ParamField path="query" type="string" name="opportunityId" required>
+  The appointment ID to schedule
+</ParamField>
+
+<ParamField path="body" type="object" name="timeData" required>
+  ISO time data for scheduling
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="string" name="isoStartTime" required>
+  ISO format start time for the appointment
+</ParamField>
+
+### Example Request
+
+```bash
+POST /schedule-by-iso-time?opportunityId=12345
+Content-Type: application/json
+
+{
+  "isoStartTime": "2024-01-15T09:00:00.000Z"
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "opportunityId": "12345",
+  "scheduledTime": "2024-01-15T09:00:00.000Z",
+  "message": "Appointment scheduled successfully by ISO time"
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "error": "Failed to schedule appointment by isoStartTime",
+  "details": "isoStartTime is required"
+}
+```
+
+### Use Cases
+
+- **Precise Scheduling**: Schedule appointments with exact ISO timestamps
+- **API Integration**: Use ISO times from external systems
+- **Time Accuracy**: Ensure precise time scheduling across timezones
