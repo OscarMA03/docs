@@ -49,7 +49,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The appointment ID to fetch time slots for"
+            "description": "The opportunity ID to fetch time slots for"
           }
         ],
         "responses": {
@@ -79,7 +79,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The appointment ID to schedule"
+            "description": "The opportunity ID to schedule"
           }
         ],
         "requestBody": {

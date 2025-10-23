@@ -8,7 +8,7 @@ openapi: 'GET /calendar-entries'
 Fetch suggested appointment time slots for a specific appointment.
 
 <ParamField path="query" type="string" name="opportunityId" required>
-  The appointment ID to fetch time slots for
+  The opportunity ID to fetch time slots for
 </ParamField>
 
 ### Response
@@ -43,7 +43,7 @@ GET /calendar-entries?opportunityId=12345
 ## Schedule Calendar Entry
 
 <ParamField path="query" type="string" name="opportunityId" required>
-  The appointment ID to schedule
+  The opportunity ID to schedule
 </ParamField>
 
 <ParamField path="body" type="object" name="appointmentData" required>
