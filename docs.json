@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Proxy Server Builder Prime API",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -57,12 +57,53 @@
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Health & Status",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/endpoint/health"
+            ]
+          },
+          {
+            "group": "Lead Management",
+            "pages": [
+              "api-reference/endpoint/leads",
+              "api-reference/endpoint/leads-by-address",
+              "api-reference/endpoint/leads-by-phone",
+              "api-reference/endpoint/leads-by-address-and-phone",
+              "api-reference/endpoint/create-lead",
+              "api-reference/endpoint/update-lead"
+            ]
+          },
+          {
+            "group": "Gate 1 Validation",
+            "pages": [
+              "api-reference/endpoint/gate1-validate-all",
+              "api-reference/endpoint/gate1-first-check"
+            ]
+          },
+          {
+            "group": "Book Appointment",
+            "pages": [
+              "api-reference/endpoint/calendar-entries",
+              "api-reference/endpoint/iso-start-times",
+              "api-reference/endpoint/schedule-by-iso-time"
+            ]
+          },
+          {
+            "group": "Task Management",
+            "pages": [
+              "api-reference/endpoint/todo-tasks"
+            ]
+          },
+          {
+            "group": "SMS Communication",
+            "pages": [
+              "api-reference/endpoint/sms"
+            ]
+          },
+          {
+            "group": "Proxy Endpoints",
+            "pages": [
+              "api-reference/endpoint/proxy"
             ]
           }
         ]
@@ -96,8 +137,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "API Base URL",
+      "href": "https://proxy-server-builder-prime.onrender.com"
     }
   },
   "contextual": {
