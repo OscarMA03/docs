@@ -63,6 +63,13 @@
             ]
           },
           {
+            "group": "Configuration",
+            "pages": [
+              "api-reference/endpoint/config",
+              "api-reference/endpoint/prev-messages"
+            ]
+          },
+          {
             "group": "Lead Management",
             "pages": [
               "api-reference/endpoint/leads",
@@ -97,9 +104,7 @@
           {
             "group": "SMS Communication",
             "pages": [
-              "api-reference/endpoint/sms",
-              "api-reference/endpoint/config",
-              "api-reference/endpoint/prev-messages"
+              "api-reference/endpoint/sms"
             ]
           },
           {
