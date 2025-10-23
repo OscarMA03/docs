@@ -1,0 +1,259 @@
+---
+title: 'Webhook Events'
+openapi: 'POST /webhook'
+---
+
+## Webhook Overview
+
+Webhooks allow your application to receive real-time notifications about events that occur in your Retell AI account. Instead of continuously polling our API, webhooks push data to your application as events happen, making your integrations more efficient and responsive.
+
+Based on [Retell AI's webhook system](https://docs.retellai.com/features/webhook-overview), this endpoint receives real-time call event notifications.
+
+## Event Types
+
+The webhook supports the following event types:
+
+| Event Type     | Description                                                        | Payload                                                                            |
+| -------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| call_started  | Triggered when a new call begins                                   | Basic call information                                                             |
+| call_ended    | Triggered when a call completes, transfers, or encounters an error | All fields from the call object except call_analysis. |
+| call_analyzed | Triggered when call analysis is complete                           | Full call data including call_analysis object                                     |
+
+## Webhook Specification
+
+The webhook will `POST` the payload to your endpoint with the following characteristics:
+
+- **Timeout**: 10 seconds
+- **Retries**: Up to 3 times if no success status (2xx) is received
+- **Order**: Webhooks are triggered in order but are not blocking
+- **Connection Issues**: If a call did not connect (dial_failed, dial_no_answer, dial_busy), the `call_started` webhook will not be triggered, but `call_ended` and `call_analyzed` will still be triggered
+
+### Request Payload
+
+<ParamField path="body" type="object" name="webhookData" required>
+  Webhook event data
+</ParamField>
+
+<ParamField path="body" type="string" name="event" required>
+  Event type (call_started, call_ended, call_analyzed)
+</ParamField>
+
+<ParamField path="body" type="object" name="call" required>
+  Call object containing call details
+</ParamField>
+
+<ParamField path="body" type="string" name="call.call_type">
+  Type of call (phone_call, etc.)
+</ParamField>
+
+<ParamField path="body" type="string" name="call.from_number">
+  Calling phone number
+</ParamField>
+
+<ParamField path="body" type="string" name="call.to_number">
+  Called phone number
+</ParamField>
+
+<ParamField path="body" type="string" name="call.direction">
+  Call direction (inbound, outbound)
+</ParamField>
+
+<ParamField path="body" type="string" name="call.call_id" required>
+  Unique call identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="call.agent_id">
+  Agent identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="call.call_status">
+  Current call status
+</ParamField>
+
+<ParamField path="body" type="object" name="call.metadata">
+  Additional call metadata
+</ParamField>
+
+<ParamField path="body" type="object" name="call.retell_llm_dynamic_variables">
+  Dynamic variables from the LLM
+</ParamField>
+
+<ParamField path="body" type="integer" name="call.start_timestamp">
+  Call start timestamp (Unix timestamp)
+</ParamField>
+
+<ParamField path="body" type="integer" name="call.end_timestamp">
+  Call end timestamp (Unix timestamp)
+</ParamField>
+
+<ParamField path="body" type="string" name="call.disconnection_reason">
+  Reason for call disconnection
+</ParamField>
+
+<ParamField path="body" type="string" name="call.transcript">
+  Call transcript text
+</ParamField>
+
+<ParamField path="body" type="array" name="call.transcript_object">
+  Structured transcript object
+</ParamField>
+
+<ParamField path="body" type="array" name="call.transcript_with_tool_calls">
+  Transcript including tool calls
+</ParamField>
+
+<ParamField path="body" type="boolean" name="call.opt_out_sensitive_data_storage">
+  Whether sensitive data storage is opted out
+</ParamField>
+
+### Example Request (call_started)
+
+```bash
+POST /webhook
+Content-Type: application/json
+
+{
+  "event": "call_started",
+  "call": {
+    "call_type": "phone_call",
+    "from_number": "+12137771234",
+    "to_number": "+12137771235",
+    "direction": "inbound",
+    "call_id": "Jabr9TXYYJHfvl6Syypi88rdAHYHmcq6",
+    "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
+    "call_status": "registered",
+    "metadata": {
+      "customer_id": "12345",
+      "campaign": "winter_sale"
+    },
+    "retell_llm_dynamic_variables": {
+      "customer_name": "John Doe"
+    },
+    "start_timestamp": 1714608475945,
+    "opt_out_sensitive_data_storage": false
+  }
+}
+```
+
+### Example Request (call_ended)
+
+```bash
+POST /webhook
+Content-Type: application/json
+
+{
+  "event": "call_ended",
+  "call": {
+    "call_type": "phone_call",
+    "from_number": "+12137771234",
+    "to_number": "+12137771235",
+    "direction": "inbound",
+    "call_id": "Jabr9TXYYJHfvl6Syypi88rdAHYHmcq6",
+    "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
+    "call_status": "registered",
+    "metadata": {
+      "customer_id": "12345",
+      "campaign": "winter_sale"
+    },
+    "retell_llm_dynamic_variables": {
+      "customer_name": "John Doe"
+    },
+    "start_timestamp": 1714608475945,
+    "end_timestamp": 1714608491736,
+    "disconnection_reason": "user_hangup",
+    "transcript": "Hello, this is John calling about your services...",
+    "transcript_object": [
+      {
+        "role": "user",
+        "content": "Hello, this is John calling about your services"
+      },
+      {
+        "role": "assistant", 
+        "content": "Hi John! I'd be happy to help you with our services. What are you looking for?"
+      }
+    ],
+    "transcript_with_tool_calls": [],
+    "opt_out_sensitive_data_storage": false
+  }
+}
+```
+
+### Example Request (call_analyzed)
+
+```bash
+POST /webhook
+Content-Type: application/json
+
+{
+  "event": "call_analyzed",
+  "call": {
+    "call_type": "phone_call",
+    "from_number": "+12137771234",
+    "to_number": "+12137771235",
+    "direction": "inbound",
+    "call_id": "Jabr9TXYYJHfvl6Syypi88rdAHYHmcq6",
+    "agent_id": "oBeDLoLOeuAbiuaMFXRtDOLriTJ5tSxD",
+    "call_status": "registered",
+    "metadata": {
+      "customer_id": "12345",
+      "campaign": "winter_sale"
+    },
+    "retell_llm_dynamic_variables": {
+      "customer_name": "John Doe"
+    },
+    "start_timestamp": 1714608475945,
+    "end_timestamp": 1714608491736,
+    "disconnection_reason": "user_hangup",
+    "transcript": "Hello, this is John calling about your services...",
+    "transcript_object": [],
+    "transcript_with_tool_calls": [],
+    "opt_out_sensitive_data_storage": false,
+    "call_analysis": {
+      "summary": "Customer inquiry about services",
+      "sentiment": "positive",
+      "key_points": ["service inquiry", "interested customer"],
+      "next_steps": ["follow_up_call", "send_pricing_info"]
+    }
+  }
+}
+```
+
+### Response
+
+We expect a successful status code (2xx) to be returned. No body is expected.
+
+```json
+HTTP/1.1 200 OK
+```
+
+### Common Use Cases
+
+1. **Real-time Analytics**
+   - Track call statistics and performance metrics
+   - Monitor call volumes and patterns
+   - Trigger alerts for specific call outcomes
+
+2. **System Integration**
+   - Update CRM records when calls complete
+   - Trigger workflow automations based on call analysis
+   - Archive call transcripts in your data warehouse
+
+3. **Call Monitoring**
+   - Get notified of failed or transferred calls
+   - Track call duration and completion status
+   - Monitor agent performance in real-time
+
+### Implementation Notes
+
+- Ensure your webhook endpoint can handle the 10-second timeout
+- Implement proper error handling and logging
+- Consider implementing idempotency for duplicate webhook events
+- Validate webhook signatures for security
+- Handle retry logic gracefully (webhooks may be sent multiple times)
+
+### Security Considerations
+
+- Implement webhook signature verification
+- Use HTTPS endpoints only
+- Validate the source of webhook requests
+- Implement rate limiting to prevent abuse
