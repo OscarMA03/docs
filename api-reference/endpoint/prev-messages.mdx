@@ -1,0 +1,163 @@
+---
+title: 'Previous Messages'
+openapi: 'POST /api/prev-messages'
+---
+
+## Get Previous Messages
+
+Retrieves conversation history between customer and company for AI context.
+
+### Request Body
+
+<ParamField path="body" type="object" name="messageData" required>
+  Message retrieval data
+</ParamField>
+
+<ParamField path="body" type="integer" name="organizationID" required>
+  Organization identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="customerPhoneNumber" required>
+  Customer's phone number
+</ParamField>
+
+<ParamField path="body" type="string" name="companyPhoneNumber" required>
+  Company's phone number
+</ParamField>
+
+<ParamField path="body" type="array" name="locations">
+  Array of location objects
+</ParamField>
+
+<ParamField path="body" type="integer" name="locations[].id" required>
+  Location identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="locations[].name">
+  Location name
+</ParamField>
+
+<ParamField path="body" type="array" name="messages">
+  Array of message objects
+</ParamField>
+
+<ParamField path="body" type="integer" name="messages[].id" required>
+  Message identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].message" required>
+  Message content
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].sentBy">
+  Sender (customer/company/ai)
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].mediaUrls">
+  Comma-separated media URLs
+</ParamField>
+
+### Example Request
+
+```bash
+POST /api/prev-messages
+Content-Type: application/json
+
+{
+  "organizationID": 456,
+  "customerPhoneNumber": "+1234567890",
+  "companyPhoneNumber": "+0987654321",
+  "locations": [
+    {
+      "id": 1,
+      "name": "Main Office"
+    },
+    {
+      "id": 2,
+      "name": "Branch Office"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "message": "Hello, I'd like to schedule an appointment",
+      "sentBy": "customer",
+      "mediaUrls": ""
+    },
+    {
+      "id": 2,
+      "message": "Hi! I'd be happy to help you schedule an appointment. What service are you interested in?",
+      "sentBy": "company",
+      "mediaUrls": ""
+    },
+    {
+      "id": 3,
+      "message": "I need a consultation for my business",
+      "sentBy": "customer",
+      "mediaUrls": "https://example.com/document.pdf"
+    }
+  ]
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "conversationHistory": [
+      {
+        "id": 1,
+        "message": "Hello, I'd like to schedule an appointment",
+        "sentBy": "customer",
+        "timestamp": "2024-01-15T10:30:00Z",
+        "mediaUrls": []
+      },
+      {
+        "id": 2,
+        "message": "Hi! I'd be happy to help you schedule an appointment. What service are you interested in?",
+        "sentBy": "company",
+        "timestamp": "2024-01-15T10:32:00Z",
+        "mediaUrls": []
+      },
+      {
+        "id": 3,
+        "message": "I need a consultation for my business",
+        "sentBy": "customer",
+        "timestamp": "2024-01-15T10:35:00Z",
+        "mediaUrls": ["https://example.com/document.pdf"]
+      }
+    ],
+    "messageCount": 3,
+    "organizationID": 456,
+    "customerPhoneNumber": "+1234567890",
+    "companyPhoneNumber": "+0987654321"
+  },
+  "error": null
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "data": null,
+  "error": "No conversation history found for the specified phone numbers"
+}
+```
+
+### Use Cases
+
+- **AI Context**: Provide conversation history to AI agent for better responses
+- **Customer Service**: Understand previous interactions before responding
+- **Continuity**: Maintain conversation flow across multiple sessions
+- **Media Tracking**: Access previously shared media files and documents
+
+### Implementation Notes
+
+- Messages should be ordered chronologically (oldest first)
+- Consider implementing pagination for large conversation histories
+- Media URLs should be validated and accessible
+- Timestamps should be in ISO 8601 format
