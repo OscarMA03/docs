@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Proxy Server Builder Prime API",
+    "title": "Builder Prime Agent Service",
     "description": "Proxy server for Builder Prime API with additional validation, calendar management, and lead processing capabilities",
     "license": {
       "name": "MIT"
