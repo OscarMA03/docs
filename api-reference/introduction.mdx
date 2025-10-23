@@ -17,6 +17,32 @@ https://proxy-server-builder-prime.onrender.com
 
 Most endpoints require the `BUILDER_PRIME_API_KEY` environment variable to be set. The API key is automatically used for authentication with the Builder Prime backend.
 
+### Company-Specific Authentication
+
+In addition to the global API key, each company has a unique authentication token that must be included in requests to distinguish between different companies and ensure secure access to company-specific information.
+
+#### Required Headers
+
+For endpoints that require company-specific access, include these headers:
+
+```bash
+Authorization: Bearer your_company_auth_token_here
+X-Company-Token: company_unique_token_12345
+```
+
+#### Authentication Levels
+
+- **Global Authentication**: Uses `BUILDER_PRIME_API_KEY` for general API access
+- **Company Authentication**: Uses unique company tokens for company-specific data access
+- **Webhook Authentication**: Requires both company token and webhook signature verification
+
+#### Security Considerations
+
+- Company tokens are unique per company and should be kept secure
+- Tokens should be rotated regularly for enhanced security
+- Never log or expose company tokens in client-side code
+- Use HTTPS for all API communications
+
 ## Response Format
 
 All endpoints return JSON responses with the following structure:
@@ -44,9 +70,11 @@ Error responses follow this format:
 The API provides the following categories of endpoints:
 
 - **Health Check** - Server status and health monitoring
-- **Calendar Management** - Appointment scheduling and time slot management
+- **Configuration** - Company configuration management and retrieval
 - **Lead Management** - Lead creation, retrieval, and updates
 - **Gate 1 Validation** - Field validation before lead creation
+- **Calendar Management** - Opportunity scheduling and time slot management
 - **Task Management** - To-do task creation and management
-- **SMS Communication** - SMS conversation retrieval and sending
+- **SMS Communication** - SMS conversation retrieval and AI response sending
+- **Webhooks** - Real-time event notifications for call events
 - **Proxy Endpoints** - Direct proxy to Builder Prime API
