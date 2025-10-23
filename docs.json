@@ -65,8 +65,8 @@
           {
             "group": "Configuration",
             "pages": [
-              "api-reference/endpoint/config",
-              "api-reference/endpoint/prev-messages"
+              "api-reference/endpoint/get-config",
+              "api-reference/endpoint/post-config"
             ]
           },
           {
@@ -104,7 +104,8 @@
           {
             "group": "SMS Communication",
             "pages": [
-              "api-reference/endpoint/sms"
+              "api-reference/endpoint/sms",
+              "api-reference/endpoint/prev-messages"
             ]
           },
           {
