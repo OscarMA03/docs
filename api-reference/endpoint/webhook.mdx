@@ -9,6 +9,27 @@ Webhooks allow your application to receive real-time notifications about events 
 
 Based on [Retell AI's webhook system](https://docs.retellai.com/features/webhook-overview), this endpoint receives real-time call event notifications.
 
+## Authentication
+
+Each company has a unique authentication token that must be included in webhook requests to distinguish between different companies and ensure secure access to company-specific information.
+
+<ParamField path="header" type="string" name="Authorization" required>
+  Bearer token for company authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="X-Company-Token" required>
+  Unique company identifier token
+</ParamField>
+
+### Authentication Headers
+
+```bash
+POST /webhook
+Content-Type: application/json
+Authorization: Bearer your_company_auth_token_here
+X-Company-Token: company_unique_token_12345
+```
+
 ## Event Types
 
 The webhook supports the following event types:
@@ -111,6 +132,8 @@ The webhook will `POST` the payload to your endpoint with the following characte
 ```bash
 POST /webhook
 Content-Type: application/json
+Authorization: Bearer your_company_auth_token_here
+X-Company-Token: company_unique_token_12345
 
 {
   "event": "call_started",
@@ -140,6 +163,8 @@ Content-Type: application/json
 ```bash
 POST /webhook
 Content-Type: application/json
+Authorization: Bearer your_company_auth_token_here
+X-Company-Token: company_unique_token_12345
 
 {
   "event": "call_ended",
@@ -183,6 +208,8 @@ Content-Type: application/json
 ```bash
 POST /webhook
 Content-Type: application/json
+Authorization: Bearer your_company_auth_token_here
+X-Company-Token: company_unique_token_12345
 
 {
   "event": "call_analyzed",
@@ -226,6 +253,26 @@ We expect a successful status code (2xx) to be returned. No body is expected.
 HTTP/1.1 200 OK
 ```
 
+### Authentication Errors
+
+If authentication fails, the webhook will return appropriate error responses:
+
+```json
+HTTP/1.1 401 Unauthorized
+{
+  "error": "Invalid authentication token",
+  "message": "The provided company token is invalid or expired"
+}
+```
+
+```json
+HTTP/1.1 403 Forbidden
+{
+  "error": "Company access denied",
+  "message": "The company token does not have permission to access this webhook"
+}
+```
+
 ### Common Use Cases
 
 1. **Real-time Analytics**
@@ -253,7 +300,12 @@ HTTP/1.1 200 OK
 
 ### Security Considerations
 
-- Implement webhook signature verification
-- Use HTTPS endpoints only
-- Validate the source of webhook requests
-- Implement rate limiting to prevent abuse
+- **Company Token Management**: Each company must have a unique token for secure access
+- **Token Validation**: Always validate both Authorization and X-Company-Token headers
+- **Token Rotation**: Implement regular token rotation for enhanced security
+- **Access Control**: Ensure tokens only grant access to company-specific data
+- **Webhook Signature Verification**: Implement webhook signature verification
+- **HTTPS Only**: Use HTTPS endpoints only for all webhook communications
+- **Source Validation**: Validate the source of webhook requests
+- **Rate Limiting**: Implement rate limiting to prevent abuse
+- **Token Storage**: Store company tokens securely and never log them
