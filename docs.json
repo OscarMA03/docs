@@ -56,7 +56,7 @@
             ]
           },
           {
-            "group": "Gate 1 Validation",
+            "group": "Validate Lead Fields",
             "pages": [
               "api-reference/endpoint/gate1-validate-all",
               "api-reference/endpoint/gate1-first-check"

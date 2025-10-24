@@ -11,10 +11,15 @@ Retrieves company configuration settings by company ID.
   Unique identifier for the company
 </ParamField>
 
+<ParamField path="header" type="string" name="Authorization" required>
+  Bearer token for company authentication
+</ParamField>
+
 ### Example Request
 
 ```bash
 GET /api/config?companyId=123
+Authorization: Bearer your_company_auth_token_here
 ```
 
 ### Example Response
@@ -24,13 +29,11 @@ GET /api/config?companyId=123
   "success": true,
   "data": {
     "companyID": 123,
-    "companyAuth": "auth_token_here",
     "companyUrl": "https://company-api.example.com",
     "companyName": "Example Company Inc",
     "companyNumber": "+1234567890",
     "serviceLabeltype": "appointment",
     "aiDisclosure": true,
-    "knowledgeBase": "https://company.example.com/kb",
     "businessHours": "9AM-5PM EST",
     "serviceAreas": "New York, New Jersey",
     "handOff": "callback_task"
