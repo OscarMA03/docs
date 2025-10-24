@@ -1,16 +1,16 @@
 ---
-title: 'Previous Messages'
-openapi: 'POST /api/prev-messages'
+title: 'SMS Communication'
+openapi: 'POST /api/sms'
 ---
 
-## Get Previous Messages
+## Get Messages and Generate AI Response
 
-Retrieves conversation history between customer and company for AI context.
+Retrieves conversation history and generates an AI response message. Returns only the AI-generated response.
 
 ### Request Body
 
 <ParamField path="body" type="object" name="messageData" required>
-  Message retrieval data
+  Message retrieval and response data
 </ParamField>
 
 <ParamField path="body" type="integer" name="organizationID" required>
@@ -60,7 +60,7 @@ Retrieves conversation history between customer and company for AI context.
 ### Example Request
 
 ```bash
-POST /api/prev-messages
+POST /api/sms
 Content-Type: application/json
 
 {
@@ -106,33 +106,12 @@ Content-Type: application/json
 {
   "success": true,
   "data": {
-    "conversationHistory": [
-      {
-        "id": 1,
-        "message": "Hello, I'd like to schedule an appointment",
-        "sentBy": "customer",
-        "timestamp": "2024-01-15T10:30:00Z",
-        "mediaUrls": []
-      },
-      {
-        "id": 2,
-        "message": "Hi! I'd be happy to help you schedule an appointment. What service are you interested in?",
-        "sentBy": "company",
-        "timestamp": "2024-01-15T10:32:00Z",
-        "mediaUrls": []
-      },
-      {
-        "id": 3,
-        "message": "I need a consultation for my business",
-        "sentBy": "customer",
-        "timestamp": "2024-01-15T10:35:00Z",
-        "mediaUrls": ["https://example.com/document.pdf"]
-      }
-    ],
-    "messageCount": 3,
-    "organizationID": 456,
-    "customerPhoneNumber": "+1234567890",
-    "companyPhoneNumber": "+0987654321"
+    "messageId": "msg_ai_123",
+    "message": "Thank you for your interest in our business consultation services! I'd be happy to help you schedule an appointment. What specific type of consultation are you looking for?",
+    "sentBy": "AI",
+    "timestamp": "2024-01-15T10:36:00Z",
+    "status": "generated",
+    "mediaUrls": []
   },
   "error": null
 }
@@ -144,20 +123,22 @@ Content-Type: application/json
 {
   "success": false,
   "data": null,
-  "error": "No conversation history found for the specified phone numbers"
+  "error": "Failed to retrieve conversation history or generate AI response"
 }
 ```
 
 ### Use Cases
 
-- **AI Context**: Provide conversation history to AI agent for better responses
-- **Customer Service**: Understand previous interactions before responding
-- **Continuity**: Maintain conversation flow across multiple sessions
-- **Media Tracking**: Access previously shared media files and documents
+- **AI-Powered Customer Service**: Generate context-aware AI responses based on conversation history
+- **Conversation Continuity**: Maintain natural conversation flow with AI assistance
+- **Lead Qualification**: AI can analyze conversation history and ask qualifying questions
+- **Real-time Support**: Provide instant, context-aware responses to customer inquiries
 
 ### Implementation Notes
 
+- The endpoint combines conversation history retrieval with AI response generation
+- AI responses are generated based on the conversation context provided
 - Messages should be ordered chronologically (oldest first)
-- Consider implementing pagination for large conversation histories
+- Consider implementing rate limiting for AI response generation
 - Media URLs should be validated and accessible
 - Timestamps should be in ISO 8601 format

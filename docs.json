@@ -79,8 +79,7 @@
           {
             "group": "SMS Communication",
             "pages": [
-              "api-reference/endpoint/prev-messages",
-              "api-reference/endpoint/response-message"
+              "api-reference/endpoint/sms"
             ]
           },
           {
