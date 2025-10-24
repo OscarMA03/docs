@@ -7,6 +7,12 @@ openapi: 'POST /api/sms'
 
 Retrieves conversation history and generates an AI response message. Returns only the AI-generated response.
 
+### Authentication
+
+<ParamField path="header" type="string" name="Authorization" required>
+  Bearer token for authentication
+</ParamField>
+
 ### Request Body
 
 <ParamField path="body" type="object" name="messageData" required>
@@ -25,24 +31,8 @@ Retrieves conversation history and generates an AI response message. Returns onl
   Company's phone number
 </ParamField>
 
-<ParamField path="body" type="array" name="locations">
-  Array of location objects
-</ParamField>
-
-<ParamField path="body" type="integer" name="locations[].id" required>
-  Location identifier
-</ParamField>
-
-<ParamField path="body" type="string" name="locations[].name">
-  Location name
-</ParamField>
-
 <ParamField path="body" type="array" name="messages">
   Array of message objects
-</ParamField>
-
-<ParamField path="body" type="integer" name="messages[].id" required>
-  Message identifier
 </ParamField>
 
 <ParamField path="body" type="string" name="messages[].message" required>
@@ -51,6 +41,10 @@ Retrieves conversation history and generates an AI response message. Returns onl
 
 <ParamField path="body" type="string" name="messages[].sentBy">
   Sender (customer/company/ai)
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].timestamp" required>
+  Message timestamp in ISO 8601 format
 </ParamField>
 
 <ParamField path="body" type="string" name="messages[].mediaUrls">
@@ -62,38 +56,29 @@ Retrieves conversation history and generates an AI response message. Returns onl
 ```bash
 POST /api/sms
 Content-Type: application/json
+Authorization: Bearer your_auth_token_here
 
 {
   "organizationID": 456,
   "customerPhoneNumber": "+1234567890",
   "companyPhoneNumber": "+0987654321",
-  "locations": [
-    {
-      "id": 1,
-      "name": "Main Office"
-    },
-    {
-      "id": 2,
-      "name": "Branch Office"
-    }
-  ],
   "messages": [
     {
-      "id": 1,
       "message": "Hello, I'd like to schedule an appointment",
       "sentBy": "customer",
+      "timestamp": "2024-01-15T10:30:00Z",
       "mediaUrls": ""
     },
     {
-      "id": 2,
       "message": "Hi! I'd be happy to help you schedule an appointment. What service are you interested in?",
       "sentBy": "company",
+      "timestamp": "2024-01-15T10:32:00Z",
       "mediaUrls": ""
     },
     {
-      "id": 3,
       "message": "I need a consultation for my business",
       "sentBy": "customer",
+      "timestamp": "2024-01-15T10:35:00Z",
       "mediaUrls": "https://example.com/document.pdf"
     }
   ]
@@ -106,7 +91,6 @@ Content-Type: application/json
 {
   "success": true,
   "data": {
-    "messageId": "msg_ai_123",
     "message": "Thank you for your interest in our business consultation services! I'd be happy to help you schedule an appointment. What specific type of consultation are you looking for?",
     "sentBy": "AI",
     "timestamp": "2024-01-15T10:36:00Z",
