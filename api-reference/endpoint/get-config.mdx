@@ -7,7 +7,7 @@ openapi: 'GET /api/config'
 
 Retrieves company configuration settings by company ID.
 
-<ParamField path="query" type="string" name="companyId" required>
+<ParamField path="query" type="string" name="companyID" required>
   Unique identifier for the company
 </ParamField>
 
@@ -18,7 +18,7 @@ Retrieves company configuration settings by company ID.
 ### Example Request
 
 ```bash
-GET /api/config?companyId=123
+GET /api/config?companyID=123
 X-API-Key: your_api_key_here
 ```
 
@@ -32,7 +32,7 @@ X-API-Key: your_api_key_here
     "companyUrl": "https://company-api.example.com",
     "companyName": "Example Company Inc",
     "companyNumber": "+1234567890",
-    "serviceLabeltype": "appointment",
+    "serviceLabelType": "appointment",
     "aiDisclosure": true,
     "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
     "serviceAreas": "New York, New Jersey",

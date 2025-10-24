@@ -7,7 +7,7 @@ openapi: 'POST /api/config'
 
 Creates or updates company configuration settings for initializing the AI agent with company-specific information.
 
-<ParamField path="query" type="string" name="companyId" required>
+<ParamField path="query" type="string" name="companyID" required>
   Unique identifier for the company
 </ParamField>
 
@@ -37,7 +37,7 @@ Creates or updates company configuration settings for initializing the AI agent 
   Callback number for follow-ups
 </ParamField>
 
-<ParamField path="body" type="string" name="serviceLabeltype">
+<ParamField path="body" type="string" name="serviceLabelType">
   What to call the appointment (per Jonathan)
 </ParamField>
 
@@ -77,7 +77,7 @@ Creates or updates company configuration settings for initializing the AI agent 
 ### Example Request
 
 ```bash
-POST /api/config?companyId=123
+POST /api/config?companyID=123
 Content-Type: application/json
 X-API-Key: your_api_key_here
 
@@ -86,7 +86,7 @@ X-API-Key: your_api_key_here
   "companyUrl": "https://company-api.example.com",
   "companyName": "Example Company Inc",
   "companyNumber": "+1234567890",
-  "serviceLabeltype": "appointment",
+  "serviceLabelType": "appointment",
   "aiDisclosure": true,
   "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
   "serviceAreas": "New York, New Jersey",
@@ -108,7 +108,7 @@ X-API-Key: your_api_key_here
     "companyUrl": "https://company-api.example.com",
     "companyName": "Example Company Inc",
     "companyNumber": "+1234567890",
-    "serviceLabeltype": "appointment",
+    "serviceLabelType": "appointment",
     "aiDisclosure": true,
     "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
     "serviceAreas": "New York, New Jersey",
