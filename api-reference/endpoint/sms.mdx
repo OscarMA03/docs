@@ -23,13 +23,6 @@ Retrieves conversation history and generates an AI response message. Returns onl
   Organization identifier
 </ParamField>
 
-<ParamField path="body" type="string" name="customerPhoneNumber" required>
-  Customer's phone number
-</ParamField>
-
-<ParamField path="body" type="string" name="companyPhoneNumber" required>
-  Company's phone number
-</ParamField>
 
 <ParamField path="body" type="array" name="messages">
   Array of message objects
@@ -60,8 +53,6 @@ Authorization: Bearer your_auth_token_here
 
 {
   "organizationID": 456,
-  "customerPhoneNumber": "+1234567890",
-  "companyPhoneNumber": "+0987654321",
   "messages": [
     {
       "message": "Hello, I'd like to schedule an appointment",

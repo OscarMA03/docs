@@ -53,7 +53,7 @@ Creates or updates company configuration settings for initializing the AI agent 
   Geographic restrictions
 </ParamField>
 
-<ParamField path="body" type="string" name="handOff">
+<ParamField path="body" type="string" name="callback">
   Create task to callback at later time
 </ParamField>
 
@@ -88,9 +88,9 @@ Authorization: Bearer your_company_auth_token_here
   "companyNumber": "+1234567890",
   "serviceLabeltype": "appointment",
   "aiDisclosure": true,
-  "businessHours": "9AM-5PM EST",
+  "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
   "serviceAreas": "New York, New Jersey",
-  "handOff": "callback_task",
+  "callback": "callback_task",
   "customGreeting": "Thanks for calling the Men with Tools...",
   "agentName": "Sally",
   "servicesSupported": ["windows", "doors", "repairs"],
@@ -110,9 +110,9 @@ Authorization: Bearer your_company_auth_token_here
     "companyNumber": "+1234567890",
     "serviceLabeltype": "appointment",
     "aiDisclosure": true,
-    "businessHours": "9AM-5PM EST",
+    "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
     "serviceAreas": "New York, New Jersey",
-    "handOff": "callback_task",
+    "callback": "callback_task",
     "customGreeting": "Thanks for calling the Men with Tools...",
     "agentName": "Sally",
     "servicesSupported": ["windows", "doors", "repairs"],

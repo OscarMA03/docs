@@ -18,7 +18,7 @@ Retrieves company configuration settings for initializing the AI agent with comp
     "knowledgeBase": string - [optional] - Knowledge base URL/reference,
     "businessHours": string - [optional] - When to offer appointments,
     "serviceAreas": string - [optional] - Geographic restrictions,
-    "handOff": string - [optional] - Create task to callback at later time
+    "callback": string - [optional] - Create task to callback at later time
 }
 ```
 
@@ -51,8 +51,6 @@ Retrieves conversation history between customer and company for AI context.
 ```json
 {
     "organizationID": int - [required] - Organization identifier,
-    "customerPhoneNumber": string - [required] - Customer's phone number,
-    "companyPhoneNumber": string - [required] - Company's phone number,
     "locations": [
         {
             "id": int - [required] - Location identifier,
