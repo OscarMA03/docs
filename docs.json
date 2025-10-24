@@ -56,7 +56,7 @@
             ]
           },
           {
-            "group": "Validate Lead Fields",
+            "group": "Agent Tool Calls",
             "pages": [
               "api-reference/endpoint/gate1-validate-all",
               "api-reference/endpoint/gate1-first-check"
