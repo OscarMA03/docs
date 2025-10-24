@@ -57,6 +57,22 @@ Creates or updates company configuration settings for initializing the AI agent 
   Create task to callback at later time
 </ParamField>
 
+<ParamField path="body" type="string" name="customGreeting">
+  Custom greeting text (e.g. "Thanks for calling the Men with Tools...")
+</ParamField>
+
+<ParamField path="body" type="string" name="agentName">
+  Agent name (e.g. "Sally")
+</ParamField>
+
+<ParamField path="body" type="array" name="servicesSupported">
+  Array of services included (e.g. ["windows", "doors", "repairs"])
+</ParamField>
+
+<ParamField path="body" type="array" name="servicesNotIncluded">
+  Array of services excluded (e.g. ["replacements", "roofs"])
+</ParamField>
+
 
 ### Example Request
 
@@ -74,7 +90,11 @@ Authorization: Bearer your_company_auth_token_here
   "aiDisclosure": true,
   "businessHours": "9AM-5PM EST",
   "serviceAreas": "New York, New Jersey",
-  "handOff": "callback_task"
+  "handOff": "callback_task",
+  "customGreeting": "Thanks for calling the Men with Tools...",
+  "agentName": "Sally",
+  "servicesSupported": ["windows", "doors", "repairs"],
+  "servicesNotIncluded": ["replacements", "roofs"]
 }
 ```
 
@@ -92,7 +112,11 @@ Authorization: Bearer your_company_auth_token_here
     "aiDisclosure": true,
     "businessHours": "9AM-5PM EST",
     "serviceAreas": "New York, New Jersey",
-    "handOff": "callback_task"
+    "handOff": "callback_task",
+    "customGreeting": "Thanks for calling the Men with Tools...",
+    "agentName": "Sally",
+    "servicesSupported": ["windows", "doors", "repairs"],
+    "servicesNotIncluded": ["replacements", "roofs"]
   },
   "error": null
 }
