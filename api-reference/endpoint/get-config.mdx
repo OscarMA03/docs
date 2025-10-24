@@ -11,15 +11,15 @@ Retrieves company configuration settings by company ID.
   Unique identifier for the company
 </ParamField>
 
-<ParamField path="header" type="string" name="Authorization" required>
-  Bearer token for company authentication
+<ParamField path="header" type="string" name="X-API-Key" required>
+  API key for authentication
 </ParamField>
 
 ### Example Request
 
 ```bash
 GET /api/config?companyId=123
-Authorization: Bearer your_company_auth_token_here
+X-API-Key: your_api_key_here
 ```
 
 ### Example Response

@@ -11,8 +11,8 @@ Creates or updates company configuration settings for initializing the AI agent 
   Unique identifier for the company
 </ParamField>
 
-<ParamField path="header" type="string" name="Authorization" required>
-  Bearer token for company authentication
+<ParamField path="header" type="string" name="X-API-Key" required>
+  API key for authentication
 </ParamField>
 
 ### Request Body
@@ -79,7 +79,7 @@ Creates or updates company configuration settings for initializing the AI agent 
 ```bash
 POST /api/config?companyId=123
 Content-Type: application/json
-Authorization: Bearer your_company_auth_token_here
+X-API-Key: your_api_key_here
 
 {
   "companyID": 123,

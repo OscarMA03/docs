@@ -9,8 +9,8 @@ Retrieves conversation history and generates an AI response message. Returns onl
 
 ### Authentication
 
-<ParamField path="header" type="string" name="Authorization" required>
-  Bearer token for authentication
+<ParamField path="header" type="string" name="X-API-Key" required>
+  API key for authentication
 </ParamField>
 
 ### Request Body
@@ -49,7 +49,7 @@ Retrieves conversation history and generates an AI response message. Returns onl
 ```bash
 POST /api/sms
 Content-Type: application/json
-Authorization: Bearer your_auth_token_here
+X-API-Key: your_api_key_here
 
 {
   "organizationID": 456,
