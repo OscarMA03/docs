@@ -1,0 +1,219 @@
+---
+title: 'Update Agent Configuration'
+openapi: 'PATCH /update-config/{llm_id}'
+---
+
+## Update Agent Configuration
+
+Updates agent configuration settings for an existing agent by LLM ID.
+
+### Authentication
+
+<ParamField path="header" type="string" name="X-API-Key" required>
+  API key for authentication
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="path" type="string" name="llm_id" required>
+  Retell LLM identifier for the agent to update
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="object" name="configData" required>
+  Company configuration data to update
+</ParamField>
+
+<ParamField path="body" type="string" name="classId">
+  Class identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="companyUrl">
+  Company's API endpoint
+</ParamField>
+
+<ParamField path="body" type="string" name="companyName">
+  Official business name
+</ParamField>
+
+<ParamField path="body" type="string" name="companyNumber">
+  Callback number for follow-ups
+</ParamField>
+
+<ParamField path="body" type="string" name="serviceLabelType">
+  What to call the appointment (e.g., "In Home Consultation")
+</ParamField>
+
+<ParamField path="body" type="string" name="aiDisclosure">
+  Whether agent announces it's AI (e.g., "true")
+</ParamField>
+
+<ParamField path="body" type="string" name="businessHours">
+  When to offer appointments
+</ParamField>
+
+<ParamField path="body" type="string" name="serviceAreas">
+  Geographic restrictions
+</ParamField>
+
+<ParamField path="body" type="string" name="callback">
+  Create task to callback at later time
+</ParamField>
+
+<ParamField path="body" type="string" name="customGreeting">
+  Custom greeting text
+</ParamField>
+
+<ParamField path="body" type="string" name="agentName">
+  Agent name (e.g., "Sally")
+</ParamField>
+
+<ParamField path="body" type="string" name="servicesSupported">
+  Comma-separated list of services included (e.g., "windows, doors, replacements")
+</ParamField>
+
+<ParamField path="body" type="string" name="servicesNotIncluded">
+  Comma-separated list of services excluded (e.g., "repairs, roofs")
+</ParamField>
+
+### Example Request
+
+```bash
+PATCH /update-config/llm_abc123xyz
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+  "classId": "1234",
+  "companyUrl": "https://company-api.example.com",
+  "companyName": "Example Company",
+  "companyNumber": "+1234567890",
+  "serviceLabelType": "In Home Consultation",
+  "aiDisclosure": "true",
+  "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
+  "serviceAreas": "New York, New Jersey",
+  "callback": "callback_task",
+  "customGreeting": "Hi, thanks for calling Example Company",
+  "agentName": "Sally",
+  "servicesSupported": "windows, doors, replacements",
+  "servicesNotIncluded": "repairs, roofs"
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "configuration": {
+      "companyID": "1234",
+      "companyUrl": "https://company-api.example.com",
+      "companyName": "Example Company",
+      "companyNumber": "+1234567890",
+      "serviceLabelType": "In Home Consultation",
+      "aiDisclosure": "true",
+      "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
+      "serviceAreas": "New York, New Jersey",
+      "callback": "callback_task",
+      "customGreeting": "Hi, thanks for calling Example Company",
+      "agentName": "Sally",
+      "servicesSupported": "windows, doors, replacements",
+      "servicesNotIncluded": "repairs, roofs"
+    }
+  },
+  "error": null
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "data": null,
+  "error": "LLM ID not found or update failed"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="object" name="data">
+  Response data object
+</ParamField>
+
+<ParamField path="response" type="object" name="data.configuration">
+  Object containing all updated configuration variables for the agent
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.companyID">
+  Company identifier
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.companyUrl">
+  Company's API endpoint
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.companyName">
+  Official business name
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.companyNumber">
+  Callback number for follow-ups
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.serviceLabelType">
+  What to call the appointment
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.aiDisclosure">
+  Whether agent announces it's AI
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.businessHours">
+  When to offer appointments
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.serviceAreas">
+  Geographic restrictions
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.callback">
+  Create task to callback at later time
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.customGreeting">
+  Custom greeting text
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.agentName">
+  Agent name
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.servicesSupported">
+  Comma-separated list of services included
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.servicesNotIncluded">
+  Comma-separated list of services excluded
+</ParamField>
+
+### Use Cases
+
+- **Configuration Updates**: Update existing agent configuration settings
+- **Business Rule Changes**: Modify appointment types, business hours, or service areas
+- **Agent Customization**: Update agent name, custom greeting, or disclosure settings
+- **Service Management**: Modify supported or excluded services
+
+### Implementation Notes
+
+- Updates configuration for an existing agent identified by the LLM ID in the path
+- Only fields included in the request body will be updated (partial updates are supported)
+- Fields not included in the request will remain unchanged
+- Returns the updated configuration object in the response
+

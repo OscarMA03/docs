@@ -1,9 +1,9 @@
 ---
-title: 'SMS Conversation'
-openapi: 'POST /sms-conversation'
+title: 'Chat Response'
+openapi: 'POST /chat'
 ---
 
-## SMS Conversation
+## Chat Response
 
 Sends a message and generates an AI response. The content field contains the current message along with previous conversation context in string format.
 
@@ -34,7 +34,7 @@ Sends a message and generates an AI response. The content field contains the cur
 ### Example Request
 
 ```bash
-POST /sms-conversation
+POST /chat 
 Content-Type: application/json
 X-API-Key: your_api_key_here
 

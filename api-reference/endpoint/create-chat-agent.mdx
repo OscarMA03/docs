@@ -1,0 +1,173 @@
+---
+title: 'Create Chat Agent'
+openapi: 'POST /create-agents'
+---
+
+## Create Chat Agent
+
+Creates a chat agent with configuration settings for initializing the AI agent with company-specific information.
+
+<ParamField path="header" type="string" name="X-API-Key" required>
+  API key for authentication
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="object" name="configData" required>
+  Company configuration data
+</ParamField>
+
+<ParamField path="body" type="string" name="classId" required>
+  Class identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="companyUrl" required>
+  Company's API endpoint
+</ParamField>
+
+<ParamField path="body" type="string" name="companyName" required>
+  Official business name
+</ParamField>
+
+<ParamField path="body" type="string" name="companyNumber" required>
+  Callback number for follow-ups
+</ParamField>
+
+<ParamField path="body" type="string" name="serviceLabelType">
+  What to call the appointment (e.g., "In Home Consultation")
+</ParamField>
+
+<ParamField path="body" type="string" name="aiDisclosure">
+  Whether agent announces it's AI (e.g., "true")
+</ParamField>
+
+<ParamField path="body" type="string" name="businessHours">
+  When to offer appointments
+</ParamField>
+
+<ParamField path="body" type="string" name="serviceAreas">
+  Geographic restrictions
+</ParamField>
+
+<ParamField path="body" type="string" name="callback">
+  Create task to callback at later time
+</ParamField>
+
+<ParamField path="body" type="string" name="customGreeting">
+  Custom greeting text
+</ParamField>
+
+<ParamField path="body" type="string" name="agentName">
+  Agent name (e.g., "Sally")
+</ParamField>
+
+<ParamField path="body" type="string" name="servicesSupported">
+  Comma-separated list of services included (e.g., "windows, doors, replacements")
+</ParamField>
+
+<ParamField path="body" type="string" name="servicesNotIncluded">
+  Comma-separated list of services excluded (e.g., "repairs, roofs")
+</ParamField>
+
+<ParamField path="body" type="string" name="knowledgeBaseName">
+  Name of the knowledge base
+</ParamField>
+
+<ParamField path="body" type="array" name="knowledgeBaseUrls">
+  Array of URLs for the knowledge base
+</ParamField>
+
+<ParamField path="body" type="array" name="knowledgeBaseFiles">
+  Array of file streams for knowledge base files
+</ParamField>
+
+### Example Request
+
+```bash
+POST /create-agents
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+  "classId": "123",
+  "companyUrl": "https://company-api.example.com",
+  "companyName": "The Men with Tools",
+  "companyNumber": "+1234567890",
+  "serviceLabelType": "In Home Consultation",
+  "aiDisclosure": "true",
+  "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
+  "serviceAreas": "New York, New Jersey",
+  "callback": "callback_task",
+  "customGreeting": "Hi, thanks for calling the Men with Tools",
+  "agentName": "Sally",
+  "servicesSupported": "windows, doors, replacements",
+  "servicesNotIncluded": "repairs, roofs",
+  "knowledgeBaseName": "Sample KB",
+  "knowledgeBaseUrls": [
+    "https://www.retellai.com",
+    "https://docs.retellai.com"
+  ],
+  "knowledgeBaseFiles": []
+}
+```
+
+**Note**: For file uploads (`knowledgeBaseFiles`), you may need to use `multipart/form-data` content type instead of `application/json` to properly send file streams.
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "chat_llm_id": "llm_abc123xyz",
+    "chat_agent_id": "4"
+  },
+  "error": null
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "data": null,
+  "error": "Invalid class ID or authentication failed"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="object" name="data">
+  Response data object
+</ParamField>
+
+<ParamField path="response" type="string" name="data.chat_llm_id">
+  Retell LLM identifier for the created chat agent
+</ParamField>
+
+<ParamField path="response" type="string" name="data.chat_agent_id">
+  Chat agent identifier
+</ParamField>
+
+### Use Cases
+
+- **Agent Creation**: Create a new chat agent with company-specific configuration
+- **Initial Setup**: Set up a new chat agent for first-time deployment
+- **AI Agent Initialization**: Configure chat agent with company-specific settings
+- **Business Rules**: Set up appointment types, business hours, and service areas for the agent
+- **Knowledge Base Integration**: Upload knowledge base files and URLs for AI context
+
+### Implementation Notes
+
+- Creates a new chat agent and returns the `chat_llm_id` and `chat_agent_id`
+- Configuration data is used to initialize the Retell LLM with company-specific settings
+- Consider implementing validation for required fields before creating the agent
+- For file uploads, use multipart/form-data encoding when sending `knowledgeBaseFiles`
+- Knowledge base files should be processed and indexed for AI context
+- The returned `chat_llm_id` can be used to retrieve agent configuration via the GET endpoint
+- The returned `chat_agent_id` is used to identify the agent in subsequent requests

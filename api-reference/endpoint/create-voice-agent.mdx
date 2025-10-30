@@ -1,11 +1,11 @@
 ---
-title: 'Create Agents with Company Configuration'
-openapi: 'POST /create-agents'
+title: 'Create Voice Agent'
+openapi: 'POST /create-voice-agent'
 ---
 
-## Create Agents with Company Configuration
+## Create Voice Agent
 
-Creates agents with configuration settings for initializing the AI agent with company-specific information.
+Creates a voice agent with configuration settings for initializing the AI agent with company-specific information.
 
 <ParamField path="header" type="string" name="X-API-Key" required>
   API key for authentication
@@ -84,21 +84,21 @@ Creates agents with configuration settings for initializing the AI agent with co
 ### Example Request
 
 ```bash
-POST /create-agents
+POST /create-voice-agent
 Content-Type: application/json
 X-API-Key: your_api_key_here
 
 {
   "classId": "123",
   "companyUrl": "https://company-api.example.com",
-  "companyName": "The Men with Tools",
+  "companyName": "Example Company Inc",
   "companyNumber": "+1234567890",
   "serviceLabelType": "In Home Consultation",
   "aiDisclosure": "true",
   "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
   "serviceAreas": "New York, New Jersey",
   "callback": "callback_task",
-  "customGreeting": "Hi, thanks for calling the Men with Tools",
+  "customGreeting": "Hi, thanks for calling Example Company",
   "agentName": "Sally",
   "servicesSupported": "windows, doors, replacements",
   "servicesNotIncluded": "repairs, roofs",
@@ -119,26 +119,8 @@ X-API-Key: your_api_key_here
 {
   "success": true,
   "data": {
-    "classId": "123",
-    "companyUrl": "https://company-api.example.com",
-    "companyName": "The Men with Tools",
-    "companyNumber": "+1234567890",
-    "phoneNumber": "+1234567890",
-    "serviceLabelType": "In Home Consultation",
-    "aiDisclosure": "true",
-    "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
-    "serviceAreas": "New York, New Jersey",
-    "callback": "callback_task",
-    "customGreeting": "Hi, thanks for calling the Men with Tools",
-    "agentName": "Sally",
-    "servicesSupported": "windows, doors, replacements",
-    "servicesNotIncluded": "repairs, roofs",
-    "knowledgeBaseName": "Sample KB",
-    "knowledgeBaseUrls": [
-      "https://www.retellai.com",
-      "https://docs.retellai.com"
-    ],
-    "knowledgeBaseFiles": []
+    "voice_agent_llm_id": "llm_abc123xyz",
+    "voice_agent_id": "4"
   },
   "error": null
 }
@@ -154,19 +136,39 @@ X-API-Key: your_api_key_here
 }
 ```
 
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="object" name="data">
+  Response data object
+</ParamField>
+
+<ParamField path="response" type="string" name="data.voice_agent_llm_id">
+  Retell LLM identifier for the created voice agent
+</ParamField>
+
+<ParamField path="response" type="string" name="data.voice_agent_id">
+  Voice agent identifier
+</ParamField>
+
 ### Use Cases
 
-- **Initial Setup**: Create new company configuration for first-time setup
-- **AI Agent Initialization**: Configure AI agent with company-specific settings
-- **Business Rules**: Set up appointment types, business hours, and service areas
+- **Agent Creation**: Create a new voice agent with company-specific configuration
+- **Initial Setup**: Set up a new voice agent for first-time deployment
+- **AI Agent Initialization**: Configure voice agent with company-specific settings
+- **Business Rules**: Set up appointment types, business hours, and service areas for the agent
 - **Knowledge Base Integration**: Upload knowledge base files and URLs for AI context
-- **Customization**: Configure AI behavior and disclosure settings
 
 ### Implementation Notes
 
-- Configuration data can be stored in a separate database for simplicity
-- Consider implementing validation for required fields before saving
-- Implement proper error handling for duplicate class IDs when creating new configurations
+- Creates a new voice agent and returns the `voice_agent_llm_id` and `voice_agent_id`
+- Configuration data is used to initialize the Retell LLM with company-specific settings
+- Consider implementing validation for required fields before creating the agent
 - For file uploads, use multipart/form-data encoding when sending `knowledgeBaseFiles`
 - Knowledge base files should be processed and indexed for AI context
-- Consider implementing audit logging for configuration changes
+- The returned `voice_agent_llm_id` can be used to retrieve agent configuration via the GET endpoint
+- The returned `voice_agent_id` is used to identify the agent in subsequent requests
+

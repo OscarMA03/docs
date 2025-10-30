@@ -40,7 +40,16 @@
           {
             "group": "Retell Agents",
             "pages": [
-              "api-reference/endpoint/post-config"
+              "api-reference/endpoint/create-chat-agent",
+              "api-reference/endpoint/create-voice-agent",
+              "api-reference/endpoint/update-config",
+              "api-reference/endpoint/get-config"
+            ]
+          },
+          {
+            "group": "Chat Response",
+            "pages": [
+              "api-reference/endpoint/chat-response"
             ]
           },
           {
@@ -70,12 +79,6 @@
             "group": "Schedule Later",
             "pages": [
               "api-reference/endpoint/todo-tasks"
-            ]
-          },
-          {
-            "group": "SMS Communication",
-            "pages": [
-              "api-reference/endpoint/sms"
             ]
           },
           {

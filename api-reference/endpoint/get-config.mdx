@@ -1,0 +1,144 @@
+---
+title: 'Get Agent Configuration'
+openapi: 'GET /get-config'
+---
+
+## Get Agent Configuration
+
+Retrieves agent configuration for an agent by LLM ID.
+
+### Authentication
+
+<ParamField path="header" type="string" name="X-API-Key" required>
+  API key for authentication
+</ParamField>
+
+### Request Parameters
+
+<ParamField path="query" type="string" name="llm_id" required>
+  Retell LLM identifier
+</ParamField>
+
+### Example Request
+
+```bash
+GET /get-config?llm_id=123
+X-API-Key: your_api_key_here
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "configuration": {
+      "customGreeting": "Hi, thanks for calling Example Company",
+      "companyName": "Example Company Inc",
+      "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
+      "servicesSupported": "windows, doors, replacements",
+      "agentName": "Sally",
+      "companyUrl": "https://company-api.example.com",
+      "aiDisclosure": "true",
+      "servicesNotIncluded": "repairs, roofs",
+      "companyID": "123",
+      "companyNumber": "+1234567890",
+      "serviceLabelType": "In Home Consultation",
+      "callback": "callback_task",
+      "serviceAreas": "New York, New Jersey"
+    }
+  },
+  "error": null
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "data": null,
+  "error": "LLM configuration not found"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="object" name="data">
+  Response data object
+</ParamField>
+
+<ParamField path="response" type="object" name="data.configuration">
+  Object containing all configuration variables for the agent
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.customGreeting">
+  Custom greeting text
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.companyName">
+  Official business name
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.businessHours">
+  When to offer appointments
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.servicesSupported">
+  Comma-separated list of services included
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.agentName">
+  Agent name
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.companyUrl">
+  Company's API endpoint
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.aiDisclosure">
+  Whether agent announces it's AI
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.servicesNotIncluded">
+  Comma-separated list of services excluded
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.companyID">
+  Company identifier
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.companyNumber">
+  Callback number for follow-ups
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.serviceLabelType">
+  What to call the appointment
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.callback">
+  Create task to callback at later time
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.serviceAreas">
+  Geographic restrictions
+</ParamField>
+
+### Use Cases
+
+- **Retrieve Agent Settings**: Get all configuration variables for a Retell LLM agent
+- **Configuration Verification**: Verify current agent configuration settings
+- **System Integration**: Access agent configuration for third-party integrations
+- **Configuration Management**: Review and manage agent configurations
+
+### Implementation Notes
+
+- Returns an object containing `configuration` with all agent configuration variables
+- All configuration variables are nested within the `configuration` object
+- Configuration data is specific to the LLM ID provided
+- Ensure proper authentication and authorization for accessing agent configurations
+
