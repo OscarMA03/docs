@@ -40,15 +40,12 @@
           {
             "group": "Configuration",
             "pages": [
-              "api-reference/endpoint/get-config",
               "api-reference/endpoint/post-config"
             ]
           },
           {
             "group": "Lead Management",
             "pages": [
-              "api-reference/endpoint/leads",
-              "api-reference/endpoint/leads-by-address",
               "api-reference/endpoint/leads-by-phone",
               "api-reference/endpoint/leads-by-address-and-phone",
               "api-reference/endpoint/create-lead",
@@ -65,7 +62,6 @@
           {
             "group": "Book Appointment",
             "pages": [
-              "api-reference/endpoint/calendar-entries",
               "api-reference/endpoint/iso-start-times",
               "api-reference/endpoint/schedule-by-iso-time"
             ]

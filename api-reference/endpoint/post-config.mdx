@@ -1,15 +1,11 @@
 ---
-title: 'Create/Update Company Configuration'
-openapi: 'POST /api/config'
+title: 'Create Company Configuration'
+openapi: 'POST /config'
 ---
 
-## Create/Update Company Configuration
+## Create Company Configuration
 
-Creates or updates company configuration settings for initializing the AI agent with company-specific information.
-
-<ParamField path="query" type="string" name="companyID" required>
-  Unique identifier for the company
-</ParamField>
+Creates company configuration settings for initializing the AI agent with company-specific information.
 
 <ParamField path="header" type="string" name="X-API-Key" required>
   API key for authentication
@@ -21,8 +17,8 @@ Creates or updates company configuration settings for initializing the AI agent 
   Company configuration data
 </ParamField>
 
-<ParamField path="body" type="integer" name="companyID" required>
-  Unique identifier for the company
+<ParamField path="body" type="string" name="classId" required>
+  Class identifier
 </ParamField>
 
 <ParamField path="body" type="string" name="companyUrl" required>
@@ -38,11 +34,11 @@ Creates or updates company configuration settings for initializing the AI agent 
 </ParamField>
 
 <ParamField path="body" type="string" name="serviceLabelType">
-  What to call the appointment (per Jonathan)
+  What to call the appointment (e.g., "In Home Consultation")
 </ParamField>
 
-<ParamField path="body" type="boolean" name="aiDisclosure">
-  Whether agent announces it's AI
+<ParamField path="body" type="string" name="aiDisclosure">
+  Whether agent announces it's AI (e.g., "true")
 </ParamField>
 
 <ParamField path="body" type="string" name="businessHours">
@@ -58,45 +54,64 @@ Creates or updates company configuration settings for initializing the AI agent 
 </ParamField>
 
 <ParamField path="body" type="string" name="customGreeting">
-  Custom greeting text (e.g. "Thanks for calling the Men with Tools...")
+  Custom greeting text
 </ParamField>
 
 <ParamField path="body" type="string" name="agentName">
-  Agent name (e.g. "Sally")
+  Agent name (e.g., "Sally")
 </ParamField>
 
-<ParamField path="body" type="array" name="servicesSupported">
-  Array of services included (e.g. ["windows", "doors", "repairs"])
+<ParamField path="body" type="string" name="servicesSupported">
+  Comma-separated list of services included (e.g., "windows, doors, replacements")
 </ParamField>
 
-<ParamField path="body" type="array" name="servicesNotIncluded">
-  Array of services excluded (e.g. ["replacements", "roofs"])
+<ParamField path="body" type="string" name="servicesNotIncluded">
+  Comma-separated list of services excluded (e.g., "repairs, roofs")
 </ParamField>
 
+<ParamField path="body" type="string" name="knowledgeBaseName">
+  Name of the knowledge base
+</ParamField>
+
+<ParamField path="body" type="array" name="knowledgeBaseUrls">
+  Array of URLs for the knowledge base
+</ParamField>
+
+<ParamField path="body" type="array" name="knowledgeBaseFiles">
+  Array of file streams for knowledge base files
+</ParamField>
 
 ### Example Request
 
 ```bash
-POST /api/config?companyID=123
+POST /config
 Content-Type: application/json
 X-API-Key: your_api_key_here
 
 {
-  "companyID": 123,
+  "classId": "123",
   "companyUrl": "https://company-api.example.com",
-  "companyName": "Example Company Inc",
+  "companyName": "The Men with Tools",
   "companyNumber": "+1234567890",
-  "serviceLabelType": "appointment",
-  "aiDisclosure": true,
+  "serviceLabelType": "In Home Consultation",
+  "aiDisclosure": "true",
   "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
   "serviceAreas": "New York, New Jersey",
   "callback": "callback_task",
-  "customGreeting": "Thanks for calling the Men with Tools...",
+  "customGreeting": "Hi, thanks for calling the Men with Tools",
   "agentName": "Sally",
-  "servicesSupported": ["windows", "doors", "repairs"],
-  "servicesNotIncluded": ["replacements", "roofs"]
+  "servicesSupported": "windows, doors, replacements",
+  "servicesNotIncluded": "repairs, roofs",
+  "knowledgeBaseName": "Sample KB",
+  "knowledgeBaseUrls": [
+    "https://www.retellai.com",
+    "https://docs.retellai.com"
+  ],
+  "knowledgeBaseFiles": []
 }
 ```
+
+**Note**: For file uploads (`knowledgeBaseFiles`), you may need to use `multipart/form-data` content type instead of `application/json` to properly send file streams.
 
 ### Example Response
 
@@ -104,19 +119,26 @@ X-API-Key: your_api_key_here
 {
   "success": true,
   "data": {
-    "companyID": 123,
+    "classId": "123",
     "companyUrl": "https://company-api.example.com",
-    "companyName": "Example Company Inc",
+    "companyName": "The Men with Tools",
     "companyNumber": "+1234567890",
-    "serviceLabelType": "appointment",
-    "aiDisclosure": true,
+    "phoneNumber": "+1234567890",
+    "serviceLabelType": "In Home Consultation",
+    "aiDisclosure": "true",
     "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
     "serviceAreas": "New York, New Jersey",
     "callback": "callback_task",
-    "customGreeting": "Thanks for calling the Men with Tools...",
+    "customGreeting": "Hi, thanks for calling the Men with Tools",
     "agentName": "Sally",
-    "servicesSupported": ["windows", "doors", "repairs"],
-    "servicesNotIncluded": ["replacements", "roofs"]
+    "servicesSupported": "windows, doors, replacements",
+    "servicesNotIncluded": "repairs, roofs",
+    "knowledgeBaseName": "Sample KB",
+    "knowledgeBaseUrls": [
+      "https://www.retellai.com",
+      "https://docs.retellai.com"
+    ],
+    "knowledgeBaseFiles": []
   },
   "error": null
 }
@@ -128,22 +150,23 @@ X-API-Key: your_api_key_here
 {
   "success": false,
   "data": null,
-  "error": "Invalid company ID or authentication failed"
+  "error": "Invalid class ID or authentication failed"
 }
 ```
 
 ### Use Cases
 
 - **Initial Setup**: Create new company configuration for first-time setup
-- **Configuration Updates**: Update existing company settings and preferences
 - **AI Agent Initialization**: Configure AI agent with company-specific settings
 - **Business Rules**: Set up appointment types, business hours, and service areas
-- **Authentication**: Establish secure connection with company systems
+- **Knowledge Base Integration**: Upload knowledge base files and URLs for AI context
 - **Customization**: Configure AI behavior and disclosure settings
 
 ### Implementation Notes
 
 - Configuration data can be stored in a separate database for simplicity
 - Consider implementing validation for required fields before saving
-- Implement proper error handling for duplicate company IDs
+- Implement proper error handling for duplicate class IDs when creating new configurations
+- For file uploads, use multipart/form-data encoding when sending `knowledgeBaseFiles`
+- Knowledge base files should be processed and indexed for AI context
 - Consider implementing audit logging for configuration changes

@@ -19,8 +19,8 @@ Sends a message and generates an AI response. The content field contains the cur
   SMS conversation data
 </ParamField>
 
-<ParamField path="body" type="string" name="class_id" required>
-  Class identifier
+<ParamField path="body" type="string" name="chat_agent_id" required>
+  Chat agent identifier
 </ParamField>
 
 <ParamField path="body" type="string" name="bp_chat_id" required>
@@ -39,7 +39,7 @@ Content-Type: application/json
 X-API-Key: your_api_key_here
 
 {
-  "class_id": "1",
+  "chat_agent_id": "1",
   "bp_chat_id": "4",
   "content": "Customer: Hello, I'd like to schedule an appointment\nCompany: Hi! I'd be happy to help you schedule an appointment. What service are you interested in?\nCustomer: I need a consultation for my business\nCustomer: no"
 }
