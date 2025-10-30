@@ -38,7 +38,7 @@
             ]
           },
           {
-            "group": "Configuration",
+            "group": "Retell Agents",
             "pages": [
               "api-reference/endpoint/post-config"
             ]
