@@ -1,11 +1,11 @@
 ---
-title: 'SMS Communication'
-openapi: 'POST /api/sms'
+title: 'SMS Conversation'
+openapi: 'POST /sms-conversation'
 ---
 
-## Get Messages and Generate AI Response
+## SMS Conversation
 
-Retrieves conversation history and generates an AI response message. Returns only the AI-generated response.
+Sends a message and generates an AI response. The content field contains the current message along with previous conversation context in string format.
 
 ### Authentication
 
@@ -15,64 +15,33 @@ Retrieves conversation history and generates an AI response message. Returns onl
 
 ### Request Body
 
-<ParamField path="body" type="object" name="messageData" required>
-  Message retrieval and response data
+<ParamField path="body" type="object" name="conversationData" required>
+  SMS conversation data
 </ParamField>
 
-<ParamField path="body" type="integer" name="organizationID" required>
-  Organization identifier
+<ParamField path="body" type="string" name="class_id" required>
+  Class identifier
 </ParamField>
 
-
-<ParamField path="body" type="array" name="messages">
-  Array of message objects
+<ParamField path="body" type="string" name="bp_chat_id" required>
+  Builder Prime chat identifier
 </ParamField>
 
-<ParamField path="body" type="string" name="messages[].message" required>
-  Message content
-</ParamField>
-
-<ParamField path="body" type="string" name="messages[].sentBy">
-  Sender (customer/company/ai)
-</ParamField>
-
-<ParamField path="body" type="string" name="messages[].timestamp" required>
-  Message timestamp in ISO 8601 format
-</ParamField>
-
-<ParamField path="body" type="string" name="messages[].mediaUrls">
-  Comma-separated media URLs
+<ParamField path="body" type="string" name="content" required>
+  Current message content along with previous conversation context in string format
 </ParamField>
 
 ### Example Request
 
 ```bash
-POST /api/sms
+POST /sms-conversation
 Content-Type: application/json
 X-API-Key: your_api_key_here
 
 {
-  "organizationID": 456,
-  "messages": [
-    {
-      "message": "Hello, I'd like to schedule an appointment",
-      "sentBy": "customer",
-      "timestamp": "2024-01-15T10:30:00Z",
-      "mediaUrls": ""
-    },
-    {
-      "message": "Hi! I'd be happy to help you schedule an appointment. What service are you interested in?",
-      "sentBy": "company",
-      "timestamp": "2024-01-15T10:32:00Z",
-      "mediaUrls": ""
-    },
-    {
-      "message": "I need a consultation for my business",
-      "sentBy": "customer",
-      "timestamp": "2024-01-15T10:35:00Z",
-      "mediaUrls": "https://example.com/document.pdf"
-    }
-  ]
+  "class_id": "1",
+  "bp_chat_id": "4",
+  "content": "Customer: Hello, I'd like to schedule an appointment\nCompany: Hi! I'd be happy to help you schedule an appointment. What service are you interested in?\nCustomer: I need a consultation for my business\nCustomer: no"
 }
 ```
 
@@ -82,15 +51,69 @@ X-API-Key: your_api_key_here
 {
   "success": true,
   "data": {
-    "message": "Thank you for your interest in our business consultation services! I'd be happy to help you schedule an appointment. What specific type of consultation are you looking for?",
-    "sentBy": "AI",
-    "timestamp": "2024-01-15T10:36:00Z",
-    "status": "generated",
-    "mediaUrls": []
+    "retell_chat_id": "chat_bd9173ad49a2ca7b44aad0a03f4",
+    "bp_chat_id": "4",
+    "found": true,
+    "completion": {
+      "messages": [
+        {
+          "message_id": "message_6af90f699587b580cacf82e9",
+          "role": "agent",
+          "created_timestamp": 1761781923966,
+          "content": "Thanks so much for calling, Oscar. We look forward to seeing you for your consultation. Have a great day!"
+        }
+      ]
+    }
   },
   "error": null
 }
 ```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="object" name="data">
+  Response data object
+</ParamField>
+
+<ParamField path="response" type="string" name="data.retell_chat_id">
+  Retell chat identifier
+</ParamField>
+
+<ParamField path="response" type="string" name="data.bp_chat_id">
+  Builder Prime chat identifier
+</ParamField>
+
+<ParamField path="response" type="boolean" name="data.found">
+  Indicates if the chat conversation was found
+</ParamField>
+
+<ParamField path="response" type="object" name="data.completion">
+  Completion object containing AI-generated messages
+</ParamField>
+
+<ParamField path="response" type="array" name="data.completion.messages">
+  Array of message objects from the AI agent
+</ParamField>
+
+<ParamField path="response" type="string" name="data.completion.messages[].message_id">
+  Unique identifier for the message
+</ParamField>
+
+<ParamField path="response" type="string" name="data.completion.messages[].role">
+  Role of the message sender (e.g., "agent")
+</ParamField>
+
+<ParamField path="response" type="integer" name="data.completion.messages[].created_timestamp">
+  Unix timestamp when the message was created
+</ParamField>
+
+<ParamField path="response" type="string" name="data.completion.messages[].content">
+  The AI-generated message content
+</ParamField>
 
 ### Error Response
 
@@ -98,7 +121,7 @@ X-API-Key: your_api_key_here
 {
   "success": false,
   "data": null,
-  "error": "Failed to retrieve conversation history or generate AI response"
+  "error": "Failed to generate AI response"
 }
 ```
 
@@ -111,9 +134,7 @@ X-API-Key: your_api_key_here
 
 ### Implementation Notes
 
-- The endpoint combines conversation history retrieval with AI response generation
-- AI responses are generated based on the conversation context provided
-- Messages should be ordered chronologically (oldest first)
+- The endpoint generates AI responses based on the provided content
+- Content should contain both previous conversation messages and the current message in a readable string format
+- Messages should be ordered chronologically (oldest first, with the most recent message at the end)
 - Consider implementing rate limiting for AI response generation
-- Media URLs should be validated and accessible
-- Timestamps should be in ISO 8601 format
