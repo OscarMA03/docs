@@ -47,7 +47,7 @@
             ]
           },
           {
-            "group": "Chat Response",
+            "group": "Chat",
             "pages": [
               "api-reference/endpoint/chat-response"
             ]

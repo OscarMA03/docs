@@ -5,7 +5,7 @@ openapi: 'POST /chat'
 
 ## Chat Response
 
-Sends a message and generates an AI response. The content field contains the current message along with previous conversation context in string format.
+Sends messages and generates an AI response. Accepts an array of message objects with sender information, timestamps, content, and media URLs.
 
 ### Authentication
 
@@ -15,20 +15,48 @@ Sends a message and generates an AI response. The content field contains the cur
 
 ### Request Body
 
-<ParamField path="body" type="object" name="conversationData" required>
-  SMS conversation data
-</ParamField>
-
-<ParamField path="body" type="string" name="chat_agent_id" required>
-  Chat agent identifier
+<ParamField path="body" type="object" name="requestData" required>
+  Chat request data
 </ParamField>
 
 <ParamField path="body" type="string" name="bp_chat_id" required>
   Builder Prime chat identifier
 </ParamField>
 
-<ParamField path="body" type="string" name="content" required>
-  Current message content along with previous conversation context in string format
+<ParamField path="body" type="string" name="chat_agent_id" required>
+  Chat agent identifier
+</ParamField>
+
+<ParamField path="body" type="array" name="messages" required>
+  Array of message objects in the conversation
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].senderType" required>
+  Sender type: CUSTOMER, AGENT, or SYSTEM
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].senderName" required>
+  Name of the message sender
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].timestamp" required>
+  Message timestamp in ISO 8601 format
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].content" required>
+  Message content as a string
+</ParamField>
+
+<ParamField path="body" type="array" name="messages[].mediaUrls">
+  Array of media URL objects
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].mediaUrls[].url" required>
+  URL of the media file
+</ParamField>
+
+<ParamField path="body" type="string" name="messages[].mediaUrls[].imageFlag" required>
+  Whether the media is an image: TRUE or FALSE
 </ParamField>
 
 ### Example Request
@@ -39,9 +67,43 @@ Content-Type: application/json
 X-API-Key: your_api_key_here
 
 {
-  "chat_agent_id": "1",
   "bp_chat_id": "4",
-  "content": "Customer: Hello, I'd like to schedule an appointment\nCompany: Hi! I'd be happy to help you schedule an appointment. What service are you interested in?\nCustomer: I need a consultation for my business\nCustomer: no"
+  "chat_agent_id": "1",
+  "messages": [
+    {
+      "senderType": "CUSTOMER",
+      "senderName": "John Doe",
+      "timestamp": "2024-01-15T10:30:00Z",
+      "content": "Hello, I'd like to schedule an appointment",
+      "mediaUrls": []
+    },
+    {
+      "senderType": "AGENT",
+      "senderName": "Sally",
+      "timestamp": "2024-01-15T10:32:00Z",
+      "content": "Hi! I'd be happy to help you schedule an appointment. What service are you interested in?",
+      "mediaUrls": []
+    },
+    {
+      "senderType": "CUSTOMER",
+      "senderName": "John Doe",
+      "timestamp": "2024-01-15T10:35:00Z",
+      "content": "I need a consultation for my business",
+      "mediaUrls": [
+        {
+          "url": "https://example.com/document.pdf",
+          "imageFlag": "FALSE"
+        }
+      ]
+    },
+    {
+      "senderType": "CUSTOMER",
+      "senderName": "John Doe",
+      "timestamp": "2024-01-15T10:36:00Z",
+      "content": "no",
+      "mediaUrls": []
+    }
+  ]
 }
 ```
 
@@ -134,7 +196,10 @@ X-API-Key: your_api_key_here
 
 ### Implementation Notes
 
-- The endpoint generates AI responses based on the provided content
-- Content should contain both previous conversation messages and the current message in a readable string format
+- The endpoint accepts an array of message objects representing the conversation history
 - Messages should be ordered chronologically (oldest first, with the most recent message at the end)
+- `senderType` must be one of: CUSTOMER, AGENT, or SYSTEM
+- `timestamp` must be in ISO 8601 format
+- `imageFlag` must be either "TRUE" or "FALSE" as a string
+- Media URLs can be empty arrays if no media is attached
 - Consider implementing rate limiting for AI response generation
