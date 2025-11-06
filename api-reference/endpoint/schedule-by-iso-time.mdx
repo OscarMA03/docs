@@ -7,6 +7,22 @@ openapi: 'POST /schedule-by-iso-time'
 
 Schedule an appointment using ISO start time.
 
+### Headers
+
+<ParamField path="header" type="string" name="x-builder-prime-api-key" required>
+  Builder Prime API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="Content-Type" required>
+  application/json
+</ParamField>
+
+### Request Parameters
+
 <ParamField path="query" type="string" name="opportunityId" required>
   The opportunity ID to schedule
 </ParamField>
@@ -26,6 +42,8 @@ Schedule an appointment using ISO start time.
 ```bash
 POST /schedule-by-iso-time?opportunityId=12345
 Content-Type: application/json
+x-builder-prime-api-key: <your-builder-prime-api-key>
+x-api-key: <your-api-key>
 
 {
   "isoStartTime": "2024-01-15T09:00:00.000Z"

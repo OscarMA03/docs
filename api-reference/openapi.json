@@ -165,6 +165,35 @@
       "post": {
         "summary": "Create Simple Lead",
         "description": "Create a simplified lead with core fields only",
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -182,6 +211,275 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/LeadResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leads/by-phone": {
+      "get": {
+        "summary": "Get Leads by Phone",
+        "description": "Retrieve leads filtered by phone number with additional optional filters",
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Phone number to search for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Leads retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leads/by-address-and-phone": {
+      "get": {
+        "summary": "Get Leads by Address and Phone",
+        "description": "Retrieve leads filtered by both address and phone number",
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Address to search for"
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Phone number to search for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Leads retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leads/{opportunityId}": {
+      "post": {
+        "summary": "Update Lead",
+        "description": "Update an existing lead/opportunity record",
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "opportunityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The opportunity ID of the lead to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lead updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/iso-start-times": {
+      "get": {
+        "summary": "Get ISO Start Times",
+        "description": "Get only ISO start time values for appointments",
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "opportunityId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The opportunity ID to get start times for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ISO start times retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schedule-by-iso-time": {
+      "post": {
+        "summary": "Schedule by ISO Time",
+        "description": "Schedule an appointment using ISO start time",
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "opportunityId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The opportunity ID to schedule"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "isoStartTime": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Appointment scheduled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 }
               }
             }
@@ -315,6 +613,24 @@
         "description": "Create a new to-do task",
         "parameters": [
           {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
             "name": "opportunityId",
             "in": "query",
             "schema": {
@@ -402,6 +718,538 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SMSResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-chat-agent": {
+      "post": {
+        "summary": "Create Chat Agent",
+        "description": "Create a Retell LLM and Chat Agent with configuration",
+        "security": [],
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["class_id", "configuration"],
+                "properties": {
+                  "class_id": {
+                    "type": "string",
+                    "description": "Class identifier"
+                  },
+                  "start_speaker": {
+                    "type": "string",
+                    "description": "Starting speaker for the conversation (e.g., 'agent')"
+                  },
+                  "configuration": {
+                    "type": "object",
+                    "properties": {
+                      "company_url": {
+                        "type": "string",
+                        "description": "Company's API endpoint"
+                      },
+                      "company_name": {
+                        "type": "string",
+                        "description": "Official business name"
+                      },
+                      "company_number": {
+                        "type": "string",
+                        "description": "Callback number for follow-ups"
+                      },
+                      "service_label_type": {
+                        "type": "string",
+                        "description": "What to call the appointment (e.g., 'In Home Consultation')"
+                      },
+                      "ai_disclosure": {
+                        "type": "string",
+                        "description": "Whether agent announces it's AI (e.g., 'true')"
+                      },
+                      "business_hours": {
+                        "type": "string",
+                        "description": "When to offer appointments"
+                      },
+                      "service_areas": {
+                        "type": "string",
+                        "description": "Geographic restrictions"
+                      },
+                      "callback": {
+                        "type": "string",
+                        "description": "Create task to callback at later time"
+                      },
+                      "custom_greeting": {
+                        "type": "string",
+                        "description": "Custom greeting text"
+                      },
+                      "agent_name": {
+                        "type": "string",
+                        "description": "Agent name (e.g., 'Sally')"
+                      },
+                      "services_supported": {
+                        "type": "string",
+                        "description": "Comma-separated list of services included"
+                      },
+                      "services_not_included": {
+                        "type": "string",
+                        "description": "Comma-separated list of services excluded"
+                      }
+                    }
+                  },
+                  "knowledgeBase": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the knowledge base"
+                      },
+                      "urls": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Array of URLs for the knowledge base"
+                      }
+                    }
+                  },
+                  "agent_name": {
+                    "type": "string",
+                    "description": "Agent name"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat agent created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "chat_llm_id": {
+                          "type": "string"
+                        },
+                        "chat_agent_id": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-voice-agent": {
+      "post": {
+        "summary": "Create Voice Agent",
+        "description": "Create a Retell LLM and Voice Agent with configuration",
+        "security": [],
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["class_id", "configuration"],
+                "properties": {
+                  "class_id": {
+                    "type": "string",
+                    "description": "Class identifier"
+                  },
+                  "start_speaker": {
+                    "type": "string",
+                    "description": "Starting speaker for the conversation (e.g., 'agent')"
+                  },
+                  "configuration": {
+                    "type": "object",
+                    "properties": {
+                      "company_url": {
+                        "type": "string",
+                        "description": "Company's API endpoint"
+                      },
+                      "company_name": {
+                        "type": "string",
+                        "description": "Official business name"
+                      },
+                      "company_number": {
+                        "type": "string",
+                        "description": "Callback number for follow-ups"
+                      },
+                      "service_label_type": {
+                        "type": "string",
+                        "description": "What to call the appointment (e.g., 'In Home Consultation')"
+                      },
+                      "ai_disclosure": {
+                        "type": "string",
+                        "description": "Whether agent announces it's AI (e.g., 'true')"
+                      },
+                      "business_hours": {
+                        "type": "string",
+                        "description": "When to offer appointments"
+                      },
+                      "service_areas": {
+                        "type": "string",
+                        "description": "Geographic restrictions"
+                      },
+                      "callback": {
+                        "type": "string",
+                        "description": "Create task to callback at later time"
+                      },
+                      "custom_greeting": {
+                        "type": "string",
+                        "description": "Custom greeting text"
+                      },
+                      "agent_name": {
+                        "type": "string",
+                        "description": "Agent name (e.g., 'Sally')"
+                      },
+                      "services_supported": {
+                        "type": "string",
+                        "description": "Comma-separated list of services included"
+                      },
+                      "services_not_included": {
+                        "type": "string",
+                        "description": "Comma-separated list of services excluded"
+                      }
+                    }
+                  },
+                  "knowledgeBase": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the knowledge base"
+                      },
+                      "urls": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Array of URLs for the knowledge base"
+                      }
+                    }
+                  },
+                  "agent_name": {
+                    "type": "string",
+                    "description": "Agent name"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Voice agent created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "voice_agent_llm_id": {
+                          "type": "string"
+                        },
+                        "voice_agent_id": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update-config/{llm_id}": {
+      "patch": {
+        "summary": "Update Agent Configuration",
+        "description": "Updates agent configuration settings for an existing agent by LLM ID",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "llm_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Retell LLM identifier for the agent to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["configuration"],
+                "properties": {
+                  "configuration": {
+                    "type": "object",
+                    "properties": {
+                      "company_url": {
+                        "type": "string",
+                        "description": "Company's API endpoint"
+                      },
+                      "company_name": {
+                        "type": "string",
+                        "description": "Official business name"
+                      },
+                      "company_number": {
+                        "type": "string",
+                        "description": "Callback number for follow-ups"
+                      },
+                      "service_label_type": {
+                        "type": "string",
+                        "description": "What to call the appointment (e.g., 'In Home Consultation')"
+                      },
+                      "ai_disclosure": {
+                        "type": "string",
+                        "description": "Whether agent announces it's AI (e.g., 'true')"
+                      },
+                      "business_hours": {
+                        "type": "string",
+                        "description": "When to offer appointments"
+                      },
+                      "service_areas": {
+                        "type": "string",
+                        "description": "Geographic restrictions"
+                      },
+                      "callback": {
+                        "type": "string",
+                        "description": "Create task to callback at later time"
+                      },
+                      "custom_greeting": {
+                        "type": "string",
+                        "description": "Custom greeting text"
+                      },
+                      "agent_name": {
+                        "type": "string",
+                        "description": "Agent name (e.g., 'Sally')"
+                      },
+                      "services_supported": {
+                        "type": "string",
+                        "description": "Comma-separated list of services included"
+                      },
+                      "services_not_included": {
+                        "type": "string",
+                        "description": "Comma-separated list of services excluded"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Configuration updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "configuration": {
+                          "type": "object",
+                          "properties": {
+                            "company_url": {
+                              "type": "string"
+                            },
+                            "company_name": {
+                              "type": "string"
+                            },
+                            "company_number": {
+                              "type": "string"
+                            },
+                            "service_label_type": {
+                              "type": "string"
+                            },
+                            "ai_disclosure": {
+                              "type": "string"
+                            },
+                            "business_hours": {
+                              "type": "string"
+                            },
+                            "service_areas": {
+                              "type": "string"
+                            },
+                            "callback": {
+                              "type": "string"
+                            },
+                            "custom_greeting": {
+                              "type": "string"
+                            },
+                            "agent_name": {
+                              "type": "string"
+                            },
+                            "services_supported": {
+                              "type": "string"
+                            },
+                            "services_not_included": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-config": {
+      "get": {
+        "summary": "Get Agent Configuration",
+        "description": "Retrieves agent configuration for an agent by LLM ID",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "llm_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Retell LLM identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Configuration retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "configuration": {
+                          "type": "object",
+                          "properties": {
+                            "company_url": {
+                              "type": "string"
+                            },
+                            "company_name": {
+                              "type": "string"
+                            },
+                            "company_number": {
+                              "type": "string"
+                            },
+                            "service_label_type": {
+                              "type": "string"
+                            },
+                            "ai_disclosure": {
+                              "type": "string"
+                            },
+                            "business_hours": {
+                              "type": "string"
+                            },
+                            "service_areas": {
+                              "type": "string"
+                            },
+                            "callback": {
+                              "type": "string"
+                            },
+                            "custom_greeting": {
+                              "type": "string"
+                            },
+                            "agent_name": {
+                              "type": "string"
+                            },
+                            "services_supported": {
+                              "type": "string"
+                            },
+                            "services_not_included": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
                 }
               }
             }
@@ -741,7 +1589,7 @@
       "apiKey": {
         "type": "apiKey",
         "in": "header",
-        "name": "X-API-Key",
+        "name": "x-api-key",
         "description": "API key for authentication (automatically set from BUILDER_PRIME_API_KEY environment variable)"
       }
     }

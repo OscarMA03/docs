@@ -7,6 +7,18 @@ openapi: 'GET /iso-start-times'
 
 Get only ISO start time values for appointments.
 
+### Headers
+
+<ParamField path="header" type="string" name="x-builder-prime-api-key" required>
+  Builder Prime API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+### Request Parameters
+
 <ParamField path="query" type="string" name="opportunityId" required>
   The opportunity ID to get start times for
 </ParamField>
@@ -15,6 +27,8 @@ Get only ISO start time values for appointments.
 
 ```bash
 GET /iso-start-times?opportunityId=12345
+x-builder-prime-api-key: <your-builder-prime-api-key>
+x-api-key: <your-api-key>
 ```
 
 ### Example Response

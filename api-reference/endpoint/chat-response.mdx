@@ -7,9 +7,9 @@ openapi: 'POST /chat'
 
 Sends messages and generates an AI response. Accepts an array of message objects with sender information, timestamps, content, and media URLs.
 
-### Authentication
+### Headers
 
-<ParamField path="header" type="string" name="X-API-Key" required>
+<ParamField path="header" type="string" name="x-api-key" required>
   API key for authentication
 </ParamField>
 
@@ -64,7 +64,7 @@ Sends messages and generates an AI response. Accepts an array of message objects
 ```bash
 POST /chat 
 Content-Type: application/json
-X-API-Key: your_api_key_here
+x-api-key: your_api_key_here
 
 {
   "bp_chat_id": "4",

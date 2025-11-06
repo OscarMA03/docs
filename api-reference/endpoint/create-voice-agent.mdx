@@ -5,80 +5,94 @@ openapi: 'POST /create-voice-agent'
 
 ## Create Voice Agent
 
-Creates a voice agent with configuration settings for initializing the AI agent with company-specific information.
+Create a Retell LLM and Voice Agent with configuration
 
-<ParamField path="header" type="string" name="X-API-Key" required>
-  API key for authentication
+### Headers
+
+<ParamField path="header" type="string" name="x-builder-prime-api-key" required>
+  Builder Prime API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="Content-Type" required>
+  application/json
 </ParamField>
 
 ### Request Body
 
-<ParamField path="body" type="object" name="configData" required>
-  Company configuration data
-</ParamField>
-
-<ParamField path="body" type="string" name="classId" required>
+<ParamField path="body" type="string" name="class_id" required>
   Class identifier
 </ParamField>
 
-<ParamField path="body" type="string" name="companyUrl" required>
+<ParamField path="body" type="string" name="start_speaker">
+  Starting speaker for the conversation (e.g., "agent")
+</ParamField>
+
+<ParamField path="body" type="object" name="configuration" required>
+  Company configuration object
+</ParamField>
+
+<ParamField path="body.configuration" type="string" name="company_url">
   Company's API endpoint
 </ParamField>
 
-<ParamField path="body" type="string" name="companyName" required>
+<ParamField path="body.configuration" type="string" name="company_name">
   Official business name
 </ParamField>
 
-<ParamField path="body" type="string" name="companyNumber" required>
+<ParamField path="body.configuration" type="string" name="company_number">
   Callback number for follow-ups
 </ParamField>
 
-<ParamField path="body" type="string" name="serviceLabelType">
+<ParamField path="body.configuration" type="string" name="service_label_type">
   What to call the appointment (e.g., "In Home Consultation")
 </ParamField>
 
-<ParamField path="body" type="string" name="aiDisclosure">
+<ParamField path="body.configuration" type="string" name="ai_disclosure">
   Whether agent announces it's AI (e.g., "true")
 </ParamField>
 
-<ParamField path="body" type="string" name="businessHours">
+<ParamField path="body.configuration" type="string" name="business_hours">
   When to offer appointments
 </ParamField>
 
-<ParamField path="body" type="string" name="serviceAreas">
+<ParamField path="body.configuration" type="string" name="service_areas">
   Geographic restrictions
 </ParamField>
 
-<ParamField path="body" type="string" name="callback">
+<ParamField path="body.configuration" type="string" name="callback">
   Create task to callback at later time
 </ParamField>
 
-<ParamField path="body" type="string" name="customGreeting">
+<ParamField path="body.configuration" type="string" name="custom_greeting">
   Custom greeting text
 </ParamField>
 
-<ParamField path="body" type="string" name="agentName">
+<ParamField path="body.configuration" type="string" name="agent_name">
   Agent name (e.g., "Sally")
 </ParamField>
 
-<ParamField path="body" type="string" name="servicesSupported">
+<ParamField path="body.configuration" type="string" name="services_supported">
   Comma-separated list of services included (e.g., "windows, doors, replacements")
 </ParamField>
 
-<ParamField path="body" type="string" name="servicesNotIncluded">
+<ParamField path="body.configuration" type="string" name="services_not_included">
   Comma-separated list of services excluded (e.g., "repairs, roofs")
 </ParamField>
 
-<ParamField path="body" type="string" name="knowledgeBaseName">
+<ParamField path="body" type="object" name="knowledgeBase">
+  Knowledge base configuration
+</ParamField>
+
+<ParamField path="body.knowledgeBase" type="string" name="name">
   Name of the knowledge base
 </ParamField>
 
-<ParamField path="body" type="array" name="knowledgeBaseUrls">
+<ParamField path="body.knowledgeBase" type="array" name="urls">
   Array of URLs for the knowledge base
 </ParamField>
 
-<ParamField path="body" type="array" name="knowledgeBaseFiles">
-  Array of file streams for knowledge base files
+<ParamField path="body" type="string" name="agent_name">
+  Agent name
 </ParamField>
 
 ### Example Request
@@ -86,32 +100,34 @@ Creates a voice agent with configuration settings for initializing the AI agent 
 ```bash
 POST /create-voice-agent
 Content-Type: application/json
-X-API-Key: your_api_key_here
+x-builder-prime-api-key: <your-builder-prime-api-key>
 
 {
-  "classId": "123",
-  "companyUrl": "https://company-api.example.com",
-  "companyName": "Example Company Inc",
-  "companyNumber": "+1234567890",
-  "serviceLabelType": "In Home Consultation",
-  "aiDisclosure": "true",
-  "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
-  "serviceAreas": "New York, New Jersey",
-  "callback": "callback_task",
-  "customGreeting": "Hi, thanks for calling Example Company",
-  "agentName": "Sally",
-  "servicesSupported": "windows, doors, replacements",
-  "servicesNotIncluded": "repairs, roofs",
-  "knowledgeBaseName": "Sample KB",
-  "knowledgeBaseUrls": [
-    "https://www.retellai.com",
-    "https://docs.retellai.com"
-  ],
-  "knowledgeBaseFiles": []
+  "class_id": "123",
+  "start_speaker": "agent",
+  "configuration": {
+    "company_url": "https://company-api.example.com",
+    "company_name": "The Men with Tools",
+    "company_number": "+1234567890",
+    "service_label_type": "In Home Consultation",
+    "ai_disclosure": "true",
+    "business_hours": "Monday 9am-5pm, Friday 9am-5pm",
+    "service_areas": "New York, New Jersey",
+    "callback": "callback_task",
+    "custom_greeting": "Hi, thanks for calling the Men with Tools",
+    "agent_name": "Sally",
+    "services_supported": "windows, doors, replacements",
+    "services_not_included": "repairs, roofs"
+  },
+  "knowledgeBase": {
+    "name": "Voice Agent KB",
+    "urls": [
+      "https://www.retellai.com"
+    ]
+  },
+  "agent_name": "Test"
 }
 ```
-
-**Note**: For file uploads (`knowledgeBaseFiles`), you may need to use `multipart/form-data` content type instead of `application/json` to properly send file streams.
 
 ### Example Response
 

@@ -7,8 +7,18 @@ openapi: 'POST /create-lead'
 
 Create a simplified lead with core fields only. The `secretKey` is automatically set from the `BUILDER_PRIME_API_KEY` environment variable.
 
-<ParamField path="body" type="object" name="leadData" required>
-  Simplified lead data for creation
+### Headers
+
+<ParamField path="header" type="string" name="x-builder-prime-api-key" required>
+  Builder Prime API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="Content-Type" required>
+  application/json
 </ParamField>
 
 ### Request Body
@@ -50,6 +60,8 @@ Create a simplified lead with core fields only. The `secretKey` is automatically
 ```bash
 POST /create-lead
 Content-Type: application/json
+x-builder-prime-api-key: <your-builder-prime-api-key>
+x-api-key: <your-api-key>
 
 {
   "firstName": "John",

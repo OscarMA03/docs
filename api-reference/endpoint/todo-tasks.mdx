@@ -7,6 +7,22 @@ openapi: 'POST /to-do-tasks/v1'
 
 Create a new to-do task. The employee ID is automatically set from the `HARDCODED_EMPLOYEE_ID` environment variable.
 
+### Headers
+
+<ParamField path="header" type="string" name="x-builder-prime-api-key" required>
+  Builder Prime API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="Content-Type" required>
+  application/json
+</ParamField>
+
+### Request Parameters
+
 <ParamField path="query" type="string" name="opportunityId">
   Optional opportunity ID to associate with the task
 </ParamField>
@@ -44,8 +60,26 @@ Create a new to-do task. The employee ID is automatically set from the `HARDCODE
 ### Example Request
 
 ```bash
+curl --request POST \
+  --url 'https://proxy-server-builder-prime.onrender.com/to-do-tasks/v1?opportunityId=12345' \
+  --header 'Content-Type: application/json' \
+  --header 'x-builder-prime-api-key: <your-builder-prime-api-key>' \
+  --header 'x-api-key: <your-api-key>' \
+  --data '{
+  "title": "Follow up with lead",
+  "type": "CALL",
+  "description": "Call the lead to discuss their requirements",
+  "dueDate": "2024-01-20T10:00:00Z"
+}'
+```
+
+Or using HTTP:
+
+```bash
 POST /to-do-tasks/v1?opportunityId=12345
 Content-Type: application/json
+x-builder-prime-api-key: <your-builder-prime-api-key>
+x-api-key: <your-api-key>
 
 {
   "title": "Follow up with lead",

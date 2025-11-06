@@ -7,6 +7,18 @@ openapi: 'GET /leads/by-address-and-phone'
 
 Retrieve leads filtered by both address and phone number. Returns the newest lead if multiple matches are found.
 
+### Headers
+
+<ParamField path="header" type="string" name="x-builder-prime-api-key" required>
+  Builder Prime API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+### Request Parameters
+
 <ParamField path="query" type="string" name="address" required>
   Address to search for (searches addressLine1 field)
 </ParamField>
@@ -43,6 +55,8 @@ Retrieve leads filtered by both address and phone number. Returns the newest lea
 
 ```bash
 GET /leads/by-address-and-phone?address=123 Main St&phone=+1234567890
+x-builder-prime-api-key: <your-builder-prime-api-key>
+x-api-key: <your-api-key>
 ```
 
 ### Example Response

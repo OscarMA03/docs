@@ -7,10 +7,14 @@ openapi: 'PATCH /update-config/{llm_id}'
 
 Updates agent configuration settings for an existing agent by LLM ID.
 
-### Authentication
+### Headers
 
-<ParamField path="header" type="string" name="X-API-Key" required>
+<ParamField path="header" type="string" name="x-api-key" required>
   API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="Content-Type" required>
+  application/json
 </ParamField>
 
 ### Path Parameters
@@ -21,59 +25,55 @@ Updates agent configuration settings for an existing agent by LLM ID.
 
 ### Request Body
 
-<ParamField path="body" type="object" name="configData" required>
-  Company configuration data to update
+<ParamField path="body" type="object" name="configuration" required>
+  Company configuration object to update
 </ParamField>
 
-<ParamField path="body" type="string" name="classId">
-  Class identifier
-</ParamField>
-
-<ParamField path="body" type="string" name="companyUrl">
+<ParamField path="body.configuration" type="string" name="company_url">
   Company's API endpoint
 </ParamField>
 
-<ParamField path="body" type="string" name="companyName">
+<ParamField path="body.configuration" type="string" name="company_name">
   Official business name
 </ParamField>
 
-<ParamField path="body" type="string" name="companyNumber">
+<ParamField path="body.configuration" type="string" name="company_number">
   Callback number for follow-ups
 </ParamField>
 
-<ParamField path="body" type="string" name="serviceLabelType">
+<ParamField path="body.configuration" type="string" name="service_label_type">
   What to call the appointment (e.g., "In Home Consultation")
 </ParamField>
 
-<ParamField path="body" type="string" name="aiDisclosure">
+<ParamField path="body.configuration" type="string" name="ai_disclosure">
   Whether agent announces it's AI (e.g., "true")
 </ParamField>
 
-<ParamField path="body" type="string" name="businessHours">
+<ParamField path="body.configuration" type="string" name="business_hours">
   When to offer appointments
 </ParamField>
 
-<ParamField path="body" type="string" name="serviceAreas">
+<ParamField path="body.configuration" type="string" name="service_areas">
   Geographic restrictions
 </ParamField>
 
-<ParamField path="body" type="string" name="callback">
+<ParamField path="body.configuration" type="string" name="callback">
   Create task to callback at later time
 </ParamField>
 
-<ParamField path="body" type="string" name="customGreeting">
+<ParamField path="body.configuration" type="string" name="custom_greeting">
   Custom greeting text
 </ParamField>
 
-<ParamField path="body" type="string" name="agentName">
+<ParamField path="body.configuration" type="string" name="agent_name">
   Agent name (e.g., "Sally")
 </ParamField>
 
-<ParamField path="body" type="string" name="servicesSupported">
+<ParamField path="body.configuration" type="string" name="services_supported">
   Comma-separated list of services included (e.g., "windows, doors, replacements")
 </ParamField>
 
-<ParamField path="body" type="string" name="servicesNotIncluded">
+<ParamField path="body.configuration" type="string" name="services_not_included">
   Comma-separated list of services excluded (e.g., "repairs, roofs")
 </ParamField>
 
@@ -82,22 +82,23 @@ Updates agent configuration settings for an existing agent by LLM ID.
 ```bash
 PATCH /update-config/llm_abc123xyz
 Content-Type: application/json
-X-API-Key: your_api_key_here
+x-api-key: <your-api-key>
 
 {
-  "classId": "1234",
-  "companyUrl": "https://company-api.example.com",
-  "companyName": "Example Company",
-  "companyNumber": "+1234567890",
-  "serviceLabelType": "In Home Consultation",
-  "aiDisclosure": "true",
-  "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
-  "serviceAreas": "New York, New Jersey",
-  "callback": "callback_task",
-  "customGreeting": "Hi, thanks for calling Example Company",
-  "agentName": "Sally",
-  "servicesSupported": "windows, doors, replacements",
-  "servicesNotIncluded": "repairs, roofs"
+  "configuration": {
+    "company_url": "<string>",
+    "company_name": "<string>",
+    "company_number": "<string>",
+    "service_label_type": "<string>",
+    "ai_disclosure": "<string>",
+    "business_hours": "<string>",
+    "service_areas": "<string>",
+    "callback": "<string>",
+    "custom_greeting": "<string>",
+    "agent_name": "<string>",
+    "services_supported": "<string>",
+    "services_not_included": "<string>"
+  }
 }
 ```
 
@@ -108,19 +109,18 @@ X-API-Key: your_api_key_here
   "success": true,
   "data": {
     "configuration": {
-      "companyID": "1234",
-      "companyUrl": "https://company-api.example.com",
-      "companyName": "Example Company",
-      "companyNumber": "+1234567890",
-      "serviceLabelType": "In Home Consultation",
-      "aiDisclosure": "true",
-      "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
-      "serviceAreas": "New York, New Jersey",
+      "company_url": "https://company-api.example.com",
+      "company_name": "Example Company",
+      "company_number": "+1234567890",
+      "service_label_type": "In Home Consultation",
+      "ai_disclosure": "true",
+      "business_hours": "Monday 9am-5pm, Friday 9am-5pm",
+      "service_areas": "New York, New Jersey",
       "callback": "callback_task",
-      "customGreeting": "Hi, thanks for calling Example Company",
-      "agentName": "Sally",
-      "servicesSupported": "windows, doors, replacements",
-      "servicesNotIncluded": "repairs, roofs"
+      "custom_greeting": "Hi, thanks for calling Example Company",
+      "agent_name": "Sally",
+      "services_supported": "windows, doors, replacements",
+      "services_not_included": "repairs, roofs"
     }
   },
   "error": null
@@ -151,35 +151,31 @@ X-API-Key: your_api_key_here
   Object containing all updated configuration variables for the agent
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.companyID">
-  Company identifier
-</ParamField>
-
-<ParamField path="response" type="string" name="data.configuration.companyUrl">
+<ParamField path="response" type="string" name="data.configuration.company_url">
   Company's API endpoint
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.companyName">
+<ParamField path="response" type="string" name="data.configuration.company_name">
   Official business name
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.companyNumber">
+<ParamField path="response" type="string" name="data.configuration.company_number">
   Callback number for follow-ups
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.serviceLabelType">
+<ParamField path="response" type="string" name="data.configuration.service_label_type">
   What to call the appointment
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.aiDisclosure">
+<ParamField path="response" type="string" name="data.configuration.ai_disclosure">
   Whether agent announces it's AI
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.businessHours">
+<ParamField path="response" type="string" name="data.configuration.business_hours">
   When to offer appointments
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.serviceAreas">
+<ParamField path="response" type="string" name="data.configuration.service_areas">
   Geographic restrictions
 </ParamField>
 
@@ -187,19 +183,19 @@ X-API-Key: your_api_key_here
   Create task to callback at later time
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.customGreeting">
+<ParamField path="response" type="string" name="data.configuration.custom_greeting">
   Custom greeting text
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.agentName">
+<ParamField path="response" type="string" name="data.configuration.agent_name">
   Agent name
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.servicesSupported">
+<ParamField path="response" type="string" name="data.configuration.services_supported">
   Comma-separated list of services included
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.servicesNotIncluded">
+<ParamField path="response" type="string" name="data.configuration.services_not_included">
   Comma-separated list of services excluded
 </ParamField>
 

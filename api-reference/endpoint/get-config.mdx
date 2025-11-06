@@ -7,9 +7,9 @@ openapi: 'GET /get-config'
 
 Retrieves agent configuration for an agent by LLM ID.
 
-### Authentication
+### Headers
 
-<ParamField path="header" type="string" name="X-API-Key" required>
+<ParamField path="header" type="string" name="x-api-key" required>
   API key for authentication
 </ParamField>
 
@@ -23,7 +23,7 @@ Retrieves agent configuration for an agent by LLM ID.
 
 ```bash
 GET /get-config?llm_id=123
-X-API-Key: your_api_key_here
+x-api-key: <your-api-key>
 ```
 
 ### Example Response
@@ -33,19 +33,18 @@ X-API-Key: your_api_key_here
   "success": true,
   "data": {
     "configuration": {
-      "customGreeting": "Hi, thanks for calling Example Company",
-      "companyName": "Example Company Inc",
-      "businessHours": "Monday 9am-5pm, Friday 9am-5pm",
-      "servicesSupported": "windows, doors, replacements",
-      "agentName": "Sally",
-      "companyUrl": "https://company-api.example.com",
-      "aiDisclosure": "true",
-      "servicesNotIncluded": "repairs, roofs",
-      "companyID": "123",
-      "companyNumber": "+1234567890",
-      "serviceLabelType": "In Home Consultation",
+      "company_url": "https://company-api.example.com",
+      "company_name": "Example Company",
+      "company_number": "+1234567890",
+      "service_label_type": "In Home Consultation",
+      "ai_disclosure": "true",
+      "business_hours": "Monday 9am-5pm, Friday 9am-5pm",
+      "service_areas": "New York, New Jersey",
       "callback": "callback_task",
-      "serviceAreas": "New York, New Jersey"
+      "custom_greeting": "Hi, thanks for calling Example Company",
+      "agent_name": "Sally",
+      "services_supported": "windows, doors, replacements",
+      "services_not_included": "repairs, roofs"
     }
   },
   "error": null
@@ -76,56 +75,52 @@ X-API-Key: your_api_key_here
   Object containing all configuration variables for the agent
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.customGreeting">
-  Custom greeting text
-</ParamField>
-
-<ParamField path="response" type="string" name="data.configuration.companyName">
-  Official business name
-</ParamField>
-
-<ParamField path="response" type="string" name="data.configuration.businessHours">
-  When to offer appointments
-</ParamField>
-
-<ParamField path="response" type="string" name="data.configuration.servicesSupported">
-  Comma-separated list of services included
-</ParamField>
-
-<ParamField path="response" type="string" name="data.configuration.agentName">
-  Agent name
-</ParamField>
-
-<ParamField path="response" type="string" name="data.configuration.companyUrl">
+<ParamField path="response" type="string" name="data.configuration.company_url">
   Company's API endpoint
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.aiDisclosure">
-  Whether agent announces it's AI
+<ParamField path="response" type="string" name="data.configuration.company_name">
+  Official business name
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.servicesNotIncluded">
-  Comma-separated list of services excluded
-</ParamField>
-
-<ParamField path="response" type="string" name="data.configuration.companyID">
-  Company identifier
-</ParamField>
-
-<ParamField path="response" type="string" name="data.configuration.companyNumber">
+<ParamField path="response" type="string" name="data.configuration.company_number">
   Callback number for follow-ups
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.serviceLabelType">
+<ParamField path="response" type="string" name="data.configuration.service_label_type">
   What to call the appointment
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.ai_disclosure">
+  Whether agent announces it's AI
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.business_hours">
+  When to offer appointments
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.service_areas">
+  Geographic restrictions
 </ParamField>
 
 <ParamField path="response" type="string" name="data.configuration.callback">
   Create task to callback at later time
 </ParamField>
 
-<ParamField path="response" type="string" name="data.configuration.serviceAreas">
-  Geographic restrictions
+<ParamField path="response" type="string" name="data.configuration.custom_greeting">
+  Custom greeting text
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.agent_name">
+  Agent name
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.services_supported">
+  Comma-separated list of services included
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.services_not_included">
+  Comma-separated list of services excluded
 </ParamField>
 
 ### Use Cases

@@ -7,6 +7,18 @@ openapi: 'GET /leads/by-phone'
 
 Retrieve leads filtered by phone number with additional optional filters.
 
+### Headers
+
+<ParamField path="header" type="string" name="x-builder-prime-api-key" required>
+  Builder Prime API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+### Request Parameters
+
 <ParamField path="query" type="string" name="phone" required>
   Phone number to search for
 </ParamField>
@@ -39,6 +51,8 @@ Retrieve leads filtered by phone number with additional optional filters.
 
 ```bash
 GET /leads/by-phone?phone=+1234567890&lead-status=Lead Received
+x-builder-prime-api-key: <your-builder-prime-api-key>
+x-api-key: <your-api-key>
 ```
 
 ### Example Response
