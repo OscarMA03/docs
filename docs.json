@@ -43,7 +43,8 @@
               "api-reference/endpoint/create-chat-agent",
               "api-reference/endpoint/create-voice-agent",
               "api-reference/endpoint/update-config",
-              "api-reference/endpoint/get-config"
+              "api-reference/endpoint/get-config",
+              "api-reference/endpoint/configure-phone-number"
             ]
           },
           {

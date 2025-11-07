@@ -1013,6 +1013,144 @@
         }
       }
     },
+    "/create-phone-number": {
+      "post": {
+        "summary": "Create Phone Number",
+        "description": "Create a phone number with Retell inbound and outbound agents",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["inbound_agent_id", "outbound_agent_id", "inbound_agent_version", "outbound_agent_version", "area_code", "number_provider", "country_code", "phone_number"],
+                "properties": {
+                  "inbound_agent_id": {
+                    "type": "string",
+                    "description": "Inbound agent identifier"
+                  },
+                  "outbound_agent_id": {
+                    "type": "string",
+                    "description": "Outbound agent identifier"
+                  },
+                  "inbound_agent_version": {
+                    "type": "integer",
+                    "description": "Inbound agent version number"
+                  },
+                  "outbound_agent_version": {
+                    "type": "integer",
+                    "description": "Outbound agent version number"
+                  },
+                  "area_code": {
+                    "type": "integer",
+                    "description": "Area code for the phone number"
+                  },
+                  "nickname": {
+                    "type": "string",
+                    "description": "Nickname for the phone number"
+                  },
+                  "inbound_webhook_url": {
+                    "type": "string",
+                    "description": "Webhook URL for inbound calls"
+                  },
+                  "number_provider": {
+                    "type": "string",
+                    "description": "Phone number provider (e.g., 'twilio')"
+                  },
+                  "country_code": {
+                    "type": "string",
+                    "description": "Country code (e.g., 'US')"
+                  },
+                  "toll_free": {
+                    "type": "boolean",
+                    "description": "Whether the number is toll-free"
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "description": "Phone number in E.164 format"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Phone number created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "inbound_agent_id": {
+                          "type": "string"
+                        },
+                        "outbound_agent_id": {
+                          "type": "string"
+                        },
+                        "inbound_agent_version": {
+                          "type": "integer"
+                        },
+                        "outbound_agent_version": {
+                          "type": "integer"
+                        },
+                        "area_code": {
+                          "type": "integer"
+                        },
+                        "nickname": {
+                          "type": "string"
+                        },
+                        "inbound_webhook_url": {
+                          "type": "string"
+                        },
+                        "number_provider": {
+                          "type": "string"
+                        },
+                        "country_code": {
+                          "type": "string"
+                        },
+                        "toll_free": {
+                          "type": "boolean"
+                        },
+                        "phone_number": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/update-config/{llm_id}": {
       "patch": {
         "summary": "Update Agent Configuration",

@@ -1,0 +1,189 @@
+---
+title: 'Create Phone Number'
+openapi: 'POST /create-phone-number'
+---
+
+## Create Phone Number
+
+Create a phone number with Retell inbound and outbound agents.
+
+### Headers
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="Content-Type" required>
+  application/json
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="string" name="inbound_agent_id" required>
+  Inbound agent identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="outbound_agent_id" required>
+  Outbound agent identifier
+</ParamField>
+
+<ParamField path="body" type="number" name="inbound_agent_version" required>
+  Inbound agent version number
+</ParamField>
+
+<ParamField path="body" type="number" name="outbound_agent_version" required>
+  Outbound agent version number
+</ParamField>
+
+<ParamField path="body" type="number" name="area_code" required>
+  Area code for the phone number
+</ParamField>
+
+<ParamField path="body" type="string" name="nickname">
+  Nickname for the phone number
+</ParamField>
+
+<ParamField path="body" type="string" name="inbound_webhook_url">
+  Webhook URL for inbound calls
+</ParamField>
+
+<ParamField path="body" type="string" name="number_provider" required>
+  Phone number provider (e.g., "twilio")
+</ParamField>
+
+<ParamField path="body" type="string" name="country_code" required>
+  Country code (e.g., "US")
+</ParamField>
+
+<ParamField path="body" type="boolean" name="toll_free">
+  Whether the number is toll-free
+</ParamField>
+
+<ParamField path="body" type="string" name="phone_number" required>
+  Phone number in E.164 format
+</ParamField>
+
+### Example Request
+
+```bash
+POST /create-phone-number
+Content-Type: application/json
+x-api-key: <your-api-key>
+
+{
+  "inbound_agent_id": "agent_id_here",
+  "outbound_agent_id": "agent_id_here",
+  "inbound_agent_version": 1,
+  "outbound_agent_version": 1,
+  "area_code": 415,
+  "nickname": "Frontdesk Number",
+  "inbound_webhook_url": "https://example.com/webhook",
+  "number_provider": "twilio",
+  "country_code": "US",
+  "toll_free": false,
+  "phone_number": "+14157774444"
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "inbound_agent_id": "agent_id_here",
+    "outbound_agent_id": "agent_id_here",
+    "inbound_agent_version": 1,
+    "outbound_agent_version": 1,
+    "area_code": 415,
+    "nickname": "Frontdesk Number",
+    "inbound_webhook_url": "https://example.com/webhook",
+    "number_provider": "twilio",
+    "country_code": "US",
+    "toll_free": false,
+    "phone_number": "+14157774444"
+  },
+  "error": null
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "data": null,
+  "error": "Failed to create phone number"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="object" name="data">
+  Response data object containing the created phone number details
+</ParamField>
+
+<ParamField path="response" type="string" name="data.inbound_agent_id">
+  Inbound agent identifier
+</ParamField>
+
+<ParamField path="response" type="string" name="data.outbound_agent_id">
+  Outbound agent identifier
+</ParamField>
+
+<ParamField path="response" type="number" name="data.inbound_agent_version">
+  Inbound agent version number
+</ParamField>
+
+<ParamField path="response" type="number" name="data.outbound_agent_version">
+  Outbound agent version number
+</ParamField>
+
+<ParamField path="response" type="number" name="data.area_code">
+  Area code for the phone number
+</ParamField>
+
+<ParamField path="response" type="string" name="data.nickname">
+  Nickname for the phone number
+</ParamField>
+
+<ParamField path="response" type="string" name="data.inbound_webhook_url">
+  Webhook URL for inbound calls
+</ParamField>
+
+<ParamField path="response" type="string" name="data.number_provider">
+  Phone number provider
+</ParamField>
+
+<ParamField path="response" type="string" name="data.country_code">
+  Country code
+</ParamField>
+
+<ParamField path="response" type="boolean" name="data.toll_free">
+  Whether the number is toll-free
+</ParamField>
+
+<ParamField path="response" type="string" name="data.phone_number">
+  Phone number in E.164 format
+</ParamField>
+
+### Use Cases
+
+- **Phone Number Creation**: Create a phone number with Retell inbound and outbound agents
+- **Agent Assignment**: Assign specific agent versions to phone numbers
+- **Webhook Setup**: Configure webhook URLs for inbound call handling
+- **Provider Management**: Set up phone numbers with different providers (e.g., Twilio)
+
+### Implementation Notes
+
+- The endpoint creates a phone number with both inbound and outbound Retell agents
+- Agent versions allow you to use specific versions of your agents
+- The phone number must be in E.164 format (e.g., "+14157774444")
+- Area code is required for number provisioning
+- Webhook URL is optional but recommended for handling inbound calls
+- Number provider determines which telephony service is used
+
