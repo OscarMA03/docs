@@ -31,11 +31,11 @@ Sends messages and generates an AI response. Accepts an array of message objects
   Array of message objects in the conversation
 </ParamField>
 
-<ParamField path="body" type="string" name="messages[].senderType" required>
+<ParamField path="body" type="string" name="messages[].sender_type" required>
   Sender type: CUSTOMER, AGENT, or SYSTEM
 </ParamField>
 
-<ParamField path="body" type="string" name="messages[].senderName" required>
+<ParamField path="body" type="string" name="messages[].sender_name" required>
   Name of the message sender
 </ParamField>
 
@@ -47,15 +47,15 @@ Sends messages and generates an AI response. Accepts an array of message objects
   Message content as a string
 </ParamField>
 
-<ParamField path="body" type="array" name="messages[].mediaUrls">
+<ParamField path="body" type="array" name="messages[].media_urls">
   Array of media URL objects
 </ParamField>
 
-<ParamField path="body" type="string" name="messages[].mediaUrls[].url" required>
+<ParamField path="body" type="string" name="messages[].media_urls[].url" required>
   URL of the media file
 </ParamField>
 
-<ParamField path="body" type="string" name="messages[].mediaUrls[].imageFlag" required>
+<ParamField path="body" type="string" name="messages[].media_urls[].image_flag" required>
   Whether the media is an image: TRUE or FALSE
 </ParamField>
 
@@ -71,37 +71,37 @@ x-api-key: your_api_key_here
   "chat_agent_id": "1",
   "messages": [
     {
-      "senderType": "CUSTOMER",
-      "senderName": "John Doe",
+      "sender_type": "CUSTOMER",
+      "sender_name": "John Doe",
       "timestamp": "2024-01-15T10:30:00Z",
       "content": "Hello, I'd like to schedule an appointment",
-      "mediaUrls": []
+      "media_urls": []
     },
     {
-      "senderType": "AGENT",
-      "senderName": "Sally",
+      "sender_type": "AGENT",
+      "sender_name": "Sally",
       "timestamp": "2024-01-15T10:32:00Z",
       "content": "Hi! I'd be happy to help you schedule an appointment. What service are you interested in?",
-      "mediaUrls": []
+      "media_urls": []
     },
     {
-      "senderType": "CUSTOMER",
-      "senderName": "John Doe",
+      "sender_type": "CUSTOMER",
+      "sender_name": "John Doe",
       "timestamp": "2024-01-15T10:35:00Z",
       "content": "I need a consultation for my business",
-      "mediaUrls": [
+      "media_urls": [
         {
           "url": "https://example.com/document.pdf",
-          "imageFlag": "FALSE"
+          "image_flag": "FALSE"
         }
       ]
     },
     {
-      "senderType": "CUSTOMER",
-      "senderName": "John Doe",
+      "sender_type": "CUSTOMER",
+      "sender_name": "John Doe",
       "timestamp": "2024-01-15T10:36:00Z",
       "content": "no",
-      "mediaUrls": []
+      "media_urls": []
     }
   ]
 }
@@ -198,8 +198,8 @@ x-api-key: your_api_key_here
 
 - The endpoint accepts an array of message objects representing the conversation history
 - Messages should be ordered chronologically (oldest first, with the most recent message at the end)
-- `senderType` must be one of: CUSTOMER, AGENT, or SYSTEM
+- `sender_type` must be one of: CUSTOMER, AGENT, or SYSTEM
 - `timestamp` must be in ISO 8601 format
-- `imageFlag` must be either "TRUE" or "FALSE" as a string
+- `image_flag` must be either "TRUE" or "FALSE" as a string
 - Media URLs can be empty arrays if no media is attached
 - Consider implementing rate limiting for AI response generation
