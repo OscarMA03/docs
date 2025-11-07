@@ -1151,6 +1151,134 @@
         }
       }
     },
+    "/import-phone-number": {
+      "post": {
+        "summary": "Import Phone Number",
+        "description": "Import an existing phone number with Retell inbound and outbound agents",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your Retell API key"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["phone_number", "termination_uri", "inbound_agent_id", "outbound_agent_id", "inbound_agent_version", "outbound_agent_version"],
+                "properties": {
+                  "phone_number": {
+                    "type": "string",
+                    "description": "Phone number in E.164 format (e.g., +14157774444)"
+                  },
+                  "termination_uri": {
+                    "type": "string",
+                    "description": "SIP trunk termination URI (e.g., someuri.pstn.twilio.com)"
+                  },
+                  "sip_trunk_auth_username": {
+                    "type": "string",
+                    "description": "SIP trunk authentication username"
+                  },
+                  "sip_trunk_auth_password": {
+                    "type": "string",
+                    "description": "SIP trunk authentication password"
+                  },
+                  "inbound_agent_id": {
+                    "type": "string",
+                    "description": "Inbound agent identifier"
+                  },
+                  "outbound_agent_id": {
+                    "type": "string",
+                    "description": "Outbound agent identifier"
+                  },
+                  "inbound_agent_version": {
+                    "type": "integer",
+                    "description": "Inbound agent version number"
+                  },
+                  "outbound_agent_version": {
+                    "type": "integer",
+                    "description": "Outbound agent version number"
+                  },
+                  "nickname": {
+                    "type": "string",
+                    "description": "Nickname for the phone number"
+                  },
+                  "inbound_webhook_url": {
+                    "type": "string",
+                    "description": "Webhook URL for inbound calls"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Phone number imported successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "phone_number": {
+                          "type": "string"
+                        },
+                        "termination_uri": {
+                          "type": "string"
+                        },
+                        "sip_trunk_auth_username": {
+                          "type": "string"
+                        },
+                        "inbound_agent_id": {
+                          "type": "string"
+                        },
+                        "outbound_agent_id": {
+                          "type": "string"
+                        },
+                        "inbound_agent_version": {
+                          "type": "integer"
+                        },
+                        "outbound_agent_version": {
+                          "type": "integer"
+                        },
+                        "nickname": {
+                          "type": "string"
+                        },
+                        "inbound_webhook_url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/update-config/{llm_id}": {
       "patch": {
         "summary": "Update Agent Configuration",

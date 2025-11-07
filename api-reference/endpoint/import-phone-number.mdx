@@ -1,0 +1,174 @@
+---
+title: 'Import Phone Number'
+openapi: 'POST /import-phone-number'
+---
+
+## Import Phone Number
+
+Import an existing phone number with Retell inbound and outbound agents.
+
+### Headers
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  Your Retell API key
+</ParamField>
+
+<ParamField path="header" type="string" name="Content-Type" required>
+  application/json
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="string" name="phone_number" required>
+  Phone number in E.164 format (e.g., +14157774444)
+</ParamField>
+
+<ParamField path="body" type="string" name="termination_uri" required>
+  SIP trunk termination URI (e.g., someuri.pstn.twilio.com)
+</ParamField>
+
+<ParamField path="body" type="string" name="sip_trunk_auth_username">
+  SIP trunk authentication username
+</ParamField>
+
+<ParamField path="body" type="string" name="sip_trunk_auth_password">
+  SIP trunk authentication password
+</ParamField>
+
+<ParamField path="body" type="string" name="inbound_agent_id" required>
+  Inbound agent identifier
+</ParamField>
+
+<ParamField path="body" type="string" name="outbound_agent_id" required>
+  Outbound agent identifier
+</ParamField>
+
+<ParamField path="body" type="number" name="inbound_agent_version" required>
+  Inbound agent version number
+</ParamField>
+
+<ParamField path="body" type="number" name="outbound_agent_version" required>
+  Outbound agent version number
+</ParamField>
+
+<ParamField path="body" type="string" name="nickname">
+  Nickname for the phone number
+</ParamField>
+
+<ParamField path="body" type="string" name="inbound_webhook_url">
+  Webhook URL for inbound calls
+</ParamField>
+
+### Example Request
+
+```bash
+POST /import-phone-number
+Content-Type: application/json
+x-api-key: <your-api-key>
+
+{
+  "phone_number": "+14157774444",
+  "termination_uri": "someuri.pstn.twilio.com",
+  "sip_trunk_auth_username": "username",
+  "sip_trunk_auth_password": "password",
+  "inbound_agent_id": "agent_id_here",
+  "outbound_agent_id": "agent_id_here",
+  "inbound_agent_version": 1,
+  "outbound_agent_version": 1,
+  "nickname": "Frontdesk Number",
+  "inbound_webhook_url": "https://example.com/webhook"
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "phone_number": "+14157774444",
+    "termination_uri": "someuri.pstn.twilio.com",
+    "sip_trunk_auth_username": "username",
+    "inbound_agent_id": "agent_id_here",
+    "outbound_agent_id": "agent_id_here",
+    "inbound_agent_version": 1,
+    "outbound_agent_version": 1,
+    "nickname": "Frontdesk Number",
+    "inbound_webhook_url": "https://example.com/webhook"
+  },
+  "error": null
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "data": null,
+  "error": "Failed to import phone number"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="object" name="data">
+  Response data object containing the imported phone number details
+</ParamField>
+
+<ParamField path="response" type="string" name="data.phone_number">
+  Phone number in E.164 format
+</ParamField>
+
+<ParamField path="response" type="string" name="data.termination_uri">
+  SIP trunk termination URI
+</ParamField>
+
+<ParamField path="response" type="string" name="data.sip_trunk_auth_username">
+  SIP trunk authentication username
+</ParamField>
+
+<ParamField path="response" type="string" name="data.inbound_agent_id">
+  Inbound agent identifier
+</ParamField>
+
+<ParamField path="response" type="string" name="data.outbound_agent_id">
+  Outbound agent identifier
+</ParamField>
+
+<ParamField path="response" type="number" name="data.inbound_agent_version">
+  Inbound agent version number
+</ParamField>
+
+<ParamField path="response" type="number" name="data.outbound_agent_version">
+  Outbound agent version number
+</ParamField>
+
+<ParamField path="response" type="string" name="data.nickname">
+  Nickname for the phone number
+</ParamField>
+
+<ParamField path="response" type="string" name="data.inbound_webhook_url">
+  Webhook URL for inbound calls
+</ParamField>
+
+### Use Cases
+
+- **Phone Number Import**: Import an existing phone number with Retell inbound and outbound agents
+- **SIP Trunk Integration**: Connect existing phone numbers via SIP trunk
+- **Agent Assignment**: Assign specific agent versions to imported phone numbers
+- **Webhook Setup**: Configure webhook URLs for inbound call handling
+
+### Implementation Notes
+
+- The endpoint imports an existing phone number with both inbound and outbound Retell agents
+- `phone_number` must be in E.164 format (e.g., "+14157774444")
+- `termination_uri` is required for SIP trunk connection
+- SIP trunk authentication credentials are optional but recommended
+- Agent versions allow you to use specific versions of your agents
+- Webhook URL is optional but recommended for handling inbound calls
+

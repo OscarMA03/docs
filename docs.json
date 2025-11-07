@@ -44,7 +44,8 @@
               "api-reference/endpoint/create-voice-agent",
               "api-reference/endpoint/update-config",
               "api-reference/endpoint/get-config",
-              "api-reference/endpoint/configure-phone-number"
+              "api-reference/endpoint/configure-phone-number",
+              "api-reference/endpoint/import-phone-number"
             ]
           },
           {
