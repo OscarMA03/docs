@@ -74,7 +74,8 @@
             "group": "Book Appointment",
             "pages": [
               "api-reference/endpoint/iso-start-times",
-              "api-reference/endpoint/schedule-by-iso-time"
+              "api-reference/endpoint/schedule-by-iso-time",
+              "api-reference/endpoint/meetings"
             ]
           },
           {

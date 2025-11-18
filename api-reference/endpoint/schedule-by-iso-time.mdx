@@ -56,8 +56,22 @@ x-api-key: <your-api-key>
 {
   "success": true,
   "opportunityId": "12345",
-  "scheduledTime": "2024-01-15T09:00:00.000Z",
-  "message": "Appointment scheduled successfully by ISO time"
+  "requestedIsoStartTime": "2024-01-15T09:00:00.000Z",
+  "slotKey": "morning",
+  "appointmentData": {
+    "isoStartTime": "2024-01-15T09:00:00.000Z",
+    "employeeHomeAddress": "",
+    "prevAppointmentAddress": "",
+    "nextAppointmentAddress": "",
+    "totalTravelTimeInSeconds": null
+  },
+  "scheduledAppointment": {
+    "id": "appt_123",
+    "startTime": "2024-01-15T09:00:00.000Z",
+    "status": "scheduled"
+  },
+  "scheduleStatus": "success",
+  "message": "Successfully scheduled appointment for 2024-01-15T09:00:00.000Z"
 }
 ```
 
@@ -66,13 +80,69 @@ x-api-key: <your-api-key>
 ```json
 {
   "success": false,
-  "error": "Failed to schedule appointment by isoStartTime",
-  "details": "isoStartTime is required"
+  "error": "No appointment found for isoStartTime: 2024-01-15T09:00:00.000Z",
+  "opportunityId": "12345",
+  "requestedIsoStartTime": "2024-01-15T09:00:00.000Z"
 }
 ```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="string" name="opportunityId">
+  The opportunity ID that was scheduled
+</ParamField>
+
+<ParamField path="response" type="string" name="requestedIsoStartTime">
+  The ISO start time that was requested
+</ParamField>
+
+<ParamField path="response" type="string" name="slotKey">
+  The slot key that matched the requested time
+</ParamField>
+
+<ParamField path="response" type="object" name="appointmentData">
+  The cleaned appointment data used for scheduling
+</ParamField>
+
+<ParamField path="response" type="string" name="appointmentData.isoStartTime">
+  ISO start time for the appointment
+</ParamField>
+
+<ParamField path="response" type="string" name="appointmentData.employeeHomeAddress">
+  Employee home address (empty string if not available)
+</ParamField>
+
+<ParamField path="response" type="string" name="appointmentData.prevAppointmentAddress">
+  Previous appointment address (empty string if not available)
+</ParamField>
+
+<ParamField path="response" type="string" name="appointmentData.nextAppointmentAddress">
+  Next appointment address (empty string if not available)
+</ParamField>
+
+<ParamField path="response" type="number" name="appointmentData.totalTravelTimeInSeconds">
+  Total travel time in seconds (null if not available)
+</ParamField>
+
+<ParamField path="response" type="object" name="scheduledAppointment">
+  The scheduled appointment data returned from the scheduling API
+</ParamField>
+
+<ParamField path="response" type="string" name="scheduleStatus">
+  Status of the scheduling operation
+</ParamField>
+
+<ParamField path="response" type="string" name="message">
+  Success message describing the result
+</ParamField>
 
 ### Use Cases
 
 - **Precise Scheduling**: Schedule appointments with exact ISO timestamps
 - **API Integration**: Use ISO times from external systems
 - **Time Accuracy**: Ensure precise time scheduling across timezones
+- **Slot Matching**: Automatically find and match available time slots

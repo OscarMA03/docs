@@ -321,10 +321,10 @@
         }
       }
     },
-    "/leads/{opportunityId}": {
+    "/update-lead/{opportunityId}": {
       "post": {
         "summary": "Update Lead",
-        "description": "Update an existing lead/opportunity record",
+        "description": "Update an existing lead/opportunity record in Builder Prime API",
         "parameters": [
           {
             "name": "x-builder-prime-api-key",
@@ -370,7 +370,23 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/Lead"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - validation error or API error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message from the API"
+                    }
+                  }
                 }
               }
             }
@@ -417,7 +433,28 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "opportunityId": {
+                      "type": "string"
+                    },
+                    "totalSlots": {
+                      "type": "integer"
+                    },
+                    "isoStartTimes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Array of ISO start time strings, sorted by earliest date first"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -479,7 +516,160 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "opportunityId": {
+                      "type": "string"
+                    },
+                    "requestedIsoStartTime": {
+                      "type": "string"
+                    },
+                    "slotKey": {
+                      "type": "string"
+                    },
+                    "appointmentData": {
+                      "type": "object",
+                      "properties": {
+                        "isoStartTime": {
+                          "type": "string"
+                        },
+                        "employeeHomeAddress": {
+                          "type": "string"
+                        },
+                        "prevAppointmentAddress": {
+                          "type": "string"
+                        },
+                        "nextAppointmentAddress": {
+                          "type": "string"
+                        },
+                        "totalTravelTimeInSeconds": {
+                          "type": "integer",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "scheduledAppointment": {
+                      "type": "object"
+                    },
+                    "scheduleStatus": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No appointment found for the requested ISO start time",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "opportunityId": {
+                      "type": "string"
+                    },
+                    "requestedIsoStartTime": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meetings": {
+      "get": {
+        "summary": "Get Meetings",
+        "description": "Get meetings from Builder Prime API. Automatically calculates date range from today to 1 month later.",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-builder-prime-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime API key for authentication"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "opportunity-id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional opportunity ID to filter meetings"
+          },
+          {
+            "name": "subdomain",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Builder Prime subdomain (defaults to 'stage' if not provided)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Meetings retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "startDateTime": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Meeting start date and time in UTC ISO 8601 format"
+                          }
+                        }
+                      }
+                    },
+                    "count": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             }
@@ -656,68 +846,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TaskResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/sms/v1": {
-      "get": {
-        "summary": "Get SMS Conversation",
-        "description": "Retrieve SMS conversation between two phone numbers",
-        "parameters": [
-          {
-            "name": "from",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "From phone number"
-          },
-          {
-            "name": "to",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "To phone number"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "SMS conversation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SMSConversationResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Send SMS",
-        "description": "Send an SMS message",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SMSData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "SMS sent successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SMSResponse"
                 }
               }
             }

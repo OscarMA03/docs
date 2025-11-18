@@ -37,12 +37,13 @@ x-api-key: <your-api-key>
 {
   "success": true,
   "opportunityId": "12345",
+  "totalSlots": 3,
   "isoStartTimes": [
     "2024-01-15T09:00:00.000Z",
     "2024-01-15T10:00:00.000Z",
     "2024-01-15T11:00:00.000Z"
   ],
-  "count": 3
+  "message": "Successfully extracted 3 isoStartTime values (sorted by earliest date first)"
 }
 ```
 
@@ -52,12 +53,35 @@ x-api-key: <your-api-key>
 {
   "success": false,
   "error": "Failed to get ISO start times",
-  "details": "opportunityId parameter is required"
+  "details": "Error message from the API"
 }
 ```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="string" name="opportunityId">
+  The opportunity ID that was queried
+</ParamField>
+
+<ParamField path="response" type="number" name="totalSlots">
+  Total number of available time slots
+</ParamField>
+
+<ParamField path="response" type="array" name="isoStartTimes">
+  Array of ISO start time strings, sorted by earliest date first
+</ParamField>
+
+<ParamField path="response" type="string" name="message">
+  Success message describing the result
+</ParamField>
 
 ### Use Cases
 
 - **Time Selection**: Get available start times in ISO format
 - **API Integration**: Use ISO times for external system integration
 - **Time Validation**: Validate appointment times before scheduling
+- **Sorted Results**: Get times sorted chronologically (earliest first)

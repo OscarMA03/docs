@@ -1,0 +1,104 @@
+---
+title: 'Get Meetings'
+openapi: 'GET /meetings'
+---
+
+## Get Meetings
+
+Get meetings from Builder Prime API. Automatically calculates date range from today to 1 month later.
+
+### Headers
+
+<ParamField path="header" type="string" name="x-builder-prime-api-key" required>
+  Builder Prime API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+### Request Parameters
+
+<ParamField path="query" type="string" name="opportunity-id">
+  Optional opportunity ID to filter meetings
+</ParamField>
+
+<ParamField path="query" type="string" name="subdomain">
+  Builder Prime subdomain (defaults to "stage" if not provided)
+</ParamField>
+
+### Example Request
+
+```bash
+GET /meetings?opportunity-id=12345&subdomain=example
+x-builder-prime-api-key: <your-builder-prime-api-key>
+x-api-key: <your-api-key>
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 123,
+      "startDateTime": "2024-01-15T17:00:00.000Z"
+    },
+    {
+      "id": 124,
+      "startDateTime": "2024-01-20T19:00:00.000Z"
+    }
+  ],
+  "count": 2
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "error": "Failed to get meetings",
+  "details": "API request failed: 401 Unauthorized"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="array" name="data">
+  Array of meeting objects
+</ParamField>
+
+<ParamField path="response" type="number" name="data[].id">
+  Unique identifier for the meeting
+</ParamField>
+
+<ParamField path="response" type="string" name="data[].startDateTime">
+  Meeting start date and time in UTC ISO 8601 format (e.g., "2024-01-15T17:00:00.000Z")
+</ParamField>
+
+<ParamField path="response" type="number" name="count">
+  Total number of meetings returned
+</ParamField>
+
+### Use Cases
+
+- **Appointment Management**: Retrieve all meetings for a specific opportunity
+- **Calendar Integration**: Get meetings for calendar display
+- **Scheduling**: View existing appointments before scheduling new ones
+- **Reporting**: Generate reports on meeting activity
+
+### Implementation Notes
+
+- The endpoint automatically calculates the date range from today to 1 month later
+- `opportunity-id` is optional - if provided, filters meetings for that specific opportunity
+- `subdomain` defaults to "stage" if not provided
+- Requires both `x-api-key` and `x-builder-prime-api-key` headers for authentication
+- Returns only meeting `id` and `startDateTime` in UTC ISO format
+- The `startDateTime` is preserved in UTC without timezone conversion
+
