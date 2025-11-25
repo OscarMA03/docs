@@ -1,0 +1,91 @@
+---
+title: 'Get Knowledge Base'
+openapi: 'GET /get-knowledge-base/{knowledge_base_id}'
+---
+
+## Get Knowledge Base
+
+Retrieves knowledge base details by knowledge base ID.
+
+### Headers
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  Retell API key for authentication
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="path" type="string" name="knowledge_base_id" required>
+  The knowledge base ID to retrieve
+</ParamField>
+
+### Example Request
+
+```bash
+GET /get-knowledge-base/kb_abc123xyz
+x-api-key: <your-retell-api-key>
+```
+
+### Example Response
+
+```json
+{
+  "knowledge_base_id": "kb_abc123xyz",
+  "name": "Voice Agent KB",
+  "created_at": 1705312200000,
+  "updated_at": 1705312200000,
+  "sources": [
+    {
+      "source_id": "src_123",
+      "type": "url",
+      "url": "https://www.retellai.com",
+      "status": "completed"
+    }
+  ]
+}
+```
+
+### Error Response
+
+```json
+{
+  "error": "Knowledge base not found or access denied"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="string" name="knowledge_base_id">
+  Unique identifier for the knowledge base
+</ParamField>
+
+<ParamField path="response" type="string" name="name">
+  Name of the knowledge base
+</ParamField>
+
+<ParamField path="response" type="number" name="created_at">
+  Creation timestamp (Unix timestamp)
+</ParamField>
+
+<ParamField path="response" type="number" name="updated_at">
+  Last update timestamp (Unix timestamp)
+</ParamField>
+
+<ParamField path="response" type="array" name="sources">
+  Array of knowledge base sources (URLs, files, texts)
+</ParamField>
+
+### Use Cases
+
+- **Knowledge Base Management**: Retrieve knowledge base details and configuration
+- **Source Verification**: Check which sources are currently in the knowledge base
+- **Status Monitoring**: Monitor knowledge base status and source processing
+- **Integration**: Access knowledge base information for third-party integrations
+
+### Implementation Notes
+
+- Returns the knowledge base object directly from Retell API
+- The knowledge base ID is required in the URL path
+- Requires `x-api-key` header with a valid Retell API key
+- Knowledge base details include all sources (URLs, files, and texts) that have been added
+

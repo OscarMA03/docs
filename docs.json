@@ -45,7 +45,9 @@
               "api-reference/endpoint/update-config",
               "api-reference/endpoint/get-config",
               "api-reference/endpoint/configure-phone-number",
-              "api-reference/endpoint/import-phone-number"
+              "api-reference/endpoint/import-phone-number",
+              "api-reference/endpoint/get-knowledge-base",
+              "api-reference/endpoint/add-knowledge-base-sources"
             ]
           },
           {

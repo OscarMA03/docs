@@ -1,0 +1,126 @@
+---
+title: 'Add Knowledge Base Sources'
+openapi: 'POST /add-knowledge-base-sources/{knowledge_base_id}'
+---
+
+## Add Knowledge Base Sources
+
+Adds sources (URLs, files, or texts) to an existing knowledge base.
+
+### Headers
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  Retell API key for authentication
+</ParamField>
+
+<ParamField path="header" type="string" name="Content-Type" required>
+  application/json
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="path" type="string" name="knowledge_base_id" required>
+  The knowledge base ID to add sources to
+</ParamField>
+
+### Request Body
+
+<ParamField path="body" type="array" name="knowledge_base_urls">
+  Array of URLs to add to the knowledge base
+</ParamField>
+
+<ParamField path="body" type="array" name="knowledge_base_files">
+  Array of file objects to add to the knowledge base
+</ParamField>
+
+<ParamField path="body" type="array" name="knowledge_base_texts">
+  Array of text objects with text and title
+</ParamField>
+
+<ParamField path="body.knowledge_base_texts" type="string" name="text" required>
+  The text content to add
+</ParamField>
+
+<ParamField path="body.knowledge_base_texts" type="string" name="title" required>
+  Title for the text content (defaults to "Untitled" if not provided)
+</ParamField>
+
+### Example Request
+
+```bash
+POST /add-knowledge-base-sources/kb_abc123xyz
+Content-Type: application/json
+x-api-key: <your-retell-api-key>
+
+{
+  "knowledge_base_urls": [
+    "https://www.retellai.com",
+    "https://docs.retellai.com"
+  ],
+  "knowledge_base_texts": [
+    {
+      "text": "This is sample knowledge base content about our services.",
+      "title": "Services Overview"
+    },
+    {
+      "text": "Contact information and support details.",
+      "title": "Contact Information"
+    }
+  ]
+}
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "knowledge_base_id": "kb_abc123xyz",
+  "sources_added": 3,
+  "message": "Successfully added sources to knowledge base"
+}
+```
+
+### Error Response
+
+```json
+{
+  "error": "Failed to add sources to knowledge base: Invalid knowledge base ID or authentication failed"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the sources were added successfully
+</ParamField>
+
+<ParamField path="response" type="string" name="knowledge_base_id">
+  The knowledge base ID where sources were added
+</ParamField>
+
+<ParamField path="response" type="number" name="sources_added">
+  Number of sources successfully added
+</ParamField>
+
+<ParamField path="response" type="string" name="message">
+  Success or error message
+</ParamField>
+
+### Use Cases
+
+- **Add URLs**: Add web pages and documentation URLs to knowledge base
+- **Add Files**: Upload documents and files to knowledge base
+- **Add Custom Text**: Add custom text content with titles to knowledge base
+- **Update Knowledge Base**: Continuously update knowledge base with new information
+- **Bulk Operations**: Add multiple sources at once
+
+### Implementation Notes
+
+- At least one of `knowledge_base_urls`, `knowledge_base_files`, or `knowledge_base_texts` must be provided
+- For `knowledge_base_texts`, the `title` field is required but defaults to "Untitled" if not provided
+- Files should be provided as file streams or file objects compatible with the Retell API
+- The endpoint returns a success response with the number of sources added
+- Requires `x-api-key` header with a valid Retell API key
+- Sources are processed asynchronously by Retell and may take time to be fully indexed
+
