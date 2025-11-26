@@ -79,6 +79,22 @@ Create a Retell LLM and Chat Agent with configuration
   Comma-separated list of services excluded (e.g., "repairs, roofs")
 </ParamField>
 
+<ParamField path="body.configuration" type="string" name="price_discussion">
+  Instructions for discussing pricing with customers
+</ParamField>
+
+<ParamField path="body.configuration" type="string" name="pricing_dialogue">
+  Script or dialogue for pricing conversations
+</ParamField>
+
+<ParamField path="body.configuration" type="string" name="promotion_mentions">
+  Information about promotions or special offers to mention
+</ParamField>
+
+<ParamField path="body.configuration" type="string" name="qualifications">
+  Qualifications or credentials to mention (e.g., licenses, certifications)
+</ParamField>
+
 <ParamField path="body" type="object" name="knowledgeBase">
   Knowledge base configuration
 </ParamField>
@@ -87,8 +103,24 @@ Create a Retell LLM and Chat Agent with configuration
   Name of the knowledge base
 </ParamField>
 
-<ParamField path="body.knowledgeBase" type="array" name="urls">
-  Array of URLs for the knowledge base
+<ParamField path="body.knowledgeBase" type="array" name="knowledge_base_urls">
+  Array of URLs to add to the knowledge base
+</ParamField>
+
+<ParamField path="body.knowledgeBase" type="array" name="knowledge_base_files">
+  Array of file objects to add to the knowledge base
+</ParamField>
+
+<ParamField path="body.knowledgeBase" type="array" name="knowledge_base_texts">
+  Array of text objects with text and title
+</ParamField>
+
+<ParamField path="body.knowledgeBase.knowledge_base_texts" type="string" name="text" required>
+  The text content to add
+</ParamField>
+
+<ParamField path="body.knowledgeBase.knowledge_base_texts" type="string" name="title" required>
+  Title for the text content
 </ParamField>
 
 <ParamField path="body" type="string" name="agent_name">
@@ -117,12 +149,26 @@ x-builder-prime-api-key: <your-builder-prime-api-key>
     "custom_greeting": "Hi, thanks for calling the Men with Tools",
     "agent_name": "Sally",
     "services_supported": "windows, doors, replacements",
-    "services_not_included": "repairs, roofs"
+    "services_not_included": "repairs, roofs",
+    "price_discussion": "Discuss pricing after understanding customer needs",
+    "pricing_dialogue": "Our pricing is competitive and varies based on project scope",
+    "promotion_mentions": "Ask about our current seasonal promotions",
+    "qualifications": "Licensed and insured, 20+ years of experience"
   },
   "knowledgeBase": {
     "name": "Voice Agent KB",
-    "urls": [
-      "https://www.retellai.com"
+    "knowledge_base_urls": [
+      "https://www.retellai.com",
+      "https://docs.retellai.com"
+    ],
+    "knowledge_base_files": [
+      {}
+    ],
+    "knowledge_base_texts": [
+      {
+        "text": "This is sample knowledge base content about our services.",
+        "title": "Services Overview"
+      }
     ]
   },
   "agent_name": "Test"

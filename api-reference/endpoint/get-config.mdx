@@ -44,7 +44,11 @@ x-api-key: <your-api-key>
       "custom_greeting": "Hi, thanks for calling Example Company",
       "agent_name": "Sally",
       "services_supported": "windows, doors, replacements",
-      "services_not_included": "repairs, roofs"
+      "services_not_included": "repairs, roofs",
+      "price_discussion": "Discuss pricing after understanding customer needs",
+      "pricing_dialogue": "Our pricing is competitive and varies based on project scope",
+      "promotion_mentions": "Ask about our current seasonal promotions",
+      "qualifications": "Licensed and insured, 20+ years of experience"
     }
   },
   "error": null
@@ -121,6 +125,22 @@ x-api-key: <your-api-key>
 
 <ParamField path="response" type="string" name="data.configuration.services_not_included">
   Comma-separated list of services excluded
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.price_discussion">
+  Instructions for discussing pricing with customers
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.pricing_dialogue">
+  Script or dialogue for pricing conversations
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.promotion_mentions">
+  Information about promotions or special offers to mention
+</ParamField>
+
+<ParamField path="response" type="string" name="data.configuration.qualifications">
+  Qualifications or credentials to mention
 </ParamField>
 
 ### Use Cases

@@ -935,6 +935,22 @@
                       "services_not_included": {
                         "type": "string",
                         "description": "Comma-separated list of services excluded"
+                      },
+                      "price_discussion": {
+                        "type": "string",
+                        "description": "Instructions for discussing pricing with customers"
+                      },
+                      "pricing_dialogue": {
+                        "type": "string",
+                        "description": "Script or dialogue for pricing conversations"
+                      },
+                      "promotion_mentions": {
+                        "type": "string",
+                        "description": "Information about promotions or special offers to mention"
+                      },
+                      "qualifications": {
+                        "type": "string",
+                        "description": "Qualifications or credentials to mention (e.g., licenses, certifications)"
                       }
                     }
                   },
@@ -945,12 +961,37 @@
                         "type": "string",
                         "description": "Name of the knowledge base"
                       },
-                      "urls": {
+                      "knowledge_base_urls": {
                         "type": "array",
                         "items": {
                           "type": "string"
                         },
-                        "description": "Array of URLs for the knowledge base"
+                        "description": "Array of URLs to add to the knowledge base"
+                      },
+                      "knowledge_base_files": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        },
+                        "description": "Array of file objects to add to the knowledge base"
+                      },
+                      "knowledge_base_texts": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": ["text", "title"],
+                          "properties": {
+                            "text": {
+                              "type": "string",
+                              "description": "The text content to add"
+                            },
+                            "title": {
+                              "type": "string",
+                              "description": "Title for the text content"
+                            }
+                          }
+                        },
+                        "description": "Array of text objects with text and title"
                       }
                     }
                   },
@@ -1079,6 +1120,22 @@
                       "services_not_included": {
                         "type": "string",
                         "description": "Comma-separated list of services excluded"
+                      },
+                      "price_discussion": {
+                        "type": "string",
+                        "description": "Instructions for discussing pricing with customers"
+                      },
+                      "pricing_dialogue": {
+                        "type": "string",
+                        "description": "Script or dialogue for pricing conversations"
+                      },
+                      "promotion_mentions": {
+                        "type": "string",
+                        "description": "Information about promotions or special offers to mention"
+                      },
+                      "qualifications": {
+                        "type": "string",
+                        "description": "Qualifications or credentials to mention (e.g., licenses, certifications)"
                       }
                     }
                   },
@@ -1089,12 +1146,37 @@
                         "type": "string",
                         "description": "Name of the knowledge base"
                       },
-                      "urls": {
+                      "knowledge_base_urls": {
                         "type": "array",
                         "items": {
                           "type": "string"
                         },
-                        "description": "Array of URLs for the knowledge base"
+                        "description": "Array of URLs to add to the knowledge base"
+                      },
+                      "knowledge_base_files": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        },
+                        "description": "Array of file objects to add to the knowledge base"
+                      },
+                      "knowledge_base_texts": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": ["text", "title"],
+                          "properties": {
+                            "text": {
+                              "type": "string",
+                              "description": "The text content to add"
+                            },
+                            "title": {
+                              "type": "string",
+                              "description": "Title for the text content"
+                            }
+                          }
+                        },
+                        "description": "Array of text objects with text and title"
                       }
                     }
                   },
@@ -1679,6 +1761,22 @@
                       "services_not_included": {
                         "type": "string",
                         "description": "Comma-separated list of services excluded"
+                      },
+                      "price_discussion": {
+                        "type": "string",
+                        "description": "Instructions for discussing pricing with customers"
+                      },
+                      "pricing_dialogue": {
+                        "type": "string",
+                        "description": "Script or dialogue for pricing conversations"
+                      },
+                      "promotion_mentions": {
+                        "type": "string",
+                        "description": "Information about promotions or special offers to mention"
+                      },
+                      "qualifications": {
+                        "type": "string",
+                        "description": "Qualifications or credentials to mention (e.g., licenses, certifications)"
                       }
                     }
                   }
@@ -1738,6 +1836,18 @@
                               "type": "string"
                             },
                             "services_not_included": {
+                              "type": "string"
+                            },
+                            "price_discussion": {
+                              "type": "string"
+                            },
+                            "pricing_dialogue": {
+                              "type": "string"
+                            },
+                            "promotion_mentions": {
+                              "type": "string"
+                            },
+                            "qualifications": {
                               "type": "string"
                             }
                           }
@@ -1827,6 +1937,18 @@
                               "type": "string"
                             },
                             "services_not_included": {
+                              "type": "string"
+                            },
+                            "price_discussion": {
+                              "type": "string"
+                            },
+                            "pricing_dialogue": {
+                              "type": "string"
+                            },
+                            "promotion_mentions": {
+                              "type": "string"
+                            },
+                            "qualifications": {
                               "type": "string"
                             }
                           }
