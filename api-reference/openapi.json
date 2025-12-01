@@ -37,6 +37,143 @@
         }
       }
     },
+    "/check-service-area": {
+      "get": {
+        "summary": "Check Service Area",
+        "description": "Check if a service area exists for a given class ID, city, state, and zipcode",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "class_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Class identifier"
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "City name"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "State abbreviation or name"
+          },
+          {
+            "name": "zipcode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ZIP code"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service area check completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "exists": {
+                          "type": "boolean",
+                          "description": "Whether the service area exists for the given location"
+                        },
+                        "class_id": {
+                          "type": "string",
+                          "description": "The class identifier that was checked"
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "The city that was checked"
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "The state that was checked"
+                        },
+                        "zipcode": {
+                          "type": "string",
+                          "description": "The ZIP code that was checked"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - missing required query parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message indicating which parameter is missing"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/calendar-entries": {
       "get": {
         "summary": "Get Calendar Entries",

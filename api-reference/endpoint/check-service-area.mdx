@@ -1,0 +1,108 @@
+---
+title: 'Check Service Area'
+openapi: 'GET /check-service-area'
+---
+
+## Check Service Area
+
+Check if a service area exists for a given class ID, city, state, and zipcode.
+
+### Headers
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+### Query Parameters
+
+<ParamField path="query" type="string" name="class_id" required>
+  Class identifier
+</ParamField>
+
+<ParamField path="query" type="string" name="city" required>
+  City name
+</ParamField>
+
+<ParamField path="query" type="string" name="state" required>
+  State abbreviation or name
+</ParamField>
+
+<ParamField path="query" type="string" name="zipcode" required>
+  ZIP code
+</ParamField>
+
+### Example Request
+
+```bash
+GET /check-service-area?class_id=123&city=New York&state=NY&zipcode=10001
+x-api-key: <your-api-key>
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "exists": true,
+    "class_id": "123",
+    "city": "New York",
+    "state": "NY",
+    "zipcode": "10001"
+  }
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "error": "class_id query parameter is required"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="object" name="data">
+  Response data object
+</ParamField>
+
+<ParamField path="response" type="boolean" name="data.exists">
+  Whether the service area exists for the given location
+</ParamField>
+
+<ParamField path="response" type="string" name="data.class_id">
+  The class identifier that was checked
+</ParamField>
+
+<ParamField path="response" type="string" name="data.city">
+  The city that was checked
+</ParamField>
+
+<ParamField path="response" type="string" name="data.state">
+  The state that was checked
+</ParamField>
+
+<ParamField path="response" type="string" name="data.zipcode">
+  The ZIP code that was checked
+</ParamField>
+
+### Use Cases
+
+- **Service Area Validation**: Check if a location is within a company's service area before scheduling
+- **Location Verification**: Verify service availability for a specific address
+- **Pre-screening**: Validate service areas before creating leads or appointments
+- **Geographic Filtering**: Determine if a location qualifies for service
+
+### Implementation Notes
+
+- All query parameters (`class_id`, `city`, `state`, `zipcode`) are required
+- Returns `exists: true` if the service area is found, `exists: false` otherwise
+- The response includes all the parameters that were checked for verification
+- Requires `x-api-key` header for authentication
+

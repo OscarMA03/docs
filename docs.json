@@ -66,6 +66,12 @@
             ]
           },
           {
+            "group": "Service Area Locations",
+            "pages": [
+              "api-reference/endpoint/check-service-area"
+            ]
+          },
+          {
             "group": "Agent Tool Calls",
             "pages": [
               "api-reference/endpoint/gate1-validate-all",
