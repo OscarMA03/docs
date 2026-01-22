@@ -17,6 +17,10 @@ Retrieve leads filtered by both address and phone number. Returns the newest lea
   API key for authentication
 </ParamField>
 
+<ParamField path="header" type="string" name="x-company-url-append" required>
+  Company URL append value (e.g., "stage", "prod")
+</ParamField>
+
 ### Request Parameters
 
 <ParamField path="query" type="string" name="address" required>
@@ -57,6 +61,7 @@ Retrieve leads filtered by both address and phone number. Returns the newest lea
 GET /leads/by-address-and-phone?address=123 Main St&phone=+1234567890
 x-builder-prime-api-key: <your-builder-prime-api-key>
 x-api-key: <your-api-key>
+x-company-url-append: <your-company-url-append>
 ```
 
 ### Example Response

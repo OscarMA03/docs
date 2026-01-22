@@ -1,0 +1,74 @@
+---
+title: 'Delete Chat Agent'
+openapi: 'DELETE /delete-chat-agent/{agent_id}'
+---
+
+## Delete Chat Agent
+
+Delete a chat agent and all its versions from Retell.
+
+### Headers
+
+<ParamField path="header" type="string" name="x-api-key" required>
+  API key for authentication
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="path" type="string" name="agent_id" required>
+  Retell chat agent identifier to delete
+</ParamField>
+
+### Example Request
+
+```bash
+DELETE /delete-chat-agent/agent_abc123xyz
+x-api-key: <your-api-key>
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "Chat agent deleted successfully"
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "error": "Invalid agent ID or agent not found"
+}
+```
+
+### Response Fields
+
+<ParamField path="response" type="boolean" name="success">
+  Indicates if the request was successful
+</ParamField>
+
+<ParamField path="response" type="string" name="message">
+  Success message (if successful)
+</ParamField>
+
+<ParamField path="response" type="string" name="error">
+  Error message (if failed)
+</ParamField>
+
+### Use Cases
+
+- **Agent Cleanup**: Remove chat agents that are no longer needed
+- **Version Management**: Delete all versions of an agent at once
+- **Resource Management**: Free up resources by removing unused agents
+- **Testing Cleanup**: Remove test agents after development
+
+### Implementation Notes
+
+- This endpoint deletes the chat agent and all its versions permanently
+- The agent ID must be a valid Retell chat agent identifier
+- Requires `x-api-key` header for authentication
+- This operation cannot be undone
+

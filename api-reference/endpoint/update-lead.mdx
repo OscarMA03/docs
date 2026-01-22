@@ -17,6 +17,10 @@ Update an existing lead/opportunity record in Builder Prime API.
   API key for authentication
 </ParamField>
 
+<ParamField path="header" type="string" name="x-company-url-append" required>
+  Company URL append value (e.g., "stage", "prod")
+</ParamField>
+
 <ParamField path="header" type="string" name="Content-Type" required>
   application/json
 </ParamField>
@@ -80,6 +84,7 @@ POST /update-lead/12345
 Content-Type: application/json
 x-builder-prime-api-key: <your-builder-prime-api-key>
 x-api-key: <your-api-key>
+x-company-url-append: <your-company-url-append>
 
 {
   "firstName": "John",

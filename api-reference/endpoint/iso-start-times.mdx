@@ -17,6 +17,10 @@ Get only ISO start time values for appointments.
   API key for authentication
 </ParamField>
 
+<ParamField path="header" type="string" name="x-company-url-append" required>
+  Company URL append value (e.g., "stage", "prod")
+</ParamField>
+
 ### Request Parameters
 
 <ParamField path="query" type="string" name="opportunityId" required>
@@ -29,6 +33,7 @@ Get only ISO start time values for appointments.
 GET /iso-start-times?opportunityId=12345
 x-builder-prime-api-key: <your-builder-prime-api-key>
 x-api-key: <your-api-key>
+x-company-url-append: <your-company-url-append>
 ```
 
 ### Example Response

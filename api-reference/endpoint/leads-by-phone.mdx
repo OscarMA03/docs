@@ -17,6 +17,10 @@ Retrieve leads filtered by phone number with additional optional filters.
   API key for authentication
 </ParamField>
 
+<ParamField path="header" type="string" name="x-company-url-append" required>
+  Company URL append value (e.g., "stage", "prod")
+</ParamField>
+
 ### Request Parameters
 
 <ParamField path="query" type="string" name="phone" required>
@@ -53,6 +57,7 @@ Retrieve leads filtered by phone number with additional optional filters.
 GET /leads/by-phone?phone=+1234567890&lead-status=Lead Received
 x-builder-prime-api-key: <your-builder-prime-api-key>
 x-api-key: <your-api-key>
+x-company-url-append: <your-company-url-append>
 ```
 
 ### Example Response

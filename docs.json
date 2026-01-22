@@ -47,7 +47,9 @@
               "api-reference/endpoint/configure-phone-number",
               "api-reference/endpoint/import-phone-number",
               "api-reference/endpoint/get-knowledge-base",
-              "api-reference/endpoint/add-knowledge-base-sources"
+              "api-reference/endpoint/add-knowledge-base-sources",
+              "api-reference/endpoint/delete-agent",
+              "api-reference/endpoint/delete-chat-agent"
             ]
           },
           {
@@ -68,7 +70,8 @@
           {
             "group": "Service Area Locations",
             "pages": [
-              "api-reference/endpoint/check-service-area"
+              "api-reference/endpoint/check-service-area",
+              "api-reference/endpoint/push-zipcodes"
             ]
           },
           {

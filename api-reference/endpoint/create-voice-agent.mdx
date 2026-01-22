@@ -23,6 +23,10 @@ Create a Retell LLM and Voice Agent with configuration
   Class identifier
 </ParamField>
 
+<ParamField path="body" type="string" name="company_id">
+  Company identifier
+</ParamField>
+
 <ParamField path="body" type="string" name="start_speaker">
   Starting speaker for the conversation (e.g., "agent")
 </ParamField>
@@ -31,8 +35,8 @@ Create a Retell LLM and Voice Agent with configuration
   Company configuration object
 </ParamField>
 
-<ParamField path="body.configuration" type="string" name="company_url">
-  Company's API endpoint
+<ParamField path="body.configuration" type="string" name="company_url_append">
+  Company's URL append value (e.g., "stage", "prod")
 </ParamField>
 
 <ParamField path="body.configuration" type="string" name="company_name">
@@ -55,10 +59,6 @@ Create a Retell LLM and Voice Agent with configuration
   When to offer appointments
 </ParamField>
 
-<ParamField path="body.configuration" type="string" name="service_areas">
-  Geographic restrictions
-</ParamField>
-
 <ParamField path="body.configuration" type="string" name="callback">
   Create task to callback at later time
 </ParamField>
@@ -79,22 +79,6 @@ Create a Retell LLM and Voice Agent with configuration
   Comma-separated list of services excluded (e.g., "repairs, roofs")
 </ParamField>
 
-<ParamField path="body.configuration" type="string" name="price_discussion">
-  Instructions for discussing pricing with customers
-</ParamField>
-
-<ParamField path="body.configuration" type="string" name="pricing_dialogue">
-  Script or dialogue for pricing conversations
-</ParamField>
-
-<ParamField path="body.configuration" type="string" name="promotion_mentions">
-  Information about promotions or special offers to mention
-</ParamField>
-
-<ParamField path="body.configuration" type="string" name="qualifications">
-  Qualifications or credentials to mention (e.g., licenses, certifications)
-</ParamField>
-
 <ParamField path="body" type="object" name="knowledgeBase">
   Knowledge base configuration
 </ParamField>
@@ -103,7 +87,7 @@ Create a Retell LLM and Voice Agent with configuration
   Name of the knowledge base
 </ParamField>
 
-<ParamField path="body.knowledgeBase" type="array" name="knowledge_base_urls">
+<ParamField path="body.knowledgeBase" type="array" name="urls">
   Array of URLs to add to the knowledge base
 </ParamField>
 
@@ -123,56 +107,58 @@ Create a Retell LLM and Voice Agent with configuration
   Title for the text content
 </ParamField>
 
-<ParamField path="body" type="string" name="agent_name">
-  Agent name
+<ParamField path="body" type="object" name="service_areas">
+  Service areas configuration
+</ParamField>
+
+<ParamField path="body.service_areas" type="array" name="zipcodes">
+  Array of ZIP codes for service areas
+</ParamField>
+
+<ParamField path="body.service_areas" type="string" name="county">
+  County name
+</ParamField>
+
+<ParamField path="body.service_areas" type="string" name="state">
+  State abbreviation or name
 </ParamField>
 
 ### Example Request
 
 ```bash
-POST /create-voice-agent
-Content-Type: application/json
-x-builder-prime-api-key: <your-builder-prime-api-key>
-
-{
-  "class_id": "123",
+curl --request POST \
+  --url 'https://proxy-server-builder-prime.onrender.com/create-voice-agent' \
+  --header 'Content-Type: application/json' \
+  --header 'x-builder-prime-api-key: <your-builder-prime-api-key>' \
+  --data '{
+  "class_id": "50233",
+  "company_id": "612313",
   "start_speaker": "agent",
   "configuration": {
-    "company_url": "https://company-api.example.com",
+    "company_url_append": "stage",
     "company_name": "The Men with Tools",
     "company_number": "+1234567890",
     "service_label_type": "In Home Consultation",
     "ai_disclosure": "true",
     "business_hours": "Monday 9am-5pm, Friday 9am-5pm",
-    "service_areas": "New York, New Jersey",
     "callback": "callback_task",
     "custom_greeting": "Hi, thanks for calling the Men with Tools",
     "agent_name": "Sally",
     "services_supported": "windows, doors, replacements",
-    "services_not_included": "repairs, roofs",
-    "price_discussion": "Discuss pricing after understanding customer needs",
-    "pricing_dialogue": "Our pricing is competitive and varies based on project scope",
-    "promotion_mentions": "Ask about our current seasonal promotions",
-    "qualifications": "Licensed and insured, 20+ years of experience"
+    "services_not_included": "repairs, roofs"
   },
   "knowledgeBase": {
     "name": "Voice Agent KB",
-    "knowledge_base_urls": [
-      "https://www.retellai.com",
-      "https://docs.retellai.com"
-    ],
-    "knowledge_base_files": [
-      {}
-    ],
-    "knowledge_base_texts": [
-      {
-        "text": "This is sample knowledge base content about our services.",
-        "title": "Services Overview"
-      }
+    "urls": [
+      "https://www.retellai.com"
     ]
   },
-  "agent_name": "Test"
-}
+  "service_areas": {
+    "zipcodes": ["90210", "90211", "90212", "10001", "10002"],
+    "county": "Los Angeles",
+    "state": "CA"
+  }
+}'
 ```
 
 ### Example Response

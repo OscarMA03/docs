@@ -322,13 +322,13 @@
             "description": "API key for authentication"
           },
           {
-            "name": "x-api-key",
+            "name": "x-company-url-append",
             "in": "header",
             "required": true,
             "schema": {
               "type": "string"
             },
-            "description": "API key for authentication"
+            "description": "Company URL append value (e.g., 'stage', 'prod')"
           }
         ],
         "requestBody": {
@@ -379,6 +379,15 @@
             "description": "API key for authentication"
           },
           {
+            "name": "x-company-url-append",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company URL append value (e.g., 'stage', 'prod')"
+          },
+          {
             "name": "phone",
             "in": "query",
             "required": true,
@@ -424,6 +433,15 @@
               "type": "string"
             },
             "description": "API key for authentication"
+          },
+          {
+            "name": "x-company-url-append",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company URL append value (e.g., 'stage', 'prod')"
           },
           {
             "name": "address",
@@ -480,6 +498,15 @@
               "type": "string"
             },
             "description": "API key for authentication"
+          },
+          {
+            "name": "x-company-url-append",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company URL append value (e.g., 'stage', 'prod')"
           },
           {
             "name": "opportunityId",
@@ -555,6 +582,15 @@
             "description": "API key for authentication"
           },
           {
+            "name": "x-company-url-append",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company URL append value (e.g., 'stage', 'prod')"
+          },
+          {
             "name": "opportunityId",
             "in": "query",
             "required": true,
@@ -621,6 +657,15 @@
               "type": "string"
             },
             "description": "API key for authentication"
+          },
+          {
+            "name": "x-company-url-append",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company URL append value (e.g., 'stage', 'prod')"
           },
           {
             "name": "opportunityId",
@@ -756,6 +801,15 @@
               "type": "string"
             },
             "description": "API key for authentication"
+          },
+          {
+            "name": "x-company-url-append",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company URL append value (e.g., 'stage', 'prod')"
           },
           {
             "name": "opportunity-id",
@@ -956,6 +1010,15 @@
               "type": "string"
             },
             "description": "API key for authentication"
+          },
+          {
+            "name": "x-company-url-append",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company URL append value (e.g., 'stage', 'prod')"
           },
           {
             "name": "opportunityId",
@@ -1203,6 +1266,10 @@
                     "type": "string",
                     "description": "Class identifier"
                   },
+                  "company_id": {
+                    "type": "string",
+                    "description": "Company identifier"
+                  },
                   "start_speaker": {
                     "type": "string",
                     "description": "Starting speaker for the conversation (e.g., 'agent')"
@@ -1210,9 +1277,9 @@
                   "configuration": {
                     "type": "object",
                     "properties": {
-                      "company_url": {
+                      "company_url_append": {
                         "type": "string",
-                        "description": "Company's API endpoint"
+                        "description": "Company's URL append value (e.g., 'stage', 'prod')"
                       },
                       "company_name": {
                         "type": "string",
@@ -1234,10 +1301,6 @@
                         "type": "string",
                         "description": "When to offer appointments"
                       },
-                      "service_areas": {
-                        "type": "string",
-                        "description": "Geographic restrictions"
-                      },
                       "callback": {
                         "type": "string",
                         "description": "Create task to callback at later time"
@@ -1252,27 +1315,11 @@
                       },
                       "services_supported": {
                         "type": "string",
-                        "description": "Comma-separated list of services included"
+                        "description": "Comma-separated list of services included (e.g., 'windows, doors, replacements')"
                       },
                       "services_not_included": {
                         "type": "string",
-                        "description": "Comma-separated list of services excluded"
-                      },
-                      "price_discussion": {
-                        "type": "string",
-                        "description": "Instructions for discussing pricing with customers"
-                      },
-                      "pricing_dialogue": {
-                        "type": "string",
-                        "description": "Script or dialogue for pricing conversations"
-                      },
-                      "promotion_mentions": {
-                        "type": "string",
-                        "description": "Information about promotions or special offers to mention"
-                      },
-                      "qualifications": {
-                        "type": "string",
-                        "description": "Qualifications or credentials to mention (e.g., licenses, certifications)"
+                        "description": "Comma-separated list of services excluded (e.g., 'repairs, roofs')"
                       }
                     }
                   },
@@ -1283,7 +1330,7 @@
                         "type": "string",
                         "description": "Name of the knowledge base"
                       },
-                      "knowledge_base_urls": {
+                      "urls": {
                         "type": "array",
                         "items": {
                           "type": "string"
@@ -1317,9 +1364,25 @@
                       }
                     }
                   },
-                  "agent_name": {
-                    "type": "string",
-                    "description": "Agent name"
+                  "service_areas": {
+                    "type": "object",
+                    "properties": {
+                      "zipcodes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Array of ZIP codes for service areas"
+                      },
+                      "county": {
+                        "type": "string",
+                        "description": "County name"
+                      },
+                      "state": {
+                        "type": "string",
+                        "description": "State abbreviation or name"
+                      }
+                    }
                   }
                 }
               }
@@ -2095,6 +2158,251 @@
                     "error": {
                       "type": "string",
                       "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delete-agent/{agent_id}": {
+      "delete": {
+        "summary": "Delete Voice Agent",
+        "description": "Delete a voice agent and all its versions from Retell",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Retell voice agent identifier to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid agent ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delete-chat-agent/{agent_id}": {
+      "delete": {
+        "summary": "Delete Chat Agent",
+        "description": "Delete a chat agent and all its versions from Retell",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          },
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Retell chat agent identifier to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chat agent deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid agent ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/push-zipcodes": {
+      "post": {
+        "summary": "Push Zipcodes",
+        "description": "Push zipcodes for a company/class to define service areas",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key for authentication"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["zipcodes", "class_id", "state"],
+                "properties": {
+                  "zipcodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Array of ZIP code strings to add"
+                  },
+                  "class_id": {
+                    "type": "number",
+                    "description": "Class identifier"
+                  },
+                  "company_id": {
+                    "type": "number",
+                    "description": "Company identifier (optional)"
+                  },
+                  "county": {
+                    "type": "string",
+                    "description": "County name (optional)"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "State abbreviation or name"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Zipcodes pushed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "class_id": {
+                          "type": "number"
+                        },
+                        "zipcodes_added": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
                     }
                   }
                 }

@@ -17,6 +17,10 @@ Get meetings from Builder Prime API. Automatically calculates date range from to
   API key for authentication
 </ParamField>
 
+<ParamField path="header" type="string" name="x-company-url-append" required>
+  Company URL append value (e.g., "stage", "prod")
+</ParamField>
+
 ### Request Parameters
 
 <ParamField path="query" type="string" name="opportunity-id">
@@ -33,6 +37,7 @@ Get meetings from Builder Prime API. Automatically calculates date range from to
 GET /meetings?opportunity-id=12345&subdomain=example
 x-builder-prime-api-key: <your-builder-prime-api-key>
 x-api-key: <your-api-key>
+x-company-url-append: <your-company-url-append>
 ```
 
 ### Example Response

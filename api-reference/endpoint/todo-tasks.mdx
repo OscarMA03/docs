@@ -17,6 +17,10 @@ Create a new to-do task. The employee ID is automatically set from the `HARDCODE
   API key for authentication
 </ParamField>
 
+<ParamField path="header" type="string" name="x-company-url-append" required>
+  Company URL append value (e.g., "stage", "prod")
+</ParamField>
+
 <ParamField path="header" type="string" name="Content-Type" required>
   application/json
 </ParamField>
@@ -65,6 +69,7 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --header 'x-builder-prime-api-key: <your-builder-prime-api-key>' \
   --header 'x-api-key: <your-api-key>' \
+  --header 'x-company-url-append: <your-company-url-append>' \
   --data '{
   "title": "Follow up with lead",
   "type": "CALL",
@@ -80,6 +85,7 @@ POST /to-do-tasks/v1?opportunityId=12345
 Content-Type: application/json
 x-builder-prime-api-key: <your-builder-prime-api-key>
 x-api-key: <your-api-key>
+x-company-url-append: <your-company-url-append>
 
 {
   "title": "Follow up with lead",

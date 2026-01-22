@@ -17,6 +17,10 @@ Create a simplified lead with core fields only. The `secretKey` is automatically
   API key for authentication
 </ParamField>
 
+<ParamField path="header" type="string" name="x-company-url-append" required>
+  Company URL append value (e.g., "stage", "prod")
+</ParamField>
+
 <ParamField path="header" type="string" name="Content-Type" required>
   application/json
 </ParamField>
@@ -62,6 +66,7 @@ POST /create-lead
 Content-Type: application/json
 x-builder-prime-api-key: <your-builder-prime-api-key>
 x-api-key: <your-api-key>
+x-company-url-append: <your-company-url-append>
 
 {
   "firstName": "John",
